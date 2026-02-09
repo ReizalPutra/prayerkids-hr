@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('contract_templates', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->longText('body');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

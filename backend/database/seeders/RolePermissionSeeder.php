@@ -15,64 +15,49 @@ class RolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
+        // Hapus cache permission (opsional tapi disarankan jika pakai Spatie)
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // 2. Buat Permission (Hak Akses Spesifik)
-        // Master Data
-        Permission::create(['name' => 'manage_divisions']);
-        Permission::create(['name' => 'manage_positions']);
-        
-        // Employee
-        Permission::create(['name' => 'view_employees']);
-        Permission::create(['name' => 'create_employees']);
-        Permission::create(['name' => 'edit_employees']);
-        Permission::create(['name' => 'delete_employees']); // Bahaya
-        
-        // Attendance
-        Permission::create(['name' => 'view_attendance_all']); // Buat HR/Admin
-        Permission::create(['name' => 'view_attendance_own']); // Buat Karyawan Biasa
+        // 1. Definisikan daftar permission
+        $permissions = [
+            // Master Data
+            'manage_divisions',
+            'manage_positions',
+            // Employee
+            'view_employees',
+            'create_employees',
+            'edit_employees',
+            'delete_employees',
+            // Attendance
+            'view_attendance_all',
+            'view_attendance_own',
+        ];
+
+        // 2. Buat Permission dengan firstOrCreate
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+        }
 
         // 3. Buat Role & Assign Permission
-        
+
         // A. Admin (Super Power)
-        $roleAdmin = Role::create(['name' => 'admin']);
-        $roleAdmin->givePermissionTo(Permission::all()); // Kasih semua akses
+        $roleAdmin = Role::firstOrCreate(['name' => 'admin']);
+        $roleAdmin->syncPermissions(Permission::all());
 
         // B. HR Staff
-        $roleHR = Role::create(['name' => 'hr']);
-        $roleHR->givePermissionTo([
-            'view_employees', 'create_employees', 'edit_employees',
+        $roleHR = Role::firstOrCreate(['name' => 'hr']);
+        $roleHR->syncPermissions([
+            'view_employees',
+            'create_employees',
+            'edit_employees',
             'view_attendance_all',
             'manage_divisions'
         ]);
 
         // C. Employee (Karyawan Biasa)
-        $roleEmployee = Role::create(['name' => 'employee']);
-        $roleEmployee->givePermissionTo([
+        $roleEmployee = Role::firstOrCreate(['name' => 'employee']);
+        $roleEmployee->syncPermissions([
             'view_attendance_own'
         ]);
-
-        // 4. Buat User Demo (Otomatis Assign Role)
-        
-        $admin = User::create([
-            'name' => 'Super Admin',
-            'username' => 'admin',
-            'password' => bcrypt('password123')
-        ]);
-        $admin->assignRole('admin'); // <--- Cara pasang role
-
-        $hr = User::create([
-            'name' => 'Mba HRD',
-            'username' => 'hrd',
-            'password' => bcrypt('password123')
-        ]);
-        $hr->assignRole('hr');
-
-        $karyawan = User::create([
-            'name' => 'Udin Penyok',
-            'username' => 'udin',
-            'password' => bcrypt('password123')
-        ]);
-        $karyawan->assignRole('employee');
     }
 }

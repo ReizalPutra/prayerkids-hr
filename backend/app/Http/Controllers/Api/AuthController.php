@@ -31,7 +31,20 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
+        $user = $request->user();
+
+        // If authenticated via token, revoke the current access token
+        $token = $user ? $user->currentAccessToken() : null;
+        if ($token) {
+            $token->delete();
+        } else {
+            // If authenticated via session/cookie (SPA mode), log out and invalidate the session
+            Auth::logout();
+            if ($request->hasSession()) {
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+            }
+        }
         return $this->success(null, 'Logout Berhasil');
     }
     

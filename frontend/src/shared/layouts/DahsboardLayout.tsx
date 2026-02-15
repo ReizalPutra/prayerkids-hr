@@ -4,10 +4,10 @@ type Props = {}
 
 function DahsboardLayout({}: Props) {
   return (
-    <div>
-      <Outlet />
-    </div>
+function DashboardLayout({}: Props) {
+  return (
+    <div>DashboardLayout</div>
   )
 }
 
-export default DahsboardLayout
+export default DashboardLayout

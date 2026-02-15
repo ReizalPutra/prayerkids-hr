@@ -1,10 +1,12 @@
-
+import { Outlet } from 'react-router-dom';
 
 type Props = {}
 
 function DahsboardLayout({}: Props) {
   return (
-    <div>DahsboardLayout</div>
+    <div>
+      <Outlet />
+    </div>
   )
 }
 

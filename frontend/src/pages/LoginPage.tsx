@@ -1,7 +1,5 @@
 
-type Props = {}
-
-function LoginPage({}: Props) {
+function LoginPage() {
   return (
     <div>LoginPage</div>
   )

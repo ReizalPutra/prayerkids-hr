@@ -1,8 +1,6 @@
 
 
-type Props = {}
-
-function EmployeePage({}: Props) {
+function EmployeePage() {
   return (
     <div>EmployeePage</div>
   )

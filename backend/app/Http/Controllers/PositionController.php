@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePositionRequest;
 use App\Models\position;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,7 @@ class PositionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePositionRequest $request)
     {
         $this->authorize('create', Position::class);
         $position = Position::create($request->validated());
@@ -53,7 +54,7 @@ class PositionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, position $position)
+    public function update(StorePositionRequest $request, position $position)
     {
         $this->authorize('update', $position);
         $position->update($request->all());

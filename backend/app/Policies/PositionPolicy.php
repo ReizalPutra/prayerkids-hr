@@ -13,54 +13,54 @@ class PositionPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_positions');
+        return $user->hasPermissionTo('view_positions');
     }
 
     /**
-     * Determine whether the user can view the model.
+     * Determine whether the user hasPermissionTo view the model.
      */
     public function view(User $user, Position $position): bool
     {
-        return $user->can('view_positions');
+        return $user->hasPermissionTo('view_positions');
     }
 
     /**
-     * Determine whether the user can create models.
+     * Determine whether the user hasPermissionTo create models.
      */
     public function create(User $user): bool
     {
-        return $user->can('manage_positions');
+        return $user->hasPermissionTo('manage_positions');
     }
 
     /**
-     * Determine whether the user can update the model.
+     * Determine whether the user hasPermissionTo update the model.
      */
     public function update(User $user, Position $position): bool
     {
-        return $user->can('manage_positions');
+        return $user->hasPermissionTo('manage_positions');
     }
 
     /**
-     * Determine whether the user can delete the model.
+     * Determine whether the user hasPermissionTo delete the model.
      */
     public function delete(User $user, Position $position): bool
     {
-        return $user->can('manage_positions');
+        return $user->hasPermissionTo('manage_positions');
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * Determine whether the user hasPermissionTo restore the model.
      */
     public function restore(User $user, Position $position): bool
     {
-        return $user->can('manage_positions');
+        return $user->hasPermissionTo('manage_positions');
     }
 
     /**
-     * Determine whether the user can permanently delete the model.
+     * Determine whether the user hasPermissionTo permanently delete the model.
      */
     public function forceDelete(User $user, Position $position): bool
     {
-        return $user->can('manage_positions');
+        return $user->hasPermissionTo('manage_positions');
     }
 }

@@ -1,6 +1,8 @@
 <?php
+
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-uses(RefreshDatabase::class)->in('Feature');
+// uses(RefreshDatabase::class)->in('Feature');
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +16,15 @@ uses(RefreshDatabase::class)->in('Feature');
 */
 
 pest()->extend(Tests\TestCase::class)
- // ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
+    ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
+    ->beforeEach(function () {
+        // 1. Bersihkan cache Spatie agar tidak bentrok
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+
+        // 2. Jalankan seeder
+        $this->seed(Database\Seeders\RolePermissionSeeder::class);
+    })
+
     ->in('Feature');
 
 /*
@@ -46,4 +56,19 @@ expect()->extend('toBeOne', function () {
 function something()
 {
     // ..
+}
+function createAdmin()
+{
+    $user = User::factory()->create();
+    $user->assignRole('admin');
+
+    return $user;
+}
+
+function createStaff()
+{
+    $user = User::factory()->create();
+    $user->assignRole('staff');
+
+    return $user;
 }

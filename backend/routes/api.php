@@ -13,10 +13,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
-
-    Route::prefix('master')->group(function () {
-
-        Route::apiResource('divisions', DivisionController::class);
-        Route::apiResource('positions', PositionController::class);
-    });
+    
+    Route::apiResource('divisions', DivisionController::class);
+    Route::apiResource('positions', PositionController::class);
 });

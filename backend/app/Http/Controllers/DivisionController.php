@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreDivisionRequest;
 use App\Models\division;
+use App\Models\Division as ModelsDivision;
 use Illuminate\Http\Request;
 
 class DivisionController extends Controller
@@ -27,7 +29,7 @@ class DivisionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreDivisionRequest $request)
     {
         $this->authorize('create', Division::class);
         $division = Division::create($request->validated());
@@ -37,7 +39,7 @@ class DivisionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(division $division)
+    public function show(ModelsDivision $division)
     {
         return $this->success($division, 'Detail divisi ditemukan');
     }
@@ -53,7 +55,7 @@ class DivisionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, division $division)
+    public function update(StoreDivisionRequest $request, ModelsDivision $division)
     {
         $this->authorize('update', $division);
         $division->update($request->all());
@@ -63,7 +65,7 @@ class DivisionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(division $division)
+    public function destroy(ModelsDivision $division)
     {
         $this->authorize('delete', $division);
         $division->delete();

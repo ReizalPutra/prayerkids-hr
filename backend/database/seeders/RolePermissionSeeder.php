@@ -13,49 +13,50 @@ class RolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        // Hapus cache permission (opsional tapi disarankan jika pakai Spatie)
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // 1. Definisikan daftar permission
+        // 1. Definisikan dengan Guard Name agar aman untuk API
         $permissions = [
-            // Master Data
             'manage_divisions',
+            'view_divisions',
             'manage_positions',
-            // Employee
+            'view_positions',
             'view_employees',
             'create_employees',
             'edit_employees',
             'delete_employees',
-            // Attendance
             'view_attendance_all',
             'view_attendance_own',
         ];
 
-        // 2. Buat Permission dengan firstOrCreate
         foreach ($permissions as $permission) {
-            Permission::firstOrCreate(['name' => $permission]);
+            Permission::firstOrCreate(['name' => $permission, 'guard_name' => 'api']);
         }
 
-        // 3. Buat Role & Assign Permission
+        // 2. Buat Role dan Assign secara spesifik
 
-        // A. Admin (Super Power)
-        $roleAdmin = Role::firstOrCreate(['name' => 'admin']);
-        $roleAdmin->syncPermissions(Permission::all());
+        // Admin: Semua akses
+        Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'api'])
+            ->syncPermissions(Permission::all());
 
-        // B. HR Staff
-        $roleHR = Role::firstOrCreate(['name' => 'hr']);
-        $roleHR->syncPermissions([
-            'view_employees',
-            'create_employees',
-            'edit_employees',
-            'view_attendance_all',
-            'manage_divisions'
-        ]);
+        // HR: Kelola operasional tapi mungkin tidak bisa hapus jabatan permanen
+        Role::firstOrCreate(['name' => 'hr', 'guard_name' => 'api'])
+            ->syncPermissions([
+                'view_divisions',
+                'manage_divisions',
+                'view_positions',
+                'view_employees',
+                'create_employees',
+                'edit_employees',
+                'view_attendance_all'
+            ]);
 
-        // C. Employee (Karyawan Biasa)
-        $roleEmployee = Role::firstOrCreate(['name' => 'employee']);
-        $roleEmployee->syncPermissions([
-            'view_attendance_own'
-        ]);
+        // Employee: Akses minimal
+        Role::firstOrCreate(['name' => 'employee', 'guard_name' => 'api'])
+            ->syncPermissions([
+                'view_attendance_own',
+                'view_divisions',
+                'view_positions'
+            ]);
     }
 }

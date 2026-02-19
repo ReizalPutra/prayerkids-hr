@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Division extends Model
 {
     use SoftDeletes;
+    protected $fillable = ['name', 'description'];
+
+    public function positions()
+    {
+        return $this->hasMany(Position::class);
+    }
 }

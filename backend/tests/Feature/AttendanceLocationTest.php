@@ -89,7 +89,7 @@ test('admin can soft delete a location', function () {
     $response = $this->deleteJson("/api/attendanceLocations/{$location->id}");
 
     $response->assertStatus(200);
-    
+
     // Check that location is soft deleted
     $deletedLocation = AttendanceLocation::withTrashed()->find($location->id);
     expect($deletedLocation->deleted_at)->not->toBeNull();

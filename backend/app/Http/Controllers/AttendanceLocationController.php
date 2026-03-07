@@ -13,6 +13,7 @@ class AttendanceLocationController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', AttendanceLocation::class);
         $locations = AttendanceLocation::all();
         return $this->success($locations, 'Data lokasi berhasil diambil');
     }

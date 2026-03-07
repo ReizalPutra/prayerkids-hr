@@ -52,10 +52,10 @@ jobs:
           touch database/database.sqlite
 
       - name: Run Migrations
-        run: php artisan migrate --force
+        run: php artisan migrate:fresh
 
       - name: Run DB Seeder
-        run: php artisan db:seed --class=RolePermissionSeeder
+        run: php artisan db:seed
 
       - name: Run Pest tests
         run: php artisan test --parallel

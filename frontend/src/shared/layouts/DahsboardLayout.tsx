@@ -4,7 +4,9 @@ type Props = {}
 
 function DashboardLayout({}: Props) {
   return (
-    <div>DashboardLayout</div>
+    <div>DashboardLayout
+      <Outlet/>
+    </div>
   )
 }
 

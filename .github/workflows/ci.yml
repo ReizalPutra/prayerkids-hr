@@ -42,7 +42,8 @@ jobs:
           chmod -R 777 storage bootstrap/cache
           mkdir -p database
           touch database/database.sqlite
-
+      - name: Run DB Seeder
+        run: php artisan db:seed --class=RolePermissionSeeder
       - name: Run Pest tests
         env:
           DB_CONNECTION: sqlite

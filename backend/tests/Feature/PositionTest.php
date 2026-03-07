@@ -10,9 +10,9 @@ beforeEach(function () {
 
 test('admin can create a position', function () {
     Sanctum::actingAs($this->admin);
-    Log::info('Auth Debug', [
-        'user_id' => auth()->id(),
-        'roles' => auth()->user()?->getRoleNames(),
+    dump([
+        'roles' => $this->admin->getRoleNames(),
+        'permissions' => $this->admin->getAllPermissions()->pluck('name')
     ]);
     $response = $this->postJson('/api/positions', [
         'title' => 'Software Engineer',

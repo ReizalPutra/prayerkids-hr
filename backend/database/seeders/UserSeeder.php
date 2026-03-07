@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('password'), // Sebaiknya ganti saat production
             ]
         );
-        $admin->assignRole($roleAdmin);
+        $admin->assignRole('admin');
 
         // 3. Buat User HR
         $hr = User::firstOrCreate(
@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('password'),
             ]
         );
-        $hr->assignRole($roleHR);
+        $hr->assignRole('hr');
 
         // 4. Buat User Karyawan (Contoh)
         $employee = User::firstOrCreate(
@@ -47,6 +47,6 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('password'),
             ]
         );
-        $employee->assignRole($roleEmployee);
+        $employee->assignRole('employee');
     }
 }

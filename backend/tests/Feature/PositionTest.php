@@ -10,20 +10,23 @@ beforeEach(function () {
 
 test('admin can create a position', function () {
     Sanctum::actingAs($this->admin);
-
+    Log::info('Auth Debug', [
+        'user_id' => auth()->id(),
+        'roles' => auth()->user()?->getRoleNames(),
+    ]);
     $response = $this->postJson('/api/positions', [
         'title' => 'Software Engineer',
         'base_salary' => 10000000
     ]);
 
     $response->assertStatus(201)
-             ->assertJsonPath('data.title', 'Software Engineer');
+        ->assertJsonPath('data.title', 'Software Engineer');
 });
 
 test('non-admin cannot delete a position', function () {
     $staff = User::factory()->create();
     $staff->assignRole('employee');
-    
+
     $position = Position::factory()->create();
 
     Sanctum::actingAs($staff);

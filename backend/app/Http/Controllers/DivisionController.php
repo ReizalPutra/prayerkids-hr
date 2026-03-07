@@ -41,6 +41,7 @@ class DivisionController extends Controller
      */
     public function show(ModelsDivision $division)
     {
+        $this->authorize('view', $division);
         return $this->success($division, 'Detail divisi ditemukan');
     }
 

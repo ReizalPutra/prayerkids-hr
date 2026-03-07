@@ -60,7 +60,10 @@ function something()
 function createAdmin()
 {
     $user = User::factory()->create();
+
     $user->assignRole('admin');
+
+    $user->refresh();
 
     return $user;
 }

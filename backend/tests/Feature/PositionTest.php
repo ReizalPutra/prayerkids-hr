@@ -6,7 +6,6 @@ use Laravel\Sanctum\Sanctum;
 
 beforeEach(function () {
     $this->admin = createAdmin();
-     dump($this->admin->getRoleNames());
 });
 
 test('admin can create a position', function () {

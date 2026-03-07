@@ -59,7 +59,7 @@ class DivisionController extends Controller
     public function update(StoreDivisionRequest $request, ModelsDivision $division)
     {
         $this->authorize('update', $division);
-        $division->update($request->all());
+        $division->update($request->validated());
         return $this->success($division, 'Data divisi berhasil diperbarui');
     }
 

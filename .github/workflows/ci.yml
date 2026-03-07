@@ -17,6 +17,14 @@ jobs:
     name: Backend Test (Laravel 12)
     runs-on: ubuntu-latest
 
+    env:
+      APP_ENV: testing
+      DB_CONNECTION: sqlite
+      DB_DATABASE: database/database.sqlite
+      CACHE_STORE: array
+      SESSION_DRIVER: array
+      QUEUE_CONNECTION: sync
+
     defaults:
       run:
         working-directory: backend
@@ -44,18 +52,12 @@ jobs:
           touch database/database.sqlite
 
       - name: Run Migrations
-        env:
-          DB_CONNECTION: sqlite
-          DB_DATABASE: database/database.sqlite
         run: php artisan migrate --force
 
       - name: Run DB Seeder
         run: php artisan db:seed --class=RolePermissionSeeder
 
       - name: Run Pest tests
-        env:
-          DB_CONNECTION: sqlite
-          DB_DATABASE: database/database.sqlite
         run: php artisan test --parallel
 
   # ==============================

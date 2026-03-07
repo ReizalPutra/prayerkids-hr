@@ -17,6 +17,8 @@ class RolePermissionSeeder extends Seeder
 
         // 1. Definisikan dengan Guard Name agar aman untuk API
         $permissions = [
+            'manage_operational',
+            'view_operational',
             'manage_divisions',
             'view_divisions',
             'manage_positions',

@@ -17,6 +17,14 @@ jobs:
     name: Backend Test (Laravel 12)
     runs-on: ubuntu-latest
 
+    env:
+      APP_ENV: testing
+      DB_CONNECTION: sqlite
+      DB_DATABASE: database/database.sqlite
+      CACHE_STORE: array
+      SESSION_DRIVER: array
+      QUEUE_CONNECTION: sync
+
     defaults:
       run:
         working-directory: backend
@@ -42,12 +50,8 @@ jobs:
           chmod -R 777 storage bootstrap/cache
           mkdir -p database
           touch database/database.sqlite
-
       - name: Run Pest tests
-        env:
-          DB_CONNECTION: sqlite
-          DB_DATABASE: database/database.sqlite
-        run: php artisan test --parallel
+        run: php artisan test
 
   # ==============================
   # FRONTEND: React + Vite (Optimized)
@@ -64,24 +68,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: 10 
+          version: 10
 
-      
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "pnpm" 
-          cache-dependency-path: frontend/pnpm-lock.yaml 
+          cache: "pnpm"
+          cache-dependency-path: frontend/pnpm-lock.yaml
 
-      
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      
       - name: Build project
         run: pnpm run build

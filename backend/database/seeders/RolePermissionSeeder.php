@@ -13,49 +13,48 @@ class RolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        // Hapus cache permission (opsional tapi disarankan jika pakai Spatie)
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // 1. Definisikan daftar permission
         $permissions = [
-            // Master Data
+            'manage_operational',
+            'view_operational',
             'manage_divisions',
+            'view_divisions',
             'manage_positions',
-            // Employee
+            'view_positions',
             'view_employees',
             'create_employees',
             'edit_employees',
             'delete_employees',
-            // Attendance
             'view_attendance_all',
             'view_attendance_own',
         ];
 
-        // 2. Buat Permission dengan firstOrCreate
-        foreach ($permissions as $permission) {
-            Permission::firstOrCreate(['name' => $permission]);
+        foreach (['web', 'api'] as $guard) {
+            foreach ($permissions as $permission) {
+                Permission::firstOrCreate(['name' => $permission, 'guard_name' => $guard]);
+            }
+
+            Role::firstOrCreate(['name' => 'admin', 'guard_name' => $guard])
+                ->syncPermissions(Permission::query()->where('guard_name', $guard)->get());
+
+            Role::firstOrCreate(['name' => 'hr', 'guard_name' => $guard])
+                ->syncPermissions([
+                    'view_divisions',
+                    'manage_divisions',
+                    'view_positions',
+                    'view_employees',
+                    'create_employees',
+                    'edit_employees',
+                    'view_attendance_all',
+                ]);
+
+            Role::firstOrCreate(['name' => 'employee', 'guard_name' => $guard])
+                ->syncPermissions([
+                    'view_attendance_own',
+                    'view_divisions',
+                    'view_positions',
+                ]);
         }
-
-        // 3. Buat Role & Assign Permission
-
-        // A. Admin (Super Power)
-        $roleAdmin = Role::firstOrCreate(['name' => 'admin']);
-        $roleAdmin->syncPermissions(Permission::all());
-
-        // B. HR Staff
-        $roleHR = Role::firstOrCreate(['name' => 'hr']);
-        $roleHR->syncPermissions([
-            'view_employees',
-            'create_employees',
-            'edit_employees',
-            'view_attendance_all',
-            'manage_divisions'
-        ]);
-
-        // C. Employee (Karyawan Biasa)
-        $roleEmployee = Role::firstOrCreate(['name' => 'employee']);
-        $roleEmployee->syncPermissions([
-            'view_attendance_own'
-        ]);
     }
 }

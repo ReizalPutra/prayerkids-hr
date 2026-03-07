@@ -58,7 +58,7 @@ jobs:
         run: php artisan db:seed
 
       - name: Run Pest tests
-        run: php artisan test --parallel
+        run: php artisan test
 
   # ==============================
   # FRONTEND: React + Vite (Optimized)

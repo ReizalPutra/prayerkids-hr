@@ -65,10 +65,10 @@ function createAdmin()
     return $user;
 }
 
-function createStaff()
+function createHr()
 {
     $user = User::factory()->create();
-    $user->assignRole('staff');
+    $user->assignRole('hr');
 
     return $user;
 }

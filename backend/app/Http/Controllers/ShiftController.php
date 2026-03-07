@@ -13,6 +13,7 @@ class ShiftController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Shift::class);
         $shifts = Shift::all();
         return $this->success($shifts, 'Data shift berhasil diambil');
     }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
 
 class AuthController extends Controller
 {
@@ -15,11 +16,17 @@ class AuthController extends Controller
             'username' => 'required',
             'password' => 'required',
         ]);
+        $throttleKey = 'login_attempt_' . $request->ip();
 
-        if (!Auth::attempt($request->only('username', 'password'))) {
-            return $this->error('Login Gagal', 401);
+        if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
+            return $this->error('Terlalu banyak percobaan. Silakan coba lagi nanti.', 429);
         }
 
+        if (!Auth::attempt($request->only('username', 'password'))) {
+            return $this->error('Username atau password tidak valid.', 401);
+        }
+
+        RateLimiter::clear($throttleKey);
         $user = User::where('username', $request->username)->firstOrFail();
         $token = $user->createToken('auth_token')->plainTextToken;
 
@@ -47,7 +54,7 @@ class AuthController extends Controller
         }
         return $this->success(null, 'Logout Berhasil');
     }
-    
+
     public function me(Request $request)
     {
         return $this->success($request->user());

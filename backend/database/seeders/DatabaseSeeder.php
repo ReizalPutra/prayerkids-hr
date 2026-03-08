@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             RolePermissionSeeder::class,
             ShiftSeeder::class,
             AttendanceLocationSeeder::class,
+            UserSeeder::class
         ]);
         // User::factory(10)->create();
 

@@ -37,7 +37,7 @@ return Application::configure(basePath: dirname(__DIR__))
                     'meta' => [
                         'code' => 401,
                         'status' => 'error',
-                        'message' => 'Sesi login tidak valid atau Anda belum login.',
+                        'message' => $e->getMessage()?: 'Sesi login tidak valid atau Anda belum login.',
                     ],
                     'data' => null
                 ], 401);

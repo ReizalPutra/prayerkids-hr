@@ -17,11 +17,26 @@ const ProtectedRoute = ({ children } : ProtectedRouteProps ) => {
   return children;
 };
 
+const PublicRoute = ({ children }: ProtectedRouteProps) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    return <Navigate to="/dashboard" replace />;
+  }
+  return children;
+};
+
 function AppRouter() {
   return (
     <Routes>
       {/* Rute Publik */}
-      <Route path="/login" element={<LoginPage />} />
+      <Route
+        path="/login"
+        element={
+          <PublicRoute>
+            <LoginPage />
+          </PublicRoute>
+        }
+      />
 
       {/* Rute Terproteksi (Butuh Login) */}
       <Route

@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+DOKUMENTASI_API_FRONTEND.md
 
 # Editor directories and files
 .vscode/*

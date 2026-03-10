@@ -1,4 +1,3 @@
-// 1. Standar Response dari Backend (Sesuai Trait ApiResponse Laravel)
 export interface ApiResponse<T> {
   meta: {
     code: number;
@@ -8,7 +7,15 @@ export interface ApiResponse<T> {
   data: T;
 }
 
-// 2. Tipe Data User (Login)
+export interface ApiErrorResponse {
+  meta: {
+    code: number;
+    status: string;
+    message: string;
+  };
+  errors?: Record<string, string[]> | null;
+}
+
 export interface User {
   id: number;
   name: string;
@@ -16,14 +23,22 @@ export interface User {
   role: 'admin' | 'hr' | 'employee';
 }
 
-// 3. Tipe Data Login Response
-export interface LoginResponse {
+export interface LoginPayload {
+  username: string;
+  password: string;
+}
+
+export interface LoginResult {
   access_token: string;
-  token_type: string;
   user: User;
 }
 
-// 4. Tipe Data Karyawan
+export interface Division {
+  id: number;
+  name: string;
+  description?: string | null;
+}
+
 export interface Employee {
   id: number;
   nik: string;

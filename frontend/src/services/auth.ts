@@ -3,7 +3,10 @@ import type { ApiResponse, LoginPayload, LoginResult, User } from "@/types";
 
 export const authService = {
   async login(payload: LoginPayload): Promise<LoginResult> {
-    const response = await api.post<ApiResponse<LoginResult>>("/login", payload);
+    const response = await api.post<ApiResponse<LoginResult>>(
+      "/login",
+      payload,
+    );
     return response.data.data;
   },
 

@@ -22,7 +22,9 @@ function DashboardLayout() {
   if (meQuery.isError) {
     return (
       <div className="p-6">
-        <p className="text-sm text-destructive">{getApiErrorMessage(meQuery.error)}</p>
+        <p className="text-sm text-destructive">
+          {getApiErrorMessage(meQuery.error)}
+        </p>
         <button
           type="button"
           className="mt-3 rounded-md border border-border px-3 py-2 text-sm"
@@ -44,7 +46,9 @@ function DashboardLayout() {
       <header className="flex items-center justify-between border-b border-border px-6 py-4">
         <div>
           <p className="text-sm text-muted-foreground">Login sebagai</p>
-          <p className="font-medium">{user.name} ({user.role})</p>
+          <p className="font-medium">
+            {user.name} ({user.role})
+          </p>
         </div>
         <button
           type="button"

@@ -10,7 +10,9 @@ function EmployeePage() {
         Contoh konsumsi API resource: <code>/api/divisions</code>
       </p>
 
-      {divisionsQuery.isLoading ? <p className="mt-4">Memuat divisi...</p> : null}
+      {divisionsQuery.isLoading ? (
+        <p className="mt-4">Memuat divisi...</p>
+      ) : null}
 
       {divisionsQuery.isError ? (
         <p className="mt-4 text-sm text-destructive">
@@ -21,10 +23,15 @@ function EmployeePage() {
       {divisionsQuery.isSuccess ? (
         <ul className="mt-4 space-y-2">
           {divisionsQuery.data.map((division) => (
-            <li key={division.id} className="rounded-md border border-border px-3 py-2">
+            <li
+              key={division.id}
+              className="rounded-md border border-border px-3 py-2"
+            >
               <p className="font-medium">{division.name}</p>
               {division.description ? (
-                <p className="text-sm text-muted-foreground">{division.description}</p>
+                <p className="text-sm text-muted-foreground">
+                  {division.description}
+                </p>
               ) : null}
             </li>
           ))}

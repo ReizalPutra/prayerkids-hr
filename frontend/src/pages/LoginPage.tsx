@@ -1,4 +1,3 @@
-
 import { useMemo, useState } from "react";
 import type { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +11,8 @@ function LoginPage() {
   const [password, setPassword] = useState("");
 
   const errorMessage = useMemo(
-    () => (loginMutation.isError ? getApiErrorMessage(loginMutation.error) : ""),
+    () =>
+      loginMutation.isError ? getApiErrorMessage(loginMutation.error) : "",
     [loginMutation.error, loginMutation.isError],
   );
 

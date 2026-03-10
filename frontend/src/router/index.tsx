@@ -1,16 +1,16 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import LoginPage from '../pages/LoginPage';
-import DashboardPage from '../pages/DashboardPage';
-import EmployeePage from '../pages/EmployeePage';
-import DashboardLayout from '../shared/layouts/DahsboardLayout';
-import type { ReactNode } from 'react';
+import { Routes, Route, Navigate } from "react-router-dom";
+import LoginPage from "../pages/LoginPage";
+import DashboardPage from "../pages/DashboardPage";
+import EmployeePage from "../pages/EmployeePage";
+import DashboardLayout from "../shared/layouts/DahsboardLayout";
+import type { ReactNode } from "react";
 
 interface ProtectedRouteProps {
   children: ReactNode;
 }
 
-const ProtectedRoute = ({ children } : ProtectedRouteProps ) => {
-  const token = localStorage.getItem('token');
+const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+  const token = localStorage.getItem("token");
   if (!token) {
     return <Navigate to="/login" replace />;
   }
@@ -18,7 +18,7 @@ const ProtectedRoute = ({ children } : ProtectedRouteProps ) => {
 };
 
 const PublicRoute = ({ children }: ProtectedRouteProps) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   if (token) {
     return <Navigate to="/dashboard" replace />;
   }

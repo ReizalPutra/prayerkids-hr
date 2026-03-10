@@ -20,7 +20,7 @@ export interface User {
   id: number;
   name: string;
   username: string;
-  role: 'admin' | 'hr' | 'employee';
+  role: "admin" | "hr" | "employee";
 }
 
 export interface LoginPayload {
@@ -52,5 +52,5 @@ export interface Employee {
     name: string;
   };
   join_date: string;
-  status: 'active' | 'resign' | 'suspended';
+  status: "active" | "resign" | "suspended";
 }

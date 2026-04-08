@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('positions', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('title');
             $table->decimal('base_salary', 15, 2)->default(0);
             $table->timestamps();

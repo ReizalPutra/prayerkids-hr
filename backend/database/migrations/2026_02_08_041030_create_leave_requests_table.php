@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('leave_requests', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('employee_id')->constrained()->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('employee_id')->constrained()->cascadeOnDelete();
             $table->enum('type', ['sick', 'annual', 'unpaid']);
             $table->date('start_date');
             $table->date('end_date');

@@ -15,50 +15,73 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 
+type LoginFormProps = Omit<React.ComponentProps<"div">, "onSubmit"> & {
+  username: string
+  password: string
+  onUsernameChange: (value: string) => void
+  onPasswordChange: (value: string) => void
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void
+  isSubmitting?: boolean
+  errorMessage?: string
+}
+
 export function LoginForm({
+  username,
+  password,
+  onUsernameChange,
+  onPasswordChange,
+  onSubmit,
+  isSubmitting = false,
+  errorMessage,
   className,
   ...props
-}: React.ComponentProps<"div">) {
+}: LoginFormProps) {
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
+          <CardTitle>Login HR</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Masuk menggunakan akun backend Laravel.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={onSubmit}>
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <FieldLabel htmlFor="username">Username</FieldLabel>
                 <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
+                  id="username"
+                  value={username}
+                  onChange={(event) => onUsernameChange(event.target.value)}
+                  autoComplete="username"
                   required
                 />
               </Field>
               <Field>
-                <div className="flex items-center">
-                  <FieldLabel htmlFor="password">Password</FieldLabel>
-                  <a
-                    href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                  >
-                    Forgot your password?
-                  </a>
-                </div>
-                <Input id="password" type="password" required />
+                <FieldLabel htmlFor="password">Password</FieldLabel>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(event) => onPasswordChange(event.target.value)}
+                  autoComplete="current-password"
+                  required
+                />
               </Field>
+
+              {errorMessage ? (
+                <p className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+                  {errorMessage}
+                </p>
+              ) : null}
+
               <Field>
-                <Button type="submit">Login</Button>
-                <Button variant="outline" type="button">
-                  Login with Google
+                <Button className="w-full" type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? "Memproses..." : "Masuk"}
                 </Button>
                 <FieldDescription className="text-center">
-                  Don&apos;t have an account? <a href="#">Sign up</a>
+                  Gunakan akun yang terdaftar di sistem HR.
                 </FieldDescription>
               </Field>
             </FieldGroup>

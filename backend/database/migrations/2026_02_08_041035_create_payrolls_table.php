@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('payrolls', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('employee_id')->constrained()->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('employee_id')->constrained()->cascadeOnDelete();
             $table->string('month');
             $table->integer('year');
             $table->decimal('basic_salary_snapshot', 15, 2);

@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('performance_reviews', function (Blueprint $table) {
-           $table->id();
-            $table->foreignId('employee_id')->constrained('employees')->cascadeOnDelete();
-            $table->foreignId('reviewer_id')->constrained('employees')->cascadeOnDelete();
+           $table->uuid('id')->primary();
+            $table->foreignUuid('employee_id')->constrained('employees')->cascadeOnDelete();
+            $table->foreignUuid('reviewer_id')->constrained('employees')->cascadeOnDelete();
             $table->string('review_period');
             $table->integer('score_discipline')->default(0);
             $table->text('note_discipline')->nullable();

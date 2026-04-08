@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -15,9 +15,9 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $roleAdmin = Role::firstOrCreate(['name' => 'admin']);
-        $roleHR = Role::firstOrCreate(['name' => 'hr']);
-        $roleEmployee = Role::firstOrCreate(['name' => 'employee']);
+        Role::firstOrCreate(['name' => 'admin']);
+        Role::firstOrCreate(['name' => 'hr']);
+        Role::firstOrCreate(['name' => 'employee']);
 
         // 2. Buat User Admin
         $admin = User::firstOrCreate(

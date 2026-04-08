@@ -17,7 +17,7 @@ export interface ApiErrorResponse {
 }
 
 export interface User {
-  id: number;
+  id: string;
   name: string;
   username: string;
   role: "admin" | "hr" | "employee";
@@ -34,21 +34,21 @@ export interface LoginResult {
 }
 
 export interface Division {
-  id: number;
+  id: string;
   name: string;
   description?: string | null;
 }
 
 export interface Employee {
-  id: number;
+  id: string;
   nik: string;
   full_name: string;
   position?: {
-    id: number;
+    id: string;
     title: string;
   };
   division?: {
-    id: number;
+    id: string;
     name: string;
   };
   join_date: string;

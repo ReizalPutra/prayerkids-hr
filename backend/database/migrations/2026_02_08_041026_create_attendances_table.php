@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('attendances', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('employee_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('shift_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('location_id')->nullable()->constrained('attendance_locations')->nullOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('employee_id')->constrained()->cascadeOnDelete();
+            $table->foreignUuid('shift_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignUuid('location_id')->nullable()->constrained('attendance_locations')->nullOnDelete();
             $table->date('date')->index();
             $table->dateTime('clock_in')->nullable();
             $table->dateTime('clock_out')->nullable();

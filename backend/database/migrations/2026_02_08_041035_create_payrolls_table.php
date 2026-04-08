@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('month');
             $table->integer('year');
             $table->decimal('basic_salary_snapshot', 15, 2);
-            $table->json('allowance_details')->nullable(); 
-            $table->json('deduction_details')->nullable(); 
+            $table->json('allowance_details')->nullable();
+            $table->json('deduction_details')->nullable();
             $table->decimal('net_salary', 15, 2);
             $table->enum('payment_status', ['paid', 'pending'])->default('pending');
             $table->date('payment_date')->nullable();

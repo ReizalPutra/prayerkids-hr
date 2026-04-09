@@ -23,10 +23,10 @@ class AttendancePolicy
         if ($user->hasPermissionTo('view_attendance_all')) {
             return true;
         }
-        
-        return $user->hasPermissionTo('view_attendance_own') && 
-               $attendance->employee && 
-               $attendance->employee->user_id === $user->id;
+
+        return $user->hasPermissionTo('view_attendance_own') &&
+            $attendance->employee &&
+            $attendance->employee->user_id === $user->id;
     }
 
     /**

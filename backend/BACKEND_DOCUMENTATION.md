@@ -33,15 +33,15 @@
 
 ### Tech Stack
 
-| Komponen | Detail |
-|----------|--------|
-| **Backend** | Laravel 11 (PHP 8.2+) |
-| **API** | RESTful (JSON) |
-| **Auth** | Sanctum (Token-based) |
-| **RBAC** | Spatie Permission |
-| **ORM** | Eloquent |
-| **DB** | SQLite / PostgreSQL |
-| **ID Strategy** | UUID (Primary Key) |
+| Komponen        | Detail                |
+| --------------- | --------------------- |
+| **Backend**     | Laravel 11 (PHP 8.2+) |
+| **API**         | RESTful (JSON)        |
+| **Auth**        | Sanctum (Token-based) |
+| **RBAC**        | Spatie Permission     |
+| **ORM**         | Eloquent              |
+| **DB**          | SQLite / PostgreSQL   |
+| **ID Strategy** | UUID (Primary Key)    |
 
 ---
 
@@ -110,12 +110,12 @@ backend/
 ### Key Principles
 
 1. **UUID Primary Keys:** Semua model menggunakan `uuid` sebagai primary key (string, 36 char)
-   - Menggunakan trait `UsesUuid` di setiap model
-   - Otomatis generate via `Illuminate\Database\Eloquent\Concerns\HasUuids`
+    - Menggunakan trait `UsesUuid` di setiap model
+    - Otomatis generate via `Illuminate\Database\Eloquent\Concerns\HasUuids`
 
 2. **Soft Deletes:** Model domain utama menggunakan soft delete
-   - `Division`, `Position`, `Shift`, `AttendanceLocation`, `Employee`, `JobVacancy`, `LeaveRequest` (transactional data keep history)
-   - `Attendance`, `Payroll`, `PerformanceReview`, `ContractTemplate` tidak soft delete (immutable records)
+    - `Division`, `Position`, `Shift`, `AttendanceLocation`, `Employee`, `JobVacancy`, `LeaveRequest` (transactional data keep history)
+    - `Attendance`, `Payroll`, `PerformanceReview`, `ContractTemplate` tidak soft delete (immutable records)
 
 3. **Timestamps:** `created_at`, `updated_at` pada semua model
 
@@ -179,7 +179,7 @@ Applicant (uuid)
 2. Subsequent Request
    ├─ Header: Authorization: Bearer {token}
    ├─ Sanctum verifies token
-   └─ Attach $request->user() 
+   └─ Attach $request->user()
 
 3. POST /api/logout
    ├─ Revoke current token
@@ -189,15 +189,18 @@ Applicant (uuid)
 ### Authorization (Spatie Permission)
 
 **Gate/Policy Check:**
+
 - `$user->hasPermissionTo('view_divisions')` → Check permission
 - `$this->authorize('view', $division)` → Check policy in controller
 - **Policy Method:** `viewAny()`, `view()`, `create()`, `update()`, `delete()`
 
 **Custom Traits:**
+
 - `UseUuid` on Models → Auto-generate UUIDs
 - Model & Role/Permission punya UUID primary key
 
 **Permission Key Format:**
+
 - View: `view_{resource}` (plural), `view_{resource}_all`, `view_{resource}_own`
 - Manage: `manage_{resource}` atau `create/edit/delete_{resource}`
 
@@ -209,16 +212,19 @@ Applicant (uuid)
 
 ```json
 {
-  "meta": {
-    "code": 200,
-    "status": "success",
-    "message": "Data divisi berhasil diambil"
-  },
-  "data": [ /* array atau single object */ ]
+    "meta": {
+        "code": 200,
+        "status": "success",
+        "message": "Data divisi berhasil diambil"
+    },
+    "data": [
+        /* array atau single object */
+    ]
 }
 ```
 
 **Status Code:**
+
 - `200` OK → GET, PUT (update)
 - `201` Created → POST (store)
 - `204` No Content → DELETE
@@ -232,15 +238,15 @@ Applicant (uuid)
 
 ```json
 {
-  "meta": {
-    "code": 422,
-    "status": "error",
-    "message": "Validasi gagal"
-  },
-  "errors": {
-    "name": ["Name field is required"],
-    "email": ["Email must be valid"]
-  }
+    "meta": {
+        "code": 422,
+        "status": "error",
+        "message": "Validasi gagal"
+    },
+    "errors": {
+        "name": ["Name field is required"],
+        "email": ["Email must be valid"]
+    }
 }
 ```
 
@@ -330,18 +336,18 @@ class StoreEmployeeRequest extends FormRequest
 
 ### Validation Rules Cheat Sheet
 
-| Rule | Usage | Example |
-|------|-------|---------|
-| **Type** | `required`, `nullable` | `'name' => 'required\|string'` |
-| **String** | `string`, `email`, `url` | `'email' => 'email'` |
-| **UUID** | `uuid` | `'id' => 'uuid'` |
-| **Database** | `exists:table,column` | `'user_id' => 'exists:users,id'` |
-| | `unique:table,column` | `'nik' => 'unique:employees,nik'` |
-| **Size** | `min`, `max`, `between` | `'age' => 'between:18,65'` |
-| **Enum** | `in:value1,value2` | `'status' => 'in:active,inactive'` |
-| **Date** | `date`, `date_format` | `'date' => 'date_format:Y-m-d'` |
-| **Array** | `array`, `array.*` | `'items' => 'array\|array.*.uuid'` |
-| **Numeric** | `numeric`, `integer`, `float` | `'quantity' => 'integer\|min:1'` |
+| Rule         | Usage                         | Example                            |
+| ------------ | ----------------------------- | ---------------------------------- |
+| **Type**     | `required`, `nullable`        | `'name' => 'required\|string'`     |
+| **String**   | `string`, `email`, `url`      | `'email' => 'email'`               |
+| **UUID**     | `uuid`                        | `'id' => 'uuid'`                   |
+| **Database** | `exists:table,column`         | `'user_id' => 'exists:users,id'`   |
+|              | `unique:table,column`         | `'nik' => 'unique:employees,nik'`  |
+| **Size**     | `min`, `max`, `between`       | `'age' => 'between:18,65'`         |
+| **Enum**     | `in:value1,value2`            | `'status' => 'in:active,inactive'` |
+| **Date**     | `date`, `date_format`         | `'date' => 'date_format:Y-m-d'`    |
+| **Array**    | `array`, `array.*`            | `'items' => 'array\|array.*.uuid'` |
+| **Numeric**  | `numeric`, `integer`, `float` | `'quantity' => 'integer\|min:1'`   |
 
 ### Conditional Validation
 
@@ -360,11 +366,13 @@ public function rules(): array
 ### Custom Validation Rules
 
 **Create custom rule:**
+
 ```bash
 php artisan make:rule ValidateUUID
 ```
 
 **File:** `app/Rules/ValidateUUID.php`
+
 ```php
 <?php
 namespace App\Rules;
@@ -384,6 +392,7 @@ class ValidateUUID implements ValidationRule
 ```
 
 **Usage in Request:**
+
 ```php
 use App\Rules\ValidateUUID;
 
@@ -398,61 +407,58 @@ public function rules(): array
 ### Error Response Examples
 
 **Validation Error (422):**
+
 ```json
 {
-  "meta": {
-    "code": 422,
-    "status": "error",
-    "message": "Validasi gagal"
-  },
-  "errors": {
-    "user_id": [
-      "User dengan ID tersebut tidak ditemukan"
-    ],
-    "nik": [
-      "NIK sudah terdaftar di sistem",
-      "Format NIK tidak valid"
-    ],
-    "join_date": [
-      "Format tanggal tidak valid (YYYY-MM-DD)"
-    ]
-  }
+    "meta": {
+        "code": 422,
+        "status": "error",
+        "message": "Validasi gagal"
+    },
+    "errors": {
+        "user_id": ["User dengan ID tersebut tidak ditemukan"],
+        "nik": ["NIK sudah terdaftar di sistem", "Format NIK tidak valid"],
+        "join_date": ["Format tanggal tidak valid (YYYY-MM-DD)"]
+    }
 }
 ```
 
 **Authorization Error (403):**
+
 ```json
 {
-  "meta": {
-    "code": 403,
-    "status": "error",
-    "message": "Anda tidak memiliki akses ke resource ini"
-  },
-  "data": null
+    "meta": {
+        "code": 403,
+        "status": "error",
+        "message": "Anda tidak memiliki akses ke resource ini"
+    },
+    "data": null
 }
 ```
 
 **Resource Not Found (404):**
+
 ```json
 {
-  "meta": {
-    "code": 404,
-    "status": "error",
-    "message": "Data tidak ditemukan"
-  },
-  "data": null
+    "meta": {
+        "code": 404,
+        "status": "error",
+        "message": "Data tidak ditemukan"
+    },
+    "data": null
 }
 ```
 
 **Unauthenticated (401):**
+
 ```json
 {
-  "meta": {
-    "code": 401,
-    "status": "error",
-    "message": "Token tidak valid atau telah kadaluarsa"
-  },
-  "data": null
+    "meta": {
+        "code": 401,
+        "status": "error",
+        "message": "Token tidak valid atau telah kadaluarsa"
+    },
+    "data": null
 }
 ```
 
@@ -475,9 +481,9 @@ class BaseController extends Controller
     {
         try {
             $this->authorize('create', Employee::class);
-            
+
             $employee = Employee::create($request->validated());
-            
+
             return $this->success(
                 $employee->load(['user', 'division', 'position']),
                 'Karyawan berhasil ditambahkan',
@@ -543,7 +549,7 @@ class Handler extends ExceptionHandler
     {
         // Handle JSON requests
         if ($request->expectsJson()) {
-            
+
             // Model not found
             if ($exception instanceof ModelNotFoundException) {
                 return response()->json([
@@ -613,6 +619,7 @@ class Handler extends ExceptionHandler
 ### Best Practices
 
 ✅ **DO:**
+
 - Always validate input in Form Request class
 - Use custom messages for better UX
 - Log errors for debugging
@@ -622,6 +629,7 @@ class Handler extends ExceptionHandler
 - Use `try-catch` for external API calls
 
 ❌ **DON'T:**
+
 - Validate in controller method (use Form Request)
 - Return bare error messages without structure
 - Expose sensitive info in error response
@@ -634,46 +642,54 @@ class Handler extends ExceptionHandler
 ## Naming Conventions
 
 ### Controllers
+
 - `{Resource}Controller` (singular noun)
 - Contoh: `EmployeeController`, `AttendanceController`, `LeaveRequestController`
 - Methods: `index()`, `store()`, `show()`, `update()`, `destroy()`
 
 ### Models
+
 - `{Resource}` (singular noun)
 - Contoh: `Employee`, `Attendance`, `LeaveRequest`
 - Location: `app/Models/`
 - Relationship: `hasMany()`, `belongsTo()`, `hasOne()`
 
 ### Requests (Form Validation)
+
 - `Store{Resource}Request` (untuk create & update)
 - Contoh: `StoreEmployeeRequest`, `StoreAttendanceRequest`
 - Location: `app/Http/Requests/`
 - Method: `rules()` (return array), `authorize()` (return bool)
 
 ### Policies
+
 - `{Resource}Policy` (singular noun)
 - Contoh: `EmployeePolicy`, `AttendancePolicy`
 - Location: `app/Policies/`
 - Methods: `viewAny()`, `view()`, `create()`, `update()`, `delete()`
 
 ### Migrations
+
 - `YYYY_MM_DD_HHMMSS_create_{table_name}_table.php`
 - Contoh: `2026_02_08_041020_create_employees_table.php`
 - Use `uuid('id')->primary()` for main table PK
 - Use `foreignUuid('parent_id')` for foreign keys
 
 ### Routes
+
 - Resource: lowercase plural, snake_case
 - Contoh: `/api/employees`, `/api/leaveRequests`, `/api/jobVacancies`
 - Route::apiResource('resource', Controller::class)
 
 ### Permissions
+
 - Format: `{action}_{resource}`
 - Action: `view`, `create`, `edit`, `delete`, `manage`, `approve`
 - Resource: lowercase plural
 - Contoh: `view_employees`, `create_employees`, `manage_divisions`, `approve_leave_requests`
 
 ### Database Columns
+
 - snake_case for column names
 - Contoh: `user_id`, `division_id`, `created_at`, `is_active`
 - Boolean: `is_{noun}` (is_active, is_locked)
@@ -692,6 +708,7 @@ php artisan make:model {Resource} -m
 ```
 
 **Model** (`app/Models/{Resource}.php`):
+
 ```php
 <?php
 namespace App\Models;
@@ -706,7 +723,7 @@ class MyResource extends Model
     // use SoftDeletes; // if needed
 
     protected $fillable = ['field1', 'field2'];
-    
+
     // Relationships
     public function parent()
     {
@@ -716,6 +733,7 @@ class MyResource extends Model
 ```
 
 **Migration** (`database/migrations/YYYY_MM_DD_HHMMSS_create_my_resources_table.php`):
+
 ```php
 public function up(): void
 {
@@ -759,6 +777,7 @@ class StoreMyResourceRequest extends FormRequest
 ```
 
 **Key Validation Rules:**
+
 - `required` / `nullable`
 - `uuid` (custom rule or just check exists)
 - `exists:{table},{column}`
@@ -876,6 +895,7 @@ Route::apiResource('myResources', MyResourceController::class);
 ```
 
 **Route akan auto-generate:**
+
 - `GET /api/myResources` → index
 - `POST /api/myResources` → store
 - `GET /api/myResources/{id}` → show
@@ -887,12 +907,14 @@ Route::apiResource('myResources', MyResourceController::class);
 **File:** `database/seeders/RolePermissionSeeder.php`
 
 Add ke `$permissions` array:
+
 ```php
 'view_my_resources',
 'manage_my_resources',
 ```
 
 Kemudian assign ke role sesuai kebutuhan:
+
 ```php
 'view_my_resources',
 'manage_my_resources',
@@ -911,38 +933,38 @@ php artisan db:seed --class=RolePermissionSeeder
 
 ### 📍 Operational Resources
 
-| Resource | Endpoint | Methods | Soft Delete |
-|----------|----------|---------|-------------|
-| **Division** | `/divisions` | CRUD | Yes |
-| **Position** | `/positions` | CRUD | Yes |
-| **Shift** | `/shifts` | CRUD | Yes |
-| **AttendanceLocation** | `/attendanceLocations` | CRUD | Yes |
-| **ContractTemplate** | `/contractTemplates` | CRUD | No |
+| Resource               | Endpoint               | Methods | Soft Delete |
+| ---------------------- | ---------------------- | ------- | ----------- |
+| **Division**           | `/divisions`           | CRUD    | Yes         |
+| **Position**           | `/positions`           | CRUD    | Yes         |
+| **Shift**              | `/shifts`              | CRUD    | Yes         |
+| **AttendanceLocation** | `/attendanceLocations` | CRUD    | Yes         |
+| **ContractTemplate**   | `/contractTemplates`   | CRUD    | No          |
 
 ### 👥 HR Management Resources
 
-| Resource | Endpoint | Methods | Soft Delete | Notes |
-|----------|----------|---------|-------------|-------|
-| **Employee** | `/employees` | CRUD | Yes | Relasi: user, division, position |
-| **Attendance** | `/attendances` | CRUD | No | Relasi: employee, shift, location |
-| **LeaveRequest** | `/leaveRequests` | CRUD | Yes | Relasi: employee |
-| **Payroll** | `/payrolls` | CRUD | No | Relasi: employee |
-| **PerformanceReview** | `/performanceReviews` | CRUD | No | Relasi: employee, reviewer |
+| Resource              | Endpoint              | Methods | Soft Delete | Notes                             |
+| --------------------- | --------------------- | ------- | ----------- | --------------------------------- |
+| **Employee**          | `/employees`          | CRUD    | Yes         | Relasi: user, division, position  |
+| **Attendance**        | `/attendances`        | CRUD    | No          | Relasi: employee, shift, location |
+| **LeaveRequest**      | `/leaveRequests`      | CRUD    | Yes         | Relasi: employee                  |
+| **Payroll**           | `/payrolls`           | CRUD    | No          | Relasi: employee                  |
+| **PerformanceReview** | `/performanceReviews` | CRUD    | No          | Relasi: employee, reviewer        |
 
 ### 🎯 Recruitment Resources
 
-| Resource | Endpoint | Methods | Soft Delete | Notes |
-|----------|----------|---------|-------------|-------|
-| **JobVacancy** | `/jobVacancies` | CRUD | Yes | Relasi: position |
-| **Applicant** | `/applicants` | CRUD | No | Relasi: jobVacancy, stage enum |
+| Resource       | Endpoint        | Methods | Soft Delete | Notes                          |
+| -------------- | --------------- | ------- | ----------- | ------------------------------ |
+| **JobVacancy** | `/jobVacancies` | CRUD    | Yes         | Relasi: position               |
+| **Applicant**  | `/applicants`   | CRUD    | No          | Relasi: jobVacancy, stage enum |
 
 ### 🔐 Authentication Endpoints
 
-| Method | Endpoint | Data | Response |
-|--------|----------|------|----------|
-| POST | `/login` | username, password | { access_token, user } |
-| GET | `/me` | (token in header) | { user } |
-| POST | `/logout` | (token in header) | null |
+| Method | Endpoint  | Data               | Response               |
+| ------ | --------- | ------------------ | ---------------------- |
+| POST   | `/login`  | username, password | { access_token, user } |
+| GET    | `/me`     | (token in header)  | { user }               |
+| POST   | `/logout` | (token in header)  | null                   |
 
 ---
 
@@ -951,6 +973,7 @@ php artisan db:seed --class=RolePermissionSeeder
 ### Complete Permission List (44 total)
 
 **Operational (10):**
+
 - `manage_divisions`, `view_divisions`
 - `manage_positions`, `view_positions`
 - `manage_shifts`, `view_shifts`
@@ -958,6 +981,7 @@ php artisan db:seed --class=RolePermissionSeeder
 - `manage_contract_templates`, `view_contract_templates`
 
 **HR Management (18):**
+
 - `view_employees`, `create_employees`, `edit_employees`, `delete_employees`
 - `view_attendance_all`, `view_attendance_own`, `create_attendance`, `edit_attendance`, `delete_attendance`
 - `view_leave_requests`, `create_leave_requests`, `edit_leave_requests`, `delete_leave_requests`, `approve_leave_requests`
@@ -965,17 +989,22 @@ php artisan db:seed --class=RolePermissionSeeder
 - `view_performance_reviews`, `manage_performance_reviews`
 
 **Recruitment (8):**
+
 - `view_job_vacancies`, `manage_job_vacancies`
 - `view_applicants`, `manage_applicants`
 
 ### Role Assignment
 
 #### 🔴 Admin Role
+
 **Permission:** ALL (44/44)
+
 - Full access to semua resource
 
 #### 🟠 HR Role
+
 **Permission:** 33/44
+
 ```
 view_divisions, manage_divisions
 view_positions, manage_positions
@@ -992,7 +1021,9 @@ view_contract_templates, manage_contract_templates
 ```
 
 #### 🟡 Employee Role
+
 **Permission:** 9/44
+
 ```
 view_divisions
 view_positions
@@ -1079,6 +1110,7 @@ php artisan config:clear
 ### Environment Variables
 
 **`.env` Development:**
+
 ```
 APP_NAME=PrayerkidsHR
 APP_ENV=local
@@ -1118,7 +1150,7 @@ class EmployeeControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $user->assignRole('admin');
-        
+
         $response = $this->actingAs($user)->getJson('/api/employees');
         $response->assertOk();
     }
@@ -1157,7 +1189,7 @@ class ResourceName extends Model
     // use SoftDeletes;
 
     protected $fillable = ['field1', 'field2'];
-    
+
     protected $casts = [
         'is_active' => 'boolean',
         'created_at' => 'datetime',

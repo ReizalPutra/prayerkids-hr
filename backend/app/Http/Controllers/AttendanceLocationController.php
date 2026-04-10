@@ -4,17 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLocationRequest;
 use App\Models\AttendanceLocation;
-use Illuminate\Http\Request;
+use App\Contracts\Services\AttendanceLocationServiceInterface;
 
 class AttendanceLocationController extends Controller
 {
+    public function __construct(private readonly AttendanceLocationServiceInterface $attendanceLocationService) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $this->authorize('viewAny', AttendanceLocation::class);
-        $locations = AttendanceLocation::all();
+        $locations = $this->attendanceLocationService->getAll();
         return $this->success($locations, 'Data lokasi berhasil diambil');
     }
 
@@ -32,7 +34,7 @@ class AttendanceLocationController extends Controller
     public function store(StoreLocationRequest $request)
     {
         $this->authorize('create', AttendanceLocation::class);
-        $location = AttendanceLocation::create($request->validated());
+        $location = $this->attendanceLocationService->create($request->validated());
         return $this->success($location, 'Lokasi baru berhasil ditambahkan', 201);
     }
 
@@ -42,7 +44,7 @@ class AttendanceLocationController extends Controller
     public function show(AttendanceLocation $attendanceLocation)
     {
         $this->authorize('view', $attendanceLocation);
-        return $this->success($attendanceLocation, 'Detail lokasi ditemukan');
+        return $this->success($this->attendanceLocationService->show($attendanceLocation), 'Detail lokasi ditemukan');
     }
 
     /**
@@ -59,9 +61,8 @@ class AttendanceLocationController extends Controller
     public function update(StoreLocationRequest $request, AttendanceLocation $attendanceLocation)
     {
         $this->authorize('update', $attendanceLocation);
-        $attendanceLocation->update($request->validated());
-        $attendanceLocation->refresh();
-        return $this->success($attendanceLocation, 'Data lokasi berhasil diperbarui');
+        $updatedLocation = $this->attendanceLocationService->update($attendanceLocation, $request->validated());
+        return $this->success($updatedLocation, 'Data lokasi berhasil diperbarui');
     }
 
     /**
@@ -70,8 +71,7 @@ class AttendanceLocationController extends Controller
     public function destroy(AttendanceLocation $attendanceLocation)
     {
         $this->authorize('delete', $attendanceLocation);
-        $attendanceLocation->delete();
-        $attendanceLocation->refresh();
-        return $this->success($attendanceLocation, 'Lokasi berhasil dihapus (Soft Delete)');
+        $deletedLocation = $this->attendanceLocationService->delete($attendanceLocation);
+        return $this->success($deletedLocation, 'Lokasi berhasil dihapus (Soft Delete)');
     }
 }

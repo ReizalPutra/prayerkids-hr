@@ -4,17 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreJobVacancyRequest;
 use App\Models\JobVacancy;
-use Illuminate\Http\Request;
+use App\Contracts\Services\JobVacancyServiceInterface;
 
 class JobVacancyController extends Controller
 {
+    public function __construct(private readonly JobVacancyServiceInterface $jobVacancyService) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $this->authorize('viewAny', JobVacancy::class);
-        $vacancies = JobVacancy::with(['position'])->get();
+        $vacancies = $this->jobVacancyService->getAll();
         return $this->success($vacancies, 'Data lowongan kerja berhasil diambil');
     }
 
@@ -24,8 +26,8 @@ class JobVacancyController extends Controller
     public function store(StoreJobVacancyRequest $request)
     {
         $this->authorize('create', JobVacancy::class);
-        $vacancy = JobVacancy::create($request->validated());
-        return $this->success($vacancy->load(['position']), 'Lowongan kerja baru berhasil ditambahkan', 201);
+        $vacancy = $this->jobVacancyService->create($request->validated());
+        return $this->success($vacancy, 'Lowongan kerja baru berhasil ditambahkan', 201);
     }
 
     /**
@@ -34,7 +36,7 @@ class JobVacancyController extends Controller
     public function show(JobVacancy $jobVacancy)
     {
         $this->authorize('view', $jobVacancy);
-        return $this->success($jobVacancy->load(['position']), 'Detail lowongan kerja ditemukan');
+        return $this->success($this->jobVacancyService->show($jobVacancy), 'Detail lowongan kerja ditemukan');
     }
 
     /**
@@ -43,9 +45,8 @@ class JobVacancyController extends Controller
     public function update(StoreJobVacancyRequest $request, JobVacancy $jobVacancy)
     {
         $this->authorize('update', $jobVacancy);
-        $jobVacancy->update($request->validated());
-        $jobVacancy->refresh();
-        return $this->success($jobVacancy->load(['position']), 'Data lowongan kerja berhasil diperbarui');
+        $updatedVacancy = $this->jobVacancyService->update($jobVacancy, $request->validated());
+        return $this->success($updatedVacancy, 'Data lowongan kerja berhasil diperbarui');
     }
 
     /**
@@ -54,7 +55,7 @@ class JobVacancyController extends Controller
     public function destroy(JobVacancy $jobVacancy)
     {
         $this->authorize('delete', $jobVacancy);
-        $jobVacancy->delete();
+        $this->jobVacancyService->delete($jobVacancy);
         return $this->success(null, 'Lowongan kerja berhasil dihapus (Soft Delete)');
     }
 }

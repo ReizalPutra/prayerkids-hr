@@ -13,7 +13,7 @@ class AttendanceLocationPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo('view_operational');
+        return $user->hasPermissionTo('view_attendance_locations');
     }
 
     /**
@@ -21,7 +21,7 @@ class AttendanceLocationPolicy
      */
     public function view(User $user, AttendanceLocation $attendanceLocation): bool
     {
-        return $user->hasPermissionTo('view_operational');
+        return $user->hasPermissionTo('view_attendance_locations');
     }
 
     /**
@@ -29,7 +29,7 @@ class AttendanceLocationPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo('manage_operational');
+        return $user->hasPermissionTo('manage_attendance_locations');
     }
 
     /**
@@ -37,7 +37,7 @@ class AttendanceLocationPolicy
      */
     public function update(User $user, AttendanceLocation $attendanceLocation): bool
     {
-        return $user->hasPermissionTo('manage_operational');
+        return $user->hasPermissionTo('manage_attendance_locations');
     }
 
     /**
@@ -45,7 +45,7 @@ class AttendanceLocationPolicy
      */
     public function delete(User $user, AttendanceLocation $attendanceLocation): bool
     {
-        return $user->hasPermissionTo('manage_operational');
+        return $user->hasPermissionTo('manage_attendance_locations');
     }
 
     /**
@@ -53,7 +53,7 @@ class AttendanceLocationPolicy
      */
     public function restore(User $user, AttendanceLocation $attendanceLocation): bool
     {
-        return $user->hasPermissionTo('manage_operational');
+        return $user->hasPermissionTo('manage_attendance_locations');
     }
 
     /**
@@ -61,6 +61,6 @@ class AttendanceLocationPolicy
      */
     public function forceDelete(User $user, AttendanceLocation $attendanceLocation): bool
     {
-        return $user->hasPermissionTo('manage_operational');
+        return $user->hasPermissionTo('manage_attendance_locations');
     }
 }

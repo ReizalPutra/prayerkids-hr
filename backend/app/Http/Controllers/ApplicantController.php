@@ -4,17 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreApplicantRequest;
 use App\Models\Applicant;
-use Illuminate\Http\Request;
+use App\Contracts\Services\ApplicantServiceInterface;
 
 class ApplicantController extends Controller
 {
+    public function __construct(private readonly ApplicantServiceInterface $applicantService) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $this->authorize('viewAny', Applicant::class);
-        $applicants = Applicant::with(['jobVacancy'])->get();
+        $applicants = $this->applicantService->getAll();
         return $this->success($applicants, 'Data pelamar berhasil diambil');
     }
 
@@ -24,8 +26,8 @@ class ApplicantController extends Controller
     public function store(StoreApplicantRequest $request)
     {
         $this->authorize('create', Applicant::class);
-        $applicant = Applicant::create($request->validated());
-        return $this->success($applicant->load(['jobVacancy']), 'Pelamar baru berhasil ditambahkan', 201);
+        $applicant = $this->applicantService->create($request->validated());
+        return $this->success($applicant, 'Pelamar baru berhasil ditambahkan', 201);
     }
 
     /**
@@ -34,7 +36,7 @@ class ApplicantController extends Controller
     public function show(Applicant $applicant)
     {
         $this->authorize('view', $applicant);
-        return $this->success($applicant->load(['jobVacancy']), 'Detail pelamar ditemukan');
+        return $this->success($this->applicantService->show($applicant), 'Detail pelamar ditemukan');
     }
 
     /**
@@ -43,9 +45,8 @@ class ApplicantController extends Controller
     public function update(StoreApplicantRequest $request, Applicant $applicant)
     {
         $this->authorize('update', $applicant);
-        $applicant->update($request->validated());
-        $applicant->refresh();
-        return $this->success($applicant->load(['jobVacancy']), 'Data pelamar berhasil diperbarui');
+        $updatedApplicant = $this->applicantService->update($applicant, $request->validated());
+        return $this->success($updatedApplicant, 'Data pelamar berhasil diperbarui');
     }
 
     /**
@@ -54,7 +55,7 @@ class ApplicantController extends Controller
     public function destroy(Applicant $applicant)
     {
         $this->authorize('delete', $applicant);
-        $applicant->delete();
+        $this->applicantService->delete($applicant);
         return $this->success(null, 'Data pelamar berhasil dihapus');
     }
 }

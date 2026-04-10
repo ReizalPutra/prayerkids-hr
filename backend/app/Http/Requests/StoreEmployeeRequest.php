@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class StoreEmployeeRequest extends FormRequest
+class StoreEmployeeRequest extends BaseApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.

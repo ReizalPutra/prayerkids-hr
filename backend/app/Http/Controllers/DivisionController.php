@@ -3,18 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDivisionRequest;
-use App\Models\division;
-use App\Models\Division as ModelsDivision;
-use Illuminate\Http\Request;
+use App\Models\Division;
+use App\Contracts\Services\DivisionServiceInterface;
 
 class DivisionController extends Controller
 {
+    public function __construct(private readonly DivisionServiceInterface $divisionService) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $divisions = Division::all();
+        $divisions = $this->divisionService->getAll();
         return $this->success($divisions, 'Data divisi berhasil diambil');
     }
 
@@ -32,23 +33,23 @@ class DivisionController extends Controller
     public function store(StoreDivisionRequest $request)
     {
         $this->authorize('create', Division::class);
-        $division = Division::create($request->validated());
+        $division = $this->divisionService->create($request->validated());
         return $this->success($division, 'Divisi baru berhasil ditambahkan', 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(ModelsDivision $division)
+    public function show(Division $division)
     {
         $this->authorize('view', $division);
-        return $this->success($division, 'Detail divisi ditemukan');
+        return $this->success($this->divisionService->show($division), 'Detail divisi ditemukan');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(division $division)
+    public function edit(Division $division)
     {
         //
     }
@@ -56,20 +57,20 @@ class DivisionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreDivisionRequest $request, ModelsDivision $division)
+    public function update(StoreDivisionRequest $request, Division $division)
     {
         $this->authorize('update', $division);
-        $division->update($request->validated());
-        return $this->success($division, 'Data divisi berhasil diperbarui');
+        $updatedDivision = $this->divisionService->update($division, $request->validated());
+        return $this->success($updatedDivision, 'Data divisi berhasil diperbarui');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ModelsDivision $division)
+    public function destroy(Division $division)
     {
         $this->authorize('delete', $division);
-        $division->delete();
+        $this->divisionService->delete($division);
         return $this->success(null, 'Divisi berhasil dihapus (Soft Delete)');
     }
 }

@@ -22,7 +22,6 @@ use App\Policies\DivisionPolicy;
 use App\Policies\EmployeePolicy;
 use App\Policies\JobVacancyPolicy;
 use App\Policies\LeaveRequestPolicy;
-use App\Policies\LocationPolicy;
 use App\Policies\PayrollPolicy;
 use App\Policies\PerformanceReviewPolicy;
 use App\Policies\PositionPolicy;
@@ -39,7 +38,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Applicant::class => ApplicantPolicy::class,
         Attendance::class => AttendancePolicy::class,
-        AttendanceLocation::class => LocationPolicy::class,
+        AttendanceLocation::class => AttendanceLocationPolicy::class,
         ContractTemplate::class => ContractTemplatePolicy::class,
         Division::class => DivisionPolicy::class,
         Employee::class => EmployeePolicy::class,

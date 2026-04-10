@@ -4,17 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreContractTemplateRequest;
 use App\Models\ContractTemplate;
-use Illuminate\Http\Request;
+use App\Contracts\Services\ContractTemplateServiceInterface;
 
 class ContractTemplateController extends Controller
 {
+    public function __construct(private readonly ContractTemplateServiceInterface $contractTemplateService) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $this->authorize('viewAny', ContractTemplate::class);
-        $templates = ContractTemplate::all();
+        $templates = $this->contractTemplateService->getAll();
         return $this->success($templates, 'Data template kontrak berhasil diambil');
     }
 
@@ -24,7 +26,7 @@ class ContractTemplateController extends Controller
     public function store(StoreContractTemplateRequest $request)
     {
         $this->authorize('create', ContractTemplate::class);
-        $template = ContractTemplate::create($request->validated());
+        $template = $this->contractTemplateService->create($request->validated());
         return $this->success($template, 'Template kontrak baru berhasil ditambahkan', 201);
     }
 
@@ -34,7 +36,7 @@ class ContractTemplateController extends Controller
     public function show(ContractTemplate $contractTemplate)
     {
         $this->authorize('view', $contractTemplate);
-        return $this->success($contractTemplate, 'Detail template kontrak ditemukan');
+        return $this->success($this->contractTemplateService->show($contractTemplate), 'Detail template kontrak ditemukan');
     }
 
     /**
@@ -43,9 +45,8 @@ class ContractTemplateController extends Controller
     public function update(StoreContractTemplateRequest $request, ContractTemplate $contractTemplate)
     {
         $this->authorize('update', $contractTemplate);
-        $contractTemplate->update($request->validated());
-        $contractTemplate->refresh();
-        return $this->success($contractTemplate, 'Data template kontrak berhasil diperbarui');
+        $updatedTemplate = $this->contractTemplateService->update($contractTemplate, $request->validated());
+        return $this->success($updatedTemplate, 'Data template kontrak berhasil diperbarui');
     }
 
     /**
@@ -54,7 +55,7 @@ class ContractTemplateController extends Controller
     public function destroy(ContractTemplate $contractTemplate)
     {
         $this->authorize('delete', $contractTemplate);
-        $contractTemplate->delete();
+        $this->contractTemplateService->delete($contractTemplate);
         return $this->success(null, 'Template kontrak berhasil dihapus');
     }
 }

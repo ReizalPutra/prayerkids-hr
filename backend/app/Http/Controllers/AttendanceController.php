@@ -4,17 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAttendanceRequest;
 use App\Models\Attendance;
-use Illuminate\Http\Request;
+use App\Contracts\Services\AttendanceServiceInterface;
 
 class AttendanceController extends Controller
 {
+    public function __construct(private readonly AttendanceServiceInterface $attendanceService) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $this->authorize('viewAny', Attendance::class);
-        $attendances = Attendance::with(['employee', 'shift', 'location'])->get();
+        $attendances = $this->attendanceService->getAll();
         return $this->success($attendances, 'Data kehadiran berhasil diambil');
     }
 
@@ -24,8 +26,8 @@ class AttendanceController extends Controller
     public function store(StoreAttendanceRequest $request)
     {
         $this->authorize('create', Attendance::class);
-        $attendance = Attendance::create($request->validated());
-        return $this->success($attendance->load(['employee', 'shift', 'location']), 'Data kehadiran baru berhasil ditambahkan', 201);
+        $attendance = $this->attendanceService->create($request->validated());
+        return $this->success($attendance, 'Data kehadiran baru berhasil ditambahkan', 201);
     }
 
     /**
@@ -34,7 +36,7 @@ class AttendanceController extends Controller
     public function show(Attendance $attendance)
     {
         $this->authorize('view', $attendance);
-        return $this->success($attendance->load(['employee', 'shift', 'location']), 'Detail kehadiran ditemukan');
+        return $this->success($this->attendanceService->show($attendance), 'Detail kehadiran ditemukan');
     }
 
     /**
@@ -43,9 +45,8 @@ class AttendanceController extends Controller
     public function update(StoreAttendanceRequest $request, Attendance $attendance)
     {
         $this->authorize('update', $attendance);
-        $attendance->update($request->validated());
-        $attendance->refresh();
-        return $this->success($attendance->load(['employee', 'shift', 'location']), 'Data kehadiran berhasil diperbarui');
+        $updatedAttendance = $this->attendanceService->update($attendance, $request->validated());
+        return $this->success($updatedAttendance, 'Data kehadiran berhasil diperbarui');
     }
 
     /**
@@ -54,7 +55,7 @@ class AttendanceController extends Controller
     public function destroy(Attendance $attendance)
     {
         $this->authorize('delete', $attendance);
-        $attendance->delete();
+        $this->attendanceService->delete($attendance);
         return $this->success(null, 'Data kehadiran berhasil dihapus');
     }
 }

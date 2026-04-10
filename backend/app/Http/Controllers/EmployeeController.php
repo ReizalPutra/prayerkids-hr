@@ -4,17 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Models\Employee;
-use Illuminate\Http\Request;
+use App\Contracts\Services\EmployeeServiceInterface;
 
 class EmployeeController extends Controller
 {
+    public function __construct(private readonly EmployeeServiceInterface $employeeService) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $this->authorize('viewAny', Employee::class);
-        $employees = Employee::with(['user', 'division', 'position'])->get();
+        $employees = $this->employeeService->getAll();
         return $this->success($employees, 'Data karyawan berhasil diambil');
     }
 
@@ -24,8 +26,8 @@ class EmployeeController extends Controller
     public function store(StoreEmployeeRequest $request)
     {
         $this->authorize('create', Employee::class);
-        $employee = Employee::create($request->validated());
-        return $this->success($employee->load(['user', 'division', 'position']), 'Karyawan baru berhasil ditambahkan', 201);
+        $employee = $this->employeeService->create($request->validated());
+        return $this->success($employee, 'Karyawan baru berhasil ditambahkan', 201);
     }
 
     /**
@@ -34,7 +36,7 @@ class EmployeeController extends Controller
     public function show(Employee $employee)
     {
         $this->authorize('view', $employee);
-        return $this->success($employee->load(['user', 'division', 'position']), 'Detail karyawan ditemukan');
+        return $this->success($this->employeeService->show($employee), 'Detail karyawan ditemukan');
     }
 
     /**
@@ -43,9 +45,8 @@ class EmployeeController extends Controller
     public function update(StoreEmployeeRequest $request, Employee $employee)
     {
         $this->authorize('update', $employee);
-        $employee->update($request->validated());
-        $employee->refresh();
-        return $this->success($employee->load(['user', 'division', 'position']), 'Data karyawan berhasil diperbarui');
+        $updatedEmployee = $this->employeeService->update($employee, $request->validated());
+        return $this->success($updatedEmployee, 'Data karyawan berhasil diperbarui');
     }
 
     /**
@@ -54,7 +55,7 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee)
     {
         $this->authorize('delete', $employee);
-        $employee->delete();
+        $this->employeeService->delete($employee);
         return $this->success(null, 'Karyawan berhasil dihapus (Soft Delete)');
     }
 }

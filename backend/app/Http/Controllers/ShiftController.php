@@ -4,17 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreShiftRequest;
 use App\Models\Shift;
-use Illuminate\Http\Request;
+use App\Contracts\Services\ShiftServiceInterface;
 
 class ShiftController extends Controller
 {
+    public function __construct(private readonly ShiftServiceInterface $shiftService) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $this->authorize('viewAny', Shift::class);
-        $shifts = Shift::all();
+        $shifts = $this->shiftService->getAll();
         return $this->success($shifts, 'Data shift berhasil diambil');
     }
 
@@ -32,7 +34,7 @@ class ShiftController extends Controller
     public function store(StoreShiftRequest $request)
     {
         $this->authorize('create', Shift::class);
-        $shift = Shift::create($request->validated());
+        $shift = $this->shiftService->create($request->validated());
         return $this->success($shift, 'Shift baru berhasil ditambahkan', 201);
     }
 
@@ -42,7 +44,7 @@ class ShiftController extends Controller
     public function show(Shift $shift)
     {
         $this->authorize('view', $shift);
-        return $this->success($shift, 'Detail shift ditemukan');
+        return $this->success($this->shiftService->show($shift), 'Detail shift ditemukan');
     }
 
     /**
@@ -59,9 +61,8 @@ class ShiftController extends Controller
     public function update(StoreShiftRequest $request, Shift $shift)
     {
         $this->authorize('update', $shift);
-        $shift->update($request->validated());
-        $shift->refresh();
-        return $this->success($shift, 'Data shift berhasil diperbarui');
+        $updatedShift = $this->shiftService->update($shift, $request->validated());
+        return $this->success($updatedShift, 'Data shift berhasil diperbarui');
     }
 
     /**
@@ -70,8 +71,7 @@ class ShiftController extends Controller
     public function destroy(Shift $shift)
     {
         $this->authorize('delete', $shift);
-        $shift->delete();
-        $shift->refresh();
-        return $this->success($shift, 'Shift berhasil dihapus (Soft Delete)');
+        $deletedShift = $this->shiftService->delete($shift);
+        return $this->success($deletedShift, 'Shift berhasil dihapus (Soft Delete)');
     }
 }

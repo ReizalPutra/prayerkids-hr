@@ -4,17 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLeaveRequestRequest;
 use App\Models\LeaveRequest;
-use Illuminate\Http\Request;
+use App\Contracts\Services\LeaveRequestServiceInterface;
 
 class LeaveRequestController extends Controller
 {
+    public function __construct(private readonly LeaveRequestServiceInterface $leaveRequestService) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $this->authorize('viewAny', LeaveRequest::class);
-        $leaves = LeaveRequest::with(['employee'])->get();
+        $leaves = $this->leaveRequestService->getAll();
         return $this->success($leaves, 'Data cuti berhasil diambil');
     }
 
@@ -24,8 +26,8 @@ class LeaveRequestController extends Controller
     public function store(StoreLeaveRequestRequest $request)
     {
         $this->authorize('create', LeaveRequest::class);
-        $leave = LeaveRequest::create($request->validated());
-        return $this->success($leave->load(['employee']), 'Pengajuan cuti baru berhasil ditambahkan', 201);
+        $leave = $this->leaveRequestService->create($request->validated());
+        return $this->success($leave, 'Pengajuan cuti baru berhasil ditambahkan', 201);
     }
 
     /**
@@ -34,7 +36,7 @@ class LeaveRequestController extends Controller
     public function show(LeaveRequest $leaveRequest)
     {
         $this->authorize('view', $leaveRequest);
-        return $this->success($leaveRequest->load(['employee']), 'Detail cuti ditemukan');
+        return $this->success($this->leaveRequestService->show($leaveRequest), 'Detail cuti ditemukan');
     }
 
     /**
@@ -43,9 +45,8 @@ class LeaveRequestController extends Controller
     public function update(StoreLeaveRequestRequest $request, LeaveRequest $leaveRequest)
     {
         $this->authorize('update', $leaveRequest);
-        $leaveRequest->update($request->validated());
-        $leaveRequest->refresh();
-        return $this->success($leaveRequest->load(['employee']), 'Data cuti berhasil diperbarui');
+        $updatedLeave = $this->leaveRequestService->update($leaveRequest, $request->validated());
+        return $this->success($updatedLeave, 'Data cuti berhasil diperbarui');
     }
 
     /**
@@ -54,7 +55,7 @@ class LeaveRequestController extends Controller
     public function destroy(LeaveRequest $leaveRequest)
     {
         $this->authorize('delete', $leaveRequest);
-        $leaveRequest->delete();
+        $this->leaveRequestService->delete($leaveRequest);
         return $this->success(null, 'Data cuti berhasil dihapus');
     }
 }

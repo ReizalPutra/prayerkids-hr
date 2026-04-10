@@ -4,17 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePerformanceReviewRequest;
 use App\Models\PerformanceReview;
-use Illuminate\Http\Request;
+use App\Contracts\Services\PerformanceReviewServiceInterface;
 
 class PerformanceReviewController extends Controller
 {
+    public function __construct(private readonly PerformanceReviewServiceInterface $performanceReviewService) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $this->authorize('viewAny', PerformanceReview::class);
-        $reviews = PerformanceReview::with(['employee', 'reviewer'])->get();
+        $reviews = $this->performanceReviewService->getAll();
         return $this->success($reviews, 'Data review performa berhasil diambil');
     }
 
@@ -24,8 +26,8 @@ class PerformanceReviewController extends Controller
     public function store(StorePerformanceReviewRequest $request)
     {
         $this->authorize('create', PerformanceReview::class);
-        $review = PerformanceReview::create($request->validated());
-        return $this->success($review->load(['employee', 'reviewer']), 'Review performa baru berhasil ditambahkan', 201);
+        $review = $this->performanceReviewService->create($request->validated());
+        return $this->success($review, 'Review performa baru berhasil ditambahkan', 201);
     }
 
     /**
@@ -34,7 +36,7 @@ class PerformanceReviewController extends Controller
     public function show(PerformanceReview $performanceReview)
     {
         $this->authorize('view', $performanceReview);
-        return $this->success($performanceReview->load(['employee', 'reviewer']), 'Detail review performa ditemukan');
+        return $this->success($this->performanceReviewService->show($performanceReview), 'Detail review performa ditemukan');
     }
 
     /**
@@ -43,9 +45,8 @@ class PerformanceReviewController extends Controller
     public function update(StorePerformanceReviewRequest $request, PerformanceReview $performanceReview)
     {
         $this->authorize('update', $performanceReview);
-        $performanceReview->update($request->validated());
-        $performanceReview->refresh();
-        return $this->success($performanceReview->load(['employee', 'reviewer']), 'Data review performa berhasil diperbarui');
+        $updatedReview = $this->performanceReviewService->update($performanceReview, $request->validated());
+        return $this->success($updatedReview, 'Data review performa berhasil diperbarui');
     }
 
     /**
@@ -54,7 +55,7 @@ class PerformanceReviewController extends Controller
     public function destroy(PerformanceReview $performanceReview)
     {
         $this->authorize('delete', $performanceReview);
-        $performanceReview->delete();
+        $this->performanceReviewService->delete($performanceReview);
         return $this->success(null, 'Data review performa berhasil dihapus');
     }
 }

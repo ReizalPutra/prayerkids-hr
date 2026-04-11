@@ -48,7 +48,13 @@ export const resourceConfigs: ResourceConfig[] = [
       { key: "description", label: "Description" },
     ],
     fields: [
-      { key: "name", label: "Name", type: "text", required: true, placeholder: "People Operations" },
+      {
+        key: "name",
+        label: "Name",
+        type: "text",
+        required: true,
+        placeholder: "People Operations",
+      },
       {
         key: "description",
         label: "Description",
@@ -68,7 +74,13 @@ export const resourceConfigs: ResourceConfig[] = [
       { key: "base_salary", label: "Base Salary" },
     ],
     fields: [
-      { key: "title", label: "Title", type: "text", required: true, placeholder: "HR Officer" },
+      {
+        key: "title",
+        label: "Title",
+        type: "text",
+        required: true,
+        placeholder: "HR Officer",
+      },
       {
         key: "division_id",
         label: "Division",
@@ -76,9 +88,19 @@ export const resourceConfigs: ResourceConfig[] = [
         required: true,
         optionsFrom: { endpoint: "/divisions", labelKey: "name" },
       },
-      { key: "base_salary", label: "Base Salary", type: "number", required: true, placeholder: "5500000" },
+      {
+        key: "base_salary",
+        label: "Base Salary",
+        type: "number",
+        required: true,
+        placeholder: "5500000",
+      },
     ],
-    samplePayload: { title: "HR Officer", division_id: "<division_uuid>", base_salary: 5500000 },
+    samplePayload: {
+      title: "HR Officer",
+      division_id: "<division_uuid>",
+      base_salary: 5500000,
+    },
   },
   {
     key: "shifts",
@@ -91,11 +113,21 @@ export const resourceConfigs: ResourceConfig[] = [
       { key: "end_time", label: "End" },
     ],
     fields: [
-      { key: "name", label: "Name", type: "text", required: true, placeholder: "Pagi" },
+      {
+        key: "name",
+        label: "Name",
+        type: "text",
+        required: true,
+        placeholder: "Pagi",
+      },
       { key: "start_time", label: "Start Time", type: "time", required: true },
       { key: "end_time", label: "End Time", type: "time", required: true },
     ],
-    samplePayload: { name: "Pagi", start_time: "08:00:00", end_time: "17:00:00" },
+    samplePayload: {
+      name: "Pagi",
+      start_time: "08:00:00",
+      end_time: "17:00:00",
+    },
   },
   {
     key: "attendanceLocations",
@@ -108,10 +140,34 @@ export const resourceConfigs: ResourceConfig[] = [
       { key: "longitude", label: "Longitude" },
     ],
     fields: [
-      { key: "name", label: "Name", type: "text", required: true, placeholder: "Kantor Pusat" },
-      { key: "latitude", label: "Latitude", type: "number", required: true, placeholder: "-6.2009" },
-      { key: "longitude", label: "Longitude", type: "number", required: true, placeholder: "106.8166" },
-      { key: "radius_meter", label: "Radius (meter)", type: "number", required: true, placeholder: "100" },
+      {
+        key: "name",
+        label: "Name",
+        type: "text",
+        required: true,
+        placeholder: "Kantor Pusat",
+      },
+      {
+        key: "latitude",
+        label: "Latitude",
+        type: "number",
+        required: true,
+        placeholder: "-6.2009",
+      },
+      {
+        key: "longitude",
+        label: "Longitude",
+        type: "number",
+        required: true,
+        placeholder: "106.8166",
+      },
+      {
+        key: "radius_meter",
+        label: "Radius (meter)",
+        type: "number",
+        required: true,
+        placeholder: "100",
+      },
     ],
     samplePayload: {
       name: "Kantor Pusat",
@@ -130,11 +186,27 @@ export const resourceConfigs: ResourceConfig[] = [
       { key: "is_active", label: "Active" },
     ],
     fields: [
-      { key: "name", label: "Name", type: "text", required: true, placeholder: "PKWT Standard" },
-      { key: "body", label: "Body", type: "textarea", required: true, placeholder: "Isi kontrak..." },
+      {
+        key: "name",
+        label: "Name",
+        type: "text",
+        required: true,
+        placeholder: "PKWT Standard",
+      },
+      {
+        key: "body",
+        label: "Body",
+        type: "textarea",
+        required: true,
+        placeholder: "Isi kontrak...",
+      },
       { key: "is_active", label: "Is Active", type: "checkbox" },
     ],
-    samplePayload: { name: "PKWT Standard", body: "Isi kontrak...", is_active: true },
+    samplePayload: {
+      name: "PKWT Standard",
+      body: "Isi kontrak...",
+      is_active: true,
+    },
   },
   {
     key: "employees",
@@ -147,8 +219,20 @@ export const resourceConfigs: ResourceConfig[] = [
       { key: "status", label: "Status" },
     ],
     fields: [
-      { key: "nik", label: "NIK", type: "text", required: true, placeholder: "EMP-2026-001" },
-      { key: "full_name", label: "Full Name", type: "text", required: true, placeholder: "Budi Setiawan" },
+      {
+        key: "nik",
+        label: "NIK",
+        type: "text",
+        required: true,
+        placeholder: "EMP-2026-001",
+      },
+      {
+        key: "full_name",
+        label: "Full Name",
+        type: "text",
+        required: true,
+        placeholder: "Budi Setiawan",
+      },
       {
         key: "division_id",
         label: "Division",
@@ -270,7 +354,13 @@ export const resourceConfigs: ResourceConfig[] = [
       },
       { key: "start_date", label: "Start Date", type: "date", required: true },
       { key: "end_date", label: "End Date", type: "date", required: true },
-      { key: "reason", label: "Reason", type: "textarea", required: true, placeholder: "Keperluan keluarga" },
+      {
+        key: "reason",
+        label: "Reason",
+        type: "textarea",
+        required: true,
+        placeholder: "Keperluan keluarga",
+      },
       {
         key: "status",
         label: "Status",
@@ -310,8 +400,20 @@ export const resourceConfigs: ResourceConfig[] = [
         required: true,
         optionsFrom: { endpoint: "/employees", labelKey: "full_name" },
       },
-      { key: "month", label: "Month", type: "text", required: true, placeholder: "April" },
-      { key: "year", label: "Year", type: "number", required: true, placeholder: "2026" },
+      {
+        key: "month",
+        label: "Month",
+        type: "text",
+        required: true,
+        placeholder: "April",
+      },
+      {
+        key: "year",
+        label: "Year",
+        type: "number",
+        required: true,
+        placeholder: "2026",
+      },
       {
         key: "basic_salary_snapshot",
         label: "Basic Salary Snapshot",
@@ -319,7 +421,13 @@ export const resourceConfigs: ResourceConfig[] = [
         required: true,
         placeholder: "6000000",
       },
-      { key: "net_salary", label: "Net Salary", type: "number", required: true, placeholder: "6600000" },
+      {
+        key: "net_salary",
+        label: "Net Salary",
+        type: "number",
+        required: true,
+        placeholder: "6600000",
+      },
       {
         key: "payment_status",
         label: "Payment Status",
@@ -366,8 +474,20 @@ export const resourceConfigs: ResourceConfig[] = [
         required: true,
         optionsFrom: { endpoint: "/employees", labelKey: "full_name" },
       },
-      { key: "review_period", label: "Review Period", type: "text", required: true, placeholder: "Q1-2026" },
-      { key: "final_score", label: "Final Score", type: "number", required: true, placeholder: "89" },
+      {
+        key: "review_period",
+        label: "Review Period",
+        type: "text",
+        required: true,
+        placeholder: "Q1-2026",
+      },
+      {
+        key: "final_score",
+        label: "Final Score",
+        type: "number",
+        required: true,
+        placeholder: "89",
+      },
       { key: "is_locked", label: "Is Locked", type: "checkbox" },
     ],
     samplePayload: {
@@ -396,7 +516,13 @@ export const resourceConfigs: ResourceConfig[] = [
         required: true,
         optionsFrom: { endpoint: "/positions", labelKey: "title" },
       },
-      { key: "title", label: "Title", type: "text", required: true, placeholder: "Backend Developer" },
+      {
+        key: "title",
+        label: "Title",
+        type: "text",
+        required: true,
+        placeholder: "Backend Developer",
+      },
       {
         key: "description",
         label: "Description",
@@ -422,7 +548,12 @@ export const resourceConfigs: ResourceConfig[] = [
           { label: "Draft", value: "draft" },
         ],
       },
-      { key: "expired_date", label: "Expired Date", type: "date", required: true },
+      {
+        key: "expired_date",
+        label: "Expired Date",
+        type: "date",
+        required: true,
+      },
     ],
     samplePayload: {
       position_id: "<position_uuid>",
@@ -451,7 +582,13 @@ export const resourceConfigs: ResourceConfig[] = [
         required: true,
         optionsFrom: { endpoint: "/jobVacancies", labelKey: "title" },
       },
-      { key: "name", label: "Name", type: "text", required: true, placeholder: "Siti Aminah" },
+      {
+        key: "name",
+        label: "Name",
+        type: "text",
+        required: true,
+        placeholder: "Siti Aminah",
+      },
       {
         key: "email",
         label: "Email",
@@ -459,7 +596,13 @@ export const resourceConfigs: ResourceConfig[] = [
         required: true,
         placeholder: "siti.aminah@example.com",
       },
-      { key: "phone", label: "Phone", type: "text", required: true, placeholder: "081234567899" },
+      {
+        key: "phone",
+        label: "Phone",
+        type: "text",
+        required: true,
+        placeholder: "081234567899",
+      },
       {
         key: "resume_path",
         label: "Resume Path",

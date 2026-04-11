@@ -11,7 +11,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { resourceConfigMap, type ResourceConfig, type ResourceField } from "@/features/resources/resource-config";
+import {
+  resourceConfigMap,
+  type ResourceConfig,
+  type ResourceField,
+} from "@/features/resources/resource-config";
 import {
   useCreateResourceMutation,
   useDeleteResourceMutation,
@@ -26,7 +30,10 @@ import type { ApiResponse } from "@/types";
 
 const prettyJson = (value: unknown) => JSON.stringify(value, null, 2);
 
-const getFieldDefaultValue = (field: ResourceField, samplePayload: Record<string, unknown>) => {
+const getFieldDefaultValue = (
+  field: ResourceField,
+  samplePayload: Record<string, unknown>,
+) => {
   if (field.optionsFrom) {
     return "";
   }
@@ -44,15 +51,24 @@ const getFieldDefaultValue = (field: ResourceField, samplePayload: Record<string
 
 const buildDefaultFormState = (config: ResourceConfig) =>
   Object.fromEntries(
-    config.fields.map((field) => [field.key, getFieldDefaultValue(field, config.samplePayload)]),
+    config.fields.map((field) => [
+      field.key,
+      getFieldDefaultValue(field, config.samplePayload),
+    ]),
   ) as Record<string, unknown>;
 
 const buildFormFromRecord = (config: ResourceConfig, row: ResourceRecord) =>
   Object.fromEntries(
-    config.fields.map((field) => [field.key, row[field.key] ?? getFieldDefaultValue(field, config.samplePayload)]),
+    config.fields.map((field) => [
+      field.key,
+      row[field.key] ?? getFieldDefaultValue(field, config.samplePayload),
+    ]),
   ) as Record<string, unknown>;
 
-const normalizePayload = (config: ResourceConfig, form: Record<string, unknown>) => {
+const normalizePayload = (
+  config: ResourceConfig,
+  form: Record<string, unknown>,
+) => {
   const payload: Record<string, unknown> = {};
 
   config.fields.forEach((field) => {
@@ -88,7 +104,9 @@ function ResourceCrudPage() {
   const [createForm, setCreateForm] = useState<Record<string, unknown>>({});
   const [editForm, setEditForm] = useState<Record<string, unknown>>({});
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [selectedDetail, setSelectedDetail] = useState<ResourceRecord | null>(null);
+  const [selectedDetail, setSelectedDetail] = useState<ResourceRecord | null>(
+    null,
+  );
 
   const listQuery = useResourceListQuery(config?.endpoint ?? "");
   const createMutation = useCreateResourceMutation(config?.endpoint ?? "");
@@ -122,10 +140,13 @@ function ResourceCrudPage() {
   });
 
   const relationDataMap = useMemo(() => {
-    return relationSources.reduce<Record<string, ResourceRecord[]>>((accumulator, endpoint, index) => {
-      accumulator[endpoint] = relationQueries[index]?.data ?? [];
-      return accumulator;
-    }, {});
+    return relationSources.reduce<Record<string, ResourceRecord[]>>(
+      (accumulator, endpoint, index) => {
+        accumulator[endpoint] = relationQueries[index]?.data ?? [];
+        return accumulator;
+      },
+      {},
+    );
   }, [relationQueries, relationSources]);
 
   useEffect(() => {
@@ -206,7 +227,7 @@ function ResourceCrudPage() {
     const form = mode === "create" ? createForm : editForm;
     const value = form[field.key];
     const relationRows = field.optionsFrom
-      ? relationDataMap[field.optionsFrom.endpoint] ?? []
+      ? (relationDataMap[field.optionsFrom.endpoint] ?? [])
       : [];
     const selectOptions =
       field.options ??
@@ -244,7 +265,10 @@ function ResourceCrudPage() {
           >
             <option value="">Pilih {field.label}</option>
             {selectOptions.map((option) => (
-              <option key={`${field.key}-${String(option.value)}`} value={String(option.value)}>
+              <option
+                key={`${field.key}-${String(option.value)}`}
+                value={String(option.value)}
+              >
                 {option.label}
               </option>
             ))}
@@ -255,13 +279,18 @@ function ResourceCrudPage() {
 
     if (field.type === "checkbox") {
       return (
-        <label key={`${mode}-${field.key}`} className="flex items-center gap-2 text-sm">
+        <label
+          key={`${mode}-${field.key}`}
+          className="flex items-center gap-2 text-sm"
+        >
           <input
             id={`${mode}-${field.key}`}
             type="checkbox"
             className="h-4 w-4 rounded border-border"
             checked={Boolean(value)}
-            onChange={(event) => setFormValue(mode, field, event.target.checked)}
+            onChange={(event) =>
+              setFormValue(mode, field, event.target.checked)
+            }
           />
           {field.label}
         </label>
@@ -298,10 +327,14 @@ function ResourceCrudPage() {
         <Card>
           <CardHeader>
             <CardTitle>Create</CardTitle>
-            <CardDescription>Form visual untuk endpoint POST {config.endpoint}</CardDescription>
+            <CardDescription>
+              Form visual untuk endpoint POST {config.endpoint}
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <div className="grid gap-3">{config.fields.map((field) => renderField("create", field))}</div>
+            <div className="grid gap-3">
+              {config.fields.map((field) => renderField("create", field))}
+            </div>
             <Button onClick={handleCreate} disabled={createMutation.isPending}>
               {createMutation.isPending ? "Menyimpan..." : "Create Data"}
             </Button>
@@ -316,15 +349,22 @@ function ResourceCrudPage() {
         <Card>
           <CardHeader>
             <CardTitle>Update</CardTitle>
-            <CardDescription>Pilih data dari tabel lalu edit lewat form visual endpoint PUT.</CardDescription>
+            <CardDescription>
+              Pilih data dari tabel lalu edit lewat form visual endpoint PUT.
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <p className="text-xs text-muted-foreground">
               Editing ID: {editingId ?? "-"}
             </p>
-            <div className="grid gap-3">{config.fields.map((field) => renderField("edit", field))}</div>
+            <div className="grid gap-3">
+              {config.fields.map((field) => renderField("edit", field))}
+            </div>
             <div className="flex gap-2">
-              <Button onClick={handleUpdate} disabled={!editingId || updateMutation.isPending}>
+              <Button
+                onClick={handleUpdate}
+                disabled={!editingId || updateMutation.isPending}
+              >
                 {updateMutation.isPending ? "Memperbarui..." : "Update Data"}
               </Button>
               <Button
@@ -346,20 +386,28 @@ function ResourceCrudPage() {
         </Card>
       </div>
 
-      {relationLoading ? <p className="text-sm text-muted-foreground">Memuat opsi relasi...</p> : null}
+      {relationLoading ? (
+        <p className="text-sm text-muted-foreground">Memuat opsi relasi...</p>
+      ) : null}
       {relationError ? (
-        <p className="text-sm text-destructive">{getApiErrorMessage(relationError.error)}</p>
+        <p className="text-sm text-destructive">
+          {getApiErrorMessage(relationError.error)}
+        </p>
       ) : null}
 
       <Card>
         <CardHeader>
           <CardTitle>List Data</CardTitle>
-          <CardDescription>Data asli dari endpoint GET {config.endpoint}</CardDescription>
+          <CardDescription>
+            Data asli dari endpoint GET {config.endpoint}
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {listQuery.isLoading ? <p>Memuat data...</p> : null}
           {listQuery.isError ? (
-            <p className="text-sm text-destructive">{getApiErrorMessage(listQuery.error)}</p>
+            <p className="text-sm text-destructive">
+              {getApiErrorMessage(listQuery.error)}
+            </p>
           ) : null}
 
           {listQuery.isSuccess ? (
@@ -379,7 +427,9 @@ function ResourceCrudPage() {
                 <tbody>
                   {rows.map((row) => (
                     <tr key={row.id} className="border-b border-border/60">
-                      <td className="max-w-40 truncate p-2 font-mono text-xs">{row.id}</td>
+                      <td className="max-w-40 truncate p-2 font-mono text-xs">
+                        {row.id}
+                      </td>
                       {config.columns.map((column) => (
                         <td key={column.key} className="max-w-56 truncate p-2">
                           {String(row[column.key] ?? "-")}
@@ -387,10 +437,18 @@ function ResourceCrudPage() {
                       ))}
                       <td className="p-2">
                         <div className="flex flex-wrap gap-2">
-                          <Button size="xs" variant="outline" onClick={() => handleShow(row.id)}>
+                          <Button
+                            size="xs"
+                            variant="outline"
+                            onClick={() => handleShow(row.id)}
+                          >
                             Detail
                           </Button>
-                          <Button size="xs" variant="outline" onClick={() => handleStartEdit(row)}>
+                          <Button
+                            size="xs"
+                            variant="outline"
+                            onClick={() => handleStartEdit(row)}
+                          >
                             Edit
                           </Button>
                           <Button
@@ -421,7 +479,9 @@ function ResourceCrudPage() {
         </CardHeader>
         <CardContent>
           <pre className="overflow-x-auto rounded-md border border-border bg-muted/30 p-3 text-xs">
-            {prettyJson(selectedDetail ?? { message: "Klik tombol Detail pada tabel" })}
+            {prettyJson(
+              selectedDetail ?? { message: "Klik tombol Detail pada tabel" },
+            )}
           </pre>
           {showMutation.isError ? (
             <p className="mt-2 text-sm text-destructive">

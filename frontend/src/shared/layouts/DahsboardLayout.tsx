@@ -26,7 +26,9 @@ function DashboardLayout() {
   useEffect(() => {
     const root = document.documentElement;
     const storedTheme = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    ).matches;
     const enableDark = storedTheme ? storedTheme === "dark" : prefersDark;
 
     root.classList.toggle("dark", enableDark);
@@ -148,7 +150,9 @@ function DashboardLayout() {
                 variant="ghost"
                 className="w-full justify-start gap-2"
               >
-                <NavLink to={`/resources/${resource.key}`}>{resource.title}</NavLink>
+                <NavLink to={`/resources/${resource.key}`}>
+                  {resource.title}
+                </NavLink>
               </Button>
             ))}
           </nav>
@@ -170,12 +174,23 @@ function DashboardLayout() {
         <div className="flex min-h-screen flex-col">
           <header className="flex items-center justify-between border-b border-border bg-background/80 px-6 py-4 backdrop-blur">
             <div>
-              <p className="text-sm text-muted-foreground">Selamat datang kembali</p>
+              <p className="text-sm text-muted-foreground">
+                Selamat datang kembali
+              </p>
               <h1 className="text-xl font-semibold">Sistem HR Prayerkids</h1>
             </div>
 
-            <Button type="button" variant="outline" size="sm" onClick={toggleTheme}>
-              {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={toggleTheme}
+            >
+              {isDark ? (
+                <Sun className="size-4" />
+              ) : (
+                <Moon className="size-4" />
+              )}
               {isDark ? "Light" : "Dark"}
             </Button>
           </header>

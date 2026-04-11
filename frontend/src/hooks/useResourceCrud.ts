@@ -23,11 +23,16 @@ export const useCreateResourceMutation = (endpoint: string) => {
 
   return useMutation({
     mutationFn: async (payload: Record<string, unknown>) => {
-      const response = await api.post<ApiResponse<ResourceRecord>>(endpoint, payload);
+      const response = await api.post<ApiResponse<ResourceRecord>>(
+        endpoint,
+        payload,
+      );
       return response.data.data;
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: resourceKeys.list(endpoint) });
+      await queryClient.invalidateQueries({
+        queryKey: resourceKeys.list(endpoint),
+      });
     },
   });
 };
@@ -36,7 +41,10 @@ export const useUpdateResourceMutation = (endpoint: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (params: { id: string; payload: Record<string, unknown> }) => {
+    mutationFn: async (params: {
+      id: string;
+      payload: Record<string, unknown>;
+    }) => {
       const response = await api.put<ApiResponse<ResourceRecord>>(
         `${endpoint}/${params.id}`,
         params.payload,
@@ -44,7 +52,9 @@ export const useUpdateResourceMutation = (endpoint: string) => {
       return response.data.data;
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: resourceKeys.list(endpoint) });
+      await queryClient.invalidateQueries({
+        queryKey: resourceKeys.list(endpoint),
+      });
     },
   });
 };
@@ -57,7 +67,9 @@ export const useDeleteResourceMutation = (endpoint: string) => {
       await api.delete(`${endpoint}/${id}`);
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: resourceKeys.list(endpoint) });
+      await queryClient.invalidateQueries({
+        queryKey: resourceKeys.list(endpoint),
+      });
     },
   });
 };
@@ -65,7 +77,9 @@ export const useDeleteResourceMutation = (endpoint: string) => {
 export const useShowResourceMutation = (endpoint: string) =>
   useMutation({
     mutationFn: async (id: string) => {
-      const response = await api.get<ApiResponse<ResourceRecord>>(`${endpoint}/${id}`);
+      const response = await api.get<ApiResponse<ResourceRecord>>(
+        `${endpoint}/${id}`,
+      );
       return response.data.data;
     },
   });

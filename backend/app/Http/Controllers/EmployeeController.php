@@ -20,8 +20,8 @@ class EmployeeController extends Controller
 
     /**
      * Display a listing of the resource.
-        *
-        * @response 200 {"meta":{"status":"success","code":200,"message":"Data karyawan berhasil diambil"},"data":[{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efe9","nik":"EMP-2026-001","full_name":"Budi Setiawan","status":"active"}]}
+     *
+     * @response 200 {"meta":{"status":"success","code":200,"message":"Data karyawan berhasil diambil"},"data":[{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efe9","nik":"EMP-2026-001","full_name":"Budi Setiawan","status":"active"}]}
      */
     public function index()
     {
@@ -32,8 +32,8 @@ class EmployeeController extends Controller
 
     /**
      * Store a newly created resource in storage.
-        *
-        * @response 201 {"meta":{"status":"success","code":201,"message":"Karyawan baru berhasil ditambahkan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efe9","nik":"EMP-2026-001","full_name":"Budi Setiawan","status":"active"}}
+     *
+     * @response 201 {"meta":{"status":"success","code":201,"message":"Karyawan baru berhasil ditambahkan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efe9","nik":"EMP-2026-001","full_name":"Budi Setiawan","status":"active"}}
      */
     public function store(StoreEmployeeRequest $request)
     {
@@ -44,10 +44,10 @@ class EmployeeController extends Controller
 
     /**
      * Display the specified resource.
-        *
-        * @response 200 {"meta":{"status":"success","code":200,"message":"Detail karyawan ditemukan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efe9","nik":"EMP-2026-001","full_name":"Budi Setiawan","status":"active"}}
-    * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
-    * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
+     *
+     * @response 200 {"meta":{"status":"success","code":200,"message":"Detail karyawan ditemukan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efe9","nik":"EMP-2026-001","full_name":"Budi Setiawan","status":"active"}}
+     * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
+     * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
      */
     public function show(Employee $employee)
     {
@@ -57,10 +57,10 @@ class EmployeeController extends Controller
 
     /**
      * Update the specified resource in storage.
-        *
-        * @response 200 {"meta":{"status":"success","code":200,"message":"Data karyawan berhasil diperbarui"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efe9","nik":"EMP-2026-001","full_name":"Budi S.","status":"active"}}
-          * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
-          * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
+     *
+     * @response 200 {"meta":{"status":"success","code":200,"message":"Data karyawan berhasil diperbarui"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efe9","nik":"EMP-2026-001","full_name":"Budi S.","status":"active"}}
+     * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
+     * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
      */
     public function update(StoreEmployeeRequest $request, Employee $employee)
     {
@@ -71,10 +71,10 @@ class EmployeeController extends Controller
 
     /**
      * Remove the specified resource from storage.
-        *
-        * @response 200 {"meta":{"status":"success","code":200,"message":"Karyawan berhasil dihapus (Soft Delete)"},"data":null}
-          * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
-          * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
+     *
+     * @response 200 {"meta":{"status":"success","code":200,"message":"Karyawan berhasil dihapus (Soft Delete)"},"data":null}
+     * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
+     * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
      */
     public function destroy(Employee $employee)
     {

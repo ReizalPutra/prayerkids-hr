@@ -20,8 +20,8 @@ class LeaveRequestController extends Controller
 
     /**
      * Display a listing of the resource.
-        *
-        * @response 200 {"meta":{"status":"success","code":200,"message":"Data cuti berhasil diambil"},"data":[{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef60","employee_id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efe9","type":"annual","status":"pending"}]}
+     *
+     * @response 200 {"meta":{"status":"success","code":200,"message":"Data cuti berhasil diambil"},"data":[{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef60","employee_id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efe9","type":"annual","status":"pending"}]}
      */
     public function index()
     {
@@ -32,8 +32,8 @@ class LeaveRequestController extends Controller
 
     /**
      * Store a newly created resource in storage.
-        *
-        * @response 201 {"meta":{"status":"success","code":201,"message":"Pengajuan cuti baru berhasil ditambahkan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef60","employee_id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efe9","type":"annual","status":"pending"}}
+     *
+     * @response 201 {"meta":{"status":"success","code":201,"message":"Pengajuan cuti baru berhasil ditambahkan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef60","employee_id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efe9","type":"annual","status":"pending"}}
      */
     public function store(StoreLeaveRequestRequest $request)
     {
@@ -44,10 +44,10 @@ class LeaveRequestController extends Controller
 
     /**
      * Display the specified resource.
-        *
-        * @response 200 {"meta":{"status":"success","code":200,"message":"Detail cuti ditemukan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef60","type":"annual","status":"pending"}}
-          * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
-          * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
+     *
+     * @response 200 {"meta":{"status":"success","code":200,"message":"Detail cuti ditemukan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef60","type":"annual","status":"pending"}}
+     * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
+     * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
      */
     public function show(LeaveRequest $leaveRequest)
     {
@@ -57,10 +57,10 @@ class LeaveRequestController extends Controller
 
     /**
      * Update the specified resource in storage.
-        *
-        * @response 200 {"meta":{"status":"success","code":200,"message":"Data cuti berhasil diperbarui"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef60","status":"approved"}}
-          * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
-          * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
+     *
+     * @response 200 {"meta":{"status":"success","code":200,"message":"Data cuti berhasil diperbarui"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef60","status":"approved"}}
+     * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
+     * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
      */
     public function update(StoreLeaveRequestRequest $request, LeaveRequest $leaveRequest)
     {
@@ -71,10 +71,10 @@ class LeaveRequestController extends Controller
 
     /**
      * Remove the specified resource from storage.
-        *
-        * @response 200 {"meta":{"status":"success","code":200,"message":"Data cuti berhasil dihapus"},"data":null}
-          * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
-          * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
+     *
+     * @response 200 {"meta":{"status":"success","code":200,"message":"Data cuti berhasil dihapus"},"data":null}
+     * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
+     * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
      */
     public function destroy(LeaveRequest $leaveRequest)
     {

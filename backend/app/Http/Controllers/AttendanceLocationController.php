@@ -20,8 +20,8 @@ class AttendanceLocationController extends Controller
 
     /**
      * Display a listing of the resource.
-        *
-        * @response 200 {"meta":{"status":"success","code":200,"message":"Data lokasi berhasil diambil"},"data":[{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef30","name":"Kantor Pusat","latitude":-6.2009,"longitude":106.8166,"radius_meter":100}]}
+     *
+     * @response 200 {"meta":{"status":"success","code":200,"message":"Data lokasi berhasil diambil"},"data":[{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef30","name":"Kantor Pusat","latitude":-6.2009,"longitude":106.8166,"radius_meter":100}]}
      */
     public function index()
     {
@@ -40,8 +40,8 @@ class AttendanceLocationController extends Controller
 
     /**
      * Store a newly created resource in storage.
-        *
-        * @response 201 {"meta":{"status":"success","code":201,"message":"Lokasi baru berhasil ditambahkan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef30","name":"Kantor Pusat","latitude":-6.2009,"longitude":106.8166,"radius_meter":100}}
+     *
+     * @response 201 {"meta":{"status":"success","code":201,"message":"Lokasi baru berhasil ditambahkan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef30","name":"Kantor Pusat","latitude":-6.2009,"longitude":106.8166,"radius_meter":100}}
      */
     public function store(StoreLocationRequest $request)
     {
@@ -52,10 +52,10 @@ class AttendanceLocationController extends Controller
 
     /**
      * Display the specified resource.
-        *
-        * @response 200 {"meta":{"status":"success","code":200,"message":"Detail lokasi ditemukan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef30","name":"Kantor Pusat","latitude":-6.2009,"longitude":106.8166,"radius_meter":100}}
-        * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
-        * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
+     *
+     * @response 200 {"meta":{"status":"success","code":200,"message":"Detail lokasi ditemukan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef30","name":"Kantor Pusat","latitude":-6.2009,"longitude":106.8166,"radius_meter":100}}
+     * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
+     * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
      */
     public function show(AttendanceLocation $attendanceLocation)
     {
@@ -73,10 +73,10 @@ class AttendanceLocationController extends Controller
 
     /**
      * Update the specified resource in storage.
-        *
-        * @response 200 {"meta":{"status":"success","code":200,"message":"Data lokasi berhasil diperbarui"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef30","name":"Kantor Cabang","latitude":-6.2101,"longitude":106.8202,"radius_meter":120}}
-          * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
-          * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
+     *
+     * @response 200 {"meta":{"status":"success","code":200,"message":"Data lokasi berhasil diperbarui"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef30","name":"Kantor Cabang","latitude":-6.2101,"longitude":106.8202,"radius_meter":120}}
+     * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
+     * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
      */
     public function update(StoreLocationRequest $request, AttendanceLocation $attendanceLocation)
     {
@@ -87,10 +87,10 @@ class AttendanceLocationController extends Controller
 
     /**
      * Remove the specified resource from storage.
-        *
-        * @response 200 {"meta":{"status":"success","code":200,"message":"Lokasi berhasil dihapus (Soft Delete)"},"data":null}
-          * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
-          * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
+     *
+     * @response 200 {"meta":{"status":"success","code":200,"message":"Lokasi berhasil dihapus (Soft Delete)"},"data":null}
+     * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
+     * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
      */
     public function destroy(AttendanceLocation $attendanceLocation)
     {

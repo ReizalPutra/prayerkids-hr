@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import {
   getApiErrorMessage,
@@ -13,12 +14,32 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { LayoutDashboard, Users, LogOut } from "lucide-react";
+import { LayoutDashboard, Users, LogOut, Moon, Sun } from "lucide-react";
+import { resourceConfigs } from "@/features/resources/resource-config";
 
 function DashboardLayout() {
   const navigate = useNavigate();
   const meQuery = useMeQuery();
   const logoutMutation = useLogoutMutation();
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const storedTheme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const enableDark = storedTheme ? storedTheme === "dark" : prefersDark;
+
+    root.classList.toggle("dark", enableDark);
+    setIsDark(enableDark);
+  }, []);
+
+  const toggleTheme = () => {
+    const root = document.documentElement;
+    const next = !isDark;
+    root.classList.toggle("dark", next);
+    localStorage.setItem("theme", next ? "dark" : "light");
+    setIsDark(next);
+  };
 
   const handleLogout = async () => {
     await logoutMutation.mutateAsync();
@@ -31,10 +52,14 @@ function DashboardLayout() {
         <Card className="mx-auto max-w-xl">
           <CardHeader>
             <CardTitle>Memuat Dashboard</CardTitle>
-            <CardDescription>Sedang mengambil data pengguna aktif.</CardDescription>
+            <CardDescription>
+              Sedang mengambil data pengguna aktif.
+            </CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">Mohon tunggu sebentar...</p>
+            <p className="text-sm text-muted-foreground">
+              Mohon tunggu sebentar...
+            </p>
           </CardContent>
         </Card>
       </div>
@@ -52,7 +77,10 @@ function DashboardLayout() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button variant="outline" onClick={() => navigate("/login", { replace: true })}>
+            <Button
+              variant="outline"
+              onClick={() => navigate("/login", { replace: true })}
+            >
               Kembali ke Login
             </Button>
           </CardContent>
@@ -80,7 +108,9 @@ function DashboardLayout() {
       <div className="mx-auto grid min-h-screen max-w-7xl grid-cols-1 lg:grid-cols-[260px_1fr]">
         <aside className="border-b border-border bg-background/80 p-4 backdrop-blur lg:border-r lg:border-b-0">
           <div className="mb-4 rounded-lg border border-border bg-background p-4">
-            <p className="text-xs uppercase tracking-wide text-muted-foreground">Prayerkids HR</p>
+            <p className="text-xs uppercase tracking-wide text-muted-foreground">
+              Prayerkids HR
+            </p>
             <h2 className="mt-1 text-lg font-semibold">Admin Panel</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               {user.name} ({user.role})
@@ -88,18 +118,39 @@ function DashboardLayout() {
           </div>
 
           <nav className="space-y-2">
-            <Button asChild variant="ghost" className="w-full justify-start gap-2">
+            <Button
+              asChild
+              variant="ghost"
+              className="w-full justify-start gap-2"
+            >
               <NavLink to="/dashboard">
                 <LayoutDashboard className="size-4" />
                 Dashboard
               </NavLink>
             </Button>
-            <Button asChild variant="ghost" className="w-full justify-start gap-2">
+            <Button
+              asChild
+              variant="ghost"
+              className="w-full justify-start gap-2"
+            >
               <NavLink to="/employees">
                 <Users className="size-4" />
                 Employees
               </NavLink>
             </Button>
+
+            <Separator className="my-2" />
+
+            {resourceConfigs.map((resource) => (
+              <Button
+                key={resource.key}
+                asChild
+                variant="ghost"
+                className="w-full justify-start gap-2"
+              >
+                <NavLink to={`/resources/${resource.key}`}>{resource.title}</NavLink>
+              </Button>
+            ))}
           </nav>
 
           <Separator className="my-4" />
@@ -117,9 +168,16 @@ function DashboardLayout() {
         </aside>
 
         <div className="flex min-h-screen flex-col">
-          <header className="border-b border-border bg-background/80 px-6 py-4 backdrop-blur">
-            <p className="text-sm text-muted-foreground">Selamat datang kembali</p>
-            <h1 className="text-xl font-semibold">Sistem HR Prayerkids</h1>
+          <header className="flex items-center justify-between border-b border-border bg-background/80 px-6 py-4 backdrop-blur">
+            <div>
+              <p className="text-sm text-muted-foreground">Selamat datang kembali</p>
+              <h1 className="text-xl font-semibold">Sistem HR Prayerkids</h1>
+            </div>
+
+            <Button type="button" variant="outline" size="sm" onClick={toggleTheme}>
+              {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}
+              {isDark ? "Light" : "Dark"}
+            </Button>
           </header>
 
           <main className="flex-1 p-6">

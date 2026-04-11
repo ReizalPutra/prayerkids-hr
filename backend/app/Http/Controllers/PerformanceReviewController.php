@@ -20,8 +20,8 @@ class PerformanceReviewController extends Controller
 
     /**
      * Display a listing of the resource.
-        *
-        * @response 200 {"meta":{"status":"success","code":200,"message":"Data review performa berhasil diambil"},"data":[{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef80","employee_id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efe9","review_period":"Q1-2026","final_score":89}]}
+     *
+     * @response 200 {"meta":{"status":"success","code":200,"message":"Data review performa berhasil diambil"},"data":[{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef80","employee_id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efe9","review_period":"Q1-2026","final_score":89}]}
      */
     public function index()
     {
@@ -32,8 +32,8 @@ class PerformanceReviewController extends Controller
 
     /**
      * Store a newly created resource in storage.
-        *
-        * @response 201 {"meta":{"status":"success","code":201,"message":"Review performa baru berhasil ditambahkan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef80","review_period":"Q1-2026","final_score":89}}
+     *
+     * @response 201 {"meta":{"status":"success","code":201,"message":"Review performa baru berhasil ditambahkan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef80","review_period":"Q1-2026","final_score":89}}
      */
     public function store(StorePerformanceReviewRequest $request)
     {
@@ -44,10 +44,10 @@ class PerformanceReviewController extends Controller
 
     /**
      * Display the specified resource.
-        *
-        * @response 200 {"meta":{"status":"success","code":200,"message":"Detail review performa ditemukan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef80","review_period":"Q1-2026","final_score":89}}
-            * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
-            * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
+     *
+     * @response 200 {"meta":{"status":"success","code":200,"message":"Detail review performa ditemukan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef80","review_period":"Q1-2026","final_score":89}}
+     * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
+     * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
      */
     public function show(PerformanceReview $performanceReview)
     {
@@ -57,10 +57,10 @@ class PerformanceReviewController extends Controller
 
     /**
      * Update the specified resource in storage.
-        *
-        * @response 200 {"meta":{"status":"success","code":200,"message":"Data review performa berhasil diperbarui"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef80","final_score":91}}
-          * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
-          * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
+     *
+     * @response 200 {"meta":{"status":"success","code":200,"message":"Data review performa berhasil diperbarui"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef80","final_score":91}}
+     * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
+     * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
      */
     public function update(StorePerformanceReviewRequest $request, PerformanceReview $performanceReview)
     {
@@ -71,10 +71,10 @@ class PerformanceReviewController extends Controller
 
     /**
      * Remove the specified resource from storage.
-        *
-        * @response 200 {"meta":{"status":"success","code":200,"message":"Data review performa berhasil dihapus"},"data":null}
-          * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
-          * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
+     *
+     * @response 200 {"meta":{"status":"success","code":200,"message":"Data review performa berhasil dihapus"},"data":null}
+     * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
+     * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
      */
     public function destroy(PerformanceReview $performanceReview)
     {

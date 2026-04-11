@@ -20,15 +20,15 @@ class DivisionController extends Controller
 
     /**
      * Display a listing of the resource.
-        *
-        * @response 200 {
-        *  "meta": {"status": "success", "code": 200, "message": "Data divisi berhasil diambil"},
-        *  "data": [{"id": "019d8f4d-38a7-72b3-aa65-20c9d3d0ef10", "name": "Human Resources", "description": "Mengelola SDM"}]
-        * }
-        * @response 401 {
-        *  "meta": {"code": 401, "status": "error", "message": "Unauthenticated."},
-        *  "errors": null
-        * }
+     *
+     * @response 200 {
+     *  "meta": {"status": "success", "code": 200, "message": "Data divisi berhasil diambil"},
+     *  "data": [{"id": "019d8f4d-38a7-72b3-aa65-20c9d3d0ef10", "name": "Human Resources", "description": "Mengelola SDM"}]
+     * }
+     * @response 401 {
+     *  "meta": {"code": 401, "status": "error", "message": "Unauthenticated."},
+     *  "errors": null
+     * }
      */
     public function index()
     {
@@ -46,15 +46,15 @@ class DivisionController extends Controller
 
     /**
      * Store a newly created resource in storage.
-        *
-        * @response 201 {
-        *  "meta": {"status": "success", "code": 201, "message": "Divisi baru berhasil ditambahkan"},
-        *  "data": {"id": "019d8f4d-38a7-72b3-aa65-20c9d3d0ef10", "name": "Human Resources", "description": "Mengelola SDM"}
-        * }
-        * @response 422 {
-        *  "meta": {"code": 422, "status": "error", "message": "Validasi request gagal."},
-        *  "errors": {"name": ["The name has already been taken."]}
-        * }
+     *
+     * @response 201 {
+     *  "meta": {"status": "success", "code": 201, "message": "Divisi baru berhasil ditambahkan"},
+     *  "data": {"id": "019d8f4d-38a7-72b3-aa65-20c9d3d0ef10", "name": "Human Resources", "description": "Mengelola SDM"}
+     * }
+     * @response 422 {
+     *  "meta": {"code": 422, "status": "error", "message": "Validasi request gagal."},
+     *  "errors": {"name": ["The name has already been taken."]}
+     * }
      */
     public function store(StoreDivisionRequest $request)
     {
@@ -65,19 +65,19 @@ class DivisionController extends Controller
 
     /**
      * Display the specified resource.
-        *
-        * @response 200 {
-        *  "meta": {"status": "success", "code": 200, "message": "Detail divisi ditemukan"},
-        *  "data": {"id": "019d8f4d-38a7-72b3-aa65-20c9d3d0ef10", "name": "Human Resources", "description": "Mengelola SDM"}
-        * }
-        * @response 403 {
-        *  "meta": {"code": 403, "status": "error", "message": "Anda tidak memiliki izin untuk mengakses resource ini."},
-        *  "errors": null
-        * }
-        * @response 404 {
-        *  "meta": {"code": 404, "status": "error", "message": "Data yang diminta tidak ditemukan."},
-        *  "errors": null
-        * }
+     *
+     * @response 200 {
+     *  "meta": {"status": "success", "code": 200, "message": "Detail divisi ditemukan"},
+     *  "data": {"id": "019d8f4d-38a7-72b3-aa65-20c9d3d0ef10", "name": "Human Resources", "description": "Mengelola SDM"}
+     * }
+     * @response 403 {
+     *  "meta": {"code": 403, "status": "error", "message": "Anda tidak memiliki izin untuk mengakses resource ini."},
+     *  "errors": null
+     * }
+     * @response 404 {
+     *  "meta": {"code": 404, "status": "error", "message": "Data yang diminta tidak ditemukan."},
+     *  "errors": null
+     * }
      */
     public function show(Division $division)
     {
@@ -95,23 +95,23 @@ class DivisionController extends Controller
 
     /**
      * Update the specified resource in storage.
-        *
-        * @response 200 {
-        *  "meta": {"status": "success", "code": 200, "message": "Data divisi berhasil diperbarui"},
-        *  "data": {"id": "019d8f4d-38a7-72b3-aa65-20c9d3d0ef10", "name": "People Operations", "description": "Mengelola SDM"}
-        * }
-        * @response 403 {
-        *  "meta": {"code": 403, "status": "error", "message": "Anda tidak memiliki izin untuk mengakses resource ini."},
-        *  "errors": null
-        * }
-        * @response 404 {
-        *  "meta": {"code": 404, "status": "error", "message": "Data yang diminta tidak ditemukan."},
-        *  "errors": null
-        * }
-        * @response 422 {
-        *  "meta": {"code": 422, "status": "error", "message": "Validasi request gagal."},
-        *  "errors": {"name": ["The name field is required."]}
-        * }
+     *
+     * @response 200 {
+     *  "meta": {"status": "success", "code": 200, "message": "Data divisi berhasil diperbarui"},
+     *  "data": {"id": "019d8f4d-38a7-72b3-aa65-20c9d3d0ef10", "name": "People Operations", "description": "Mengelola SDM"}
+     * }
+     * @response 403 {
+     *  "meta": {"code": 403, "status": "error", "message": "Anda tidak memiliki izin untuk mengakses resource ini."},
+     *  "errors": null
+     * }
+     * @response 404 {
+     *  "meta": {"code": 404, "status": "error", "message": "Data yang diminta tidak ditemukan."},
+     *  "errors": null
+     * }
+     * @response 422 {
+     *  "meta": {"code": 422, "status": "error", "message": "Validasi request gagal."},
+     *  "errors": {"name": ["The name field is required."]}
+     * }
      */
     public function update(StoreDivisionRequest $request, Division $division)
     {
@@ -122,19 +122,19 @@ class DivisionController extends Controller
 
     /**
      * Remove the specified resource from storage.
-        *
-        * @response 200 {
-        *  "meta": {"status": "success", "code": 200, "message": "Divisi berhasil dihapus (Soft Delete)"},
-        *  "data": null
-        * }
-        * @response 403 {
-        *  "meta": {"code": 403, "status": "error", "message": "Anda tidak memiliki izin untuk mengakses resource ini."},
-        *  "errors": null
-        * }
-        * @response 404 {
-        *  "meta": {"code": 404, "status": "error", "message": "Data yang diminta tidak ditemukan."},
-        *  "errors": null
-        * }
+     *
+     * @response 200 {
+     *  "meta": {"status": "success", "code": 200, "message": "Divisi berhasil dihapus (Soft Delete)"},
+     *  "data": null
+     * }
+     * @response 403 {
+     *  "meta": {"code": 403, "status": "error", "message": "Anda tidak memiliki izin untuk mengakses resource ini."},
+     *  "errors": null
+     * }
+     * @response 404 {
+     *  "meta": {"code": 404, "status": "error", "message": "Data yang diminta tidak ditemukan."},
+     *  "errors": null
+     * }
      */
     public function destroy(Division $division)
     {

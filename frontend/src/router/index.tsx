@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "../pages/LoginPage";
 import DashboardPage from "../pages/DashboardPage";
 import EmployeePage from "../pages/EmployeePage";
+import ResourceCrudPage from "../pages/ResourceCrudPage";
 import DashboardLayout from "../shared/layouts/DahsboardLayout";
 import type { ReactNode } from "react";
 
@@ -49,6 +50,7 @@ function AppRouter() {
         {/* Anak-anak Dashboard */}
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/employees" element={<EmployeePage />} />
+        <Route path="/resources/:resourceKey" element={<ResourceCrudPage />} />
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
       </Route>
 

@@ -9,7 +9,13 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Building2, Users, ShieldCheck, ArrowRight } from "lucide-react";
+import {
+  Building2,
+  Users,
+  ShieldCheck,
+  ArrowRight,
+  BarChart3,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 
 function DashboardPage() {
@@ -17,6 +23,8 @@ function DashboardPage() {
   const divisionsQuery = useDivisionsQuery();
 
   const totalDivisions = divisionsQuery.data?.length ?? 0;
+  const activityData = [42, 58, 35, 66, 73, 51, 80];
+  const peakActivity = Math.max(...activityData);
 
   return (
     <section className="space-y-6">
@@ -31,12 +39,16 @@ function DashboardPage() {
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0">
-            <CardTitle className="text-sm font-medium">Pengguna Aktif</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Pengguna Aktif
+            </CardTitle>
             <Users className="size-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <p className="text-xl font-semibold">{meQuery.data?.name ?? "-"}</p>
-            <p className="text-xs text-muted-foreground">Role: {meQuery.data?.role ?? "-"}</p>
+            <p className="text-xs text-muted-foreground">
+              Role: {meQuery.data?.role ?? "-"}
+            </p>
           </CardContent>
         </Card>
 
@@ -46,9 +58,13 @@ function DashboardPage() {
             <Building2 className="size-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <p className="text-xl font-semibold">{divisionsQuery.isSuccess ? totalDivisions : "-"}</p>
+            <p className="text-xl font-semibold">
+              {divisionsQuery.isSuccess ? totalDivisions : "-"}
+            </p>
             <p className="text-xs text-muted-foreground">
-              {divisionsQuery.isLoading ? "Memuat data..." : "Sumber: /api/divisions"}
+              {divisionsQuery.isLoading
+                ? "Memuat data..."
+                : "Sumber: /api/divisions"}
             </p>
           </CardContent>
         </Card>
@@ -59,8 +75,12 @@ function DashboardPage() {
             <ShieldCheck className="size-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <p className="text-xl font-semibold">{meQuery.isSuccess ? "Valid" : "Unknown"}</p>
-            <p className="text-xs text-muted-foreground">Token Bearer tersimpan di browser</p>
+            <p className="text-xl font-semibold">
+              {meQuery.isSuccess ? "Valid" : "Unknown"}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Token Bearer tersimpan di browser
+            </p>
           </CardContent>
         </Card>
 
@@ -70,8 +90,14 @@ function DashboardPage() {
             <ArrowRight className="size-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <p className="text-xl font-semibold">{meQuery.isError || divisionsQuery.isError ? "Perlu cek" : "Sehat"}</p>
-            <p className="text-xs text-muted-foreground">Monitoring sederhana endpoint utama</p>
+            <p className="text-xl font-semibold">
+              {meQuery.isError || divisionsQuery.isError
+                ? "Perlu cek"
+                : "Sehat"}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Monitoring sederhana endpoint utama
+            </p>
           </CardContent>
         </Card>
       </div>
@@ -80,7 +106,9 @@ function DashboardPage() {
         <Card>
           <CardHeader>
             <CardTitle>Aksi Cepat</CardTitle>
-            <CardDescription>Navigasi ke area yang sering dipakai admin.</CardDescription>
+            <CardDescription>
+              Navigasi ke area yang sering dipakai admin.
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <Button asChild className="w-full justify-between">
@@ -89,8 +117,16 @@ function DashboardPage() {
                 <ArrowRight className="size-4" />
               </Link>
             </Button>
-            <Button asChild variant="outline" className="w-full justify-between">
-              <a href="http://localhost:8000/docs" target="_blank" rel="noreferrer">
+            <Button
+              asChild
+              variant="outline"
+              className="w-full justify-between"
+            >
+              <a
+                href="http://localhost:8000/docs"
+                target="_blank"
+                rel="noreferrer"
+              >
                 Buka API Docs (Scribe)
                 <ArrowRight className="size-4" />
               </a>
@@ -101,7 +137,9 @@ function DashboardPage() {
         <Card>
           <CardHeader>
             <CardTitle>Info Integrasi</CardTitle>
-            <CardDescription>Ringkasan endpoint yang sedang dipakai frontend.</CardDescription>
+            <CardDescription>
+              Ringkasan endpoint yang sedang dipakai frontend.
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <div>
@@ -121,6 +159,35 @@ function DashboardPage() {
           </CardContent>
         </Card>
       </div>
+
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle>Aktivitas Mingguan</CardTitle>
+              <CardDescription>
+                Visual cepat trafik penggunaan modul HR minggu ini.
+              </CardDescription>
+            </div>
+            <BarChart3 className="size-5 text-muted-foreground" />
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-7 gap-2">
+            {activityData.map((value, index) => (
+              <div key={`${index}-${value}`} className="space-y-2 text-center">
+                <div className="flex h-36 items-end rounded-md bg-muted/50 p-1">
+                  <div
+                    className="w-full rounded-sm bg-primary/80"
+                    style={{ height: `${(value / peakActivity) * 100}%` }}
+                  />
+                </div>
+                <p className="text-xs text-muted-foreground">H{index + 1}</p>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </section>
   );
 }

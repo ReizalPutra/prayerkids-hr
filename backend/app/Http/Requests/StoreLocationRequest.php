@@ -28,4 +28,34 @@ class StoreLocationRequest extends BaseApiRequest
             'is_active' => 'nullable|boolean',
         ];
     }
+
+    public function bodyParameters(): array
+    {
+        return [
+            'name' => [
+                'description' => 'Nama lokasi presensi yang unik.',
+                'example' => 'Kantor Pusat',
+            ],
+            'latitude' => [
+                'description' => 'Koordinat latitude lokasi.',
+                'example' => -6.2009,
+            ],
+            'longitude' => [
+                'description' => 'Koordinat longitude lokasi.',
+                'example' => 106.8166,
+            ],
+            'radius_meter' => [
+                'description' => 'Radius toleransi presensi dalam meter.',
+                'example' => 100,
+            ],
+            'qr_token' => [
+                'description' => 'Token QR untuk presensi berbasis QR.',
+                'example' => 'LOC-HQ-QR-001',
+            ],
+            'is_active' => [
+                'description' => 'Status aktif lokasi.',
+                'example' => true,
+            ],
+        ];
+    }
 }

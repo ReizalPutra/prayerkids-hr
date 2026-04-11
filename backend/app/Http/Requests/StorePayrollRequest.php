@@ -31,4 +31,19 @@ class StorePayrollRequest extends BaseApiRequest
             'payment_date' => 'nullable|date',
         ];
     }
+
+    public function bodyParameters(): array
+    {
+        return [
+            'employee_id' => ['description' => 'ID karyawan penerima gaji.', 'example' => '019d8f4d-38a7-72b3-aa65-20c9d3d0efe9'],
+            'month' => ['description' => 'Periode bulan payroll.', 'example' => 'April'],
+            'year' => ['description' => 'Periode tahun payroll.', 'example' => 2026],
+            'basic_salary_snapshot' => ['description' => 'Snapshot gaji pokok saat payroll diproses.', 'example' => 6000000],
+            'allowance_details' => ['description' => 'Rincian tunjangan (object key-value).', 'example' => ['transport' => 500000, 'meal' => 300000]],
+            'deduction_details' => ['description' => 'Rincian potongan (object key-value).', 'example' => ['bpjs' => 200000]],
+            'net_salary' => ['description' => 'Gaji bersih yang dibayarkan.', 'example' => 6600000],
+            'payment_status' => ['description' => 'Status pembayaran: paid atau pending.', 'example' => 'pending'],
+            'payment_date' => ['description' => 'Tanggal pembayaran.', 'example' => '2026-04-30'],
+        ];
+    }
 }

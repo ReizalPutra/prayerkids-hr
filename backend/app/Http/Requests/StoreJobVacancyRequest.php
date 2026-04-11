@@ -28,4 +28,16 @@ class StoreJobVacancyRequest extends BaseApiRequest
             'expired_date' => 'required|date',
         ];
     }
+
+    public function bodyParameters(): array
+    {
+        return [
+            'position_id' => ['description' => 'ID jabatan untuk lowongan.', 'example' => '019d8f4d-38a7-72b3-aa65-20c9d3d0ef11'],
+            'title' => ['description' => 'Judul lowongan kerja.', 'example' => 'Backend Developer'],
+            'description' => ['description' => 'Deskripsi lowongan.', 'example' => 'Mengembangkan dan memelihara API HRIS.'],
+            'requirements' => ['description' => 'Kualifikasi/kebutuhan kandidat.', 'example' => 'Minimal 2 tahun pengalaman Laravel.'],
+            'status' => ['description' => 'Status lowongan: open atau closed.', 'example' => 'open'],
+            'expired_date' => ['description' => 'Tanggal kadaluarsa lowongan.', 'example' => '2026-06-30'],
+        ];
+    }
 }

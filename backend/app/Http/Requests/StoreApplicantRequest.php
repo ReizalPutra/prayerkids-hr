@@ -28,4 +28,16 @@ class StoreApplicantRequest extends BaseApiRequest
             'stage' => 'nullable|in:applied,screening,interview,offering,hired,rejected',
         ];
     }
+
+    public function bodyParameters(): array
+    {
+        return [
+            'job_vacancy_id' => ['description' => 'ID lowongan yang dilamar.', 'example' => '019d8f4d-38a7-72b3-aa65-20c9d3d0efa1'],
+            'name' => ['description' => 'Nama lengkap pelamar.', 'example' => 'Siti Aminah'],
+            'email' => ['description' => 'Email pelamar.', 'example' => 'siti.aminah@example.com'],
+            'phone' => ['description' => 'Nomor telepon pelamar.', 'example' => '081234567899'],
+            'resume_path' => ['description' => 'Path file CV/resume.', 'example' => 'resumes/siti-aminah.pdf'],
+            'stage' => ['description' => 'Tahap proses rekrutmen.', 'example' => 'screening'],
+        ];
+    }
 }

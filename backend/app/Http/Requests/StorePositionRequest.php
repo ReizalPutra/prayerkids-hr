@@ -24,4 +24,18 @@ class StorePositionRequest extends BaseApiRequest
             'base_salary' => 'required|numeric|min:0',
         ];
     }
+
+    public function bodyParameters(): array
+    {
+        return [
+            'title' => [
+                'description' => 'Nama jabatan yang unik.',
+                'example' => 'HR Officer',
+            ],
+            'base_salary' => [
+                'description' => 'Gaji pokok default untuk jabatan ini.',
+                'example' => 5500000,
+            ],
+        ];
+    }
 }

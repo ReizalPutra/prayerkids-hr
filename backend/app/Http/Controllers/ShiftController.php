@@ -6,12 +6,22 @@ use App\Http\Requests\StoreShiftRequest;
 use App\Models\Shift;
 use App\Contracts\Services\ShiftServiceInterface;
 
+/**
+ * @group Operational - Shifts
+ * API pengelolaan data shift kerja.
+ *
+ * @response 401 {"meta":{"code":401,"status":"error","message":"Unauthenticated."},"errors":null}
+ * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
+ * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
+ */
 class ShiftController extends Controller
 {
     public function __construct(private readonly ShiftServiceInterface $shiftService) {}
 
     /**
      * Display a listing of the resource.
+        *
+        * @response 200 {"meta":{"status":"success","code":200,"message":"Data shift berhasil diambil"},"data":[{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef20","name":"Pagi","start_time":"08:00:00","end_time":"17:00:00"}]}
      */
     public function index()
     {
@@ -30,6 +40,9 @@ class ShiftController extends Controller
 
     /**
      * Store a newly created resource in storage.
+        *
+        * @response 201 {"meta":{"status":"success","code":201,"message":"Shift baru berhasil ditambahkan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef20","name":"Pagi","start_time":"08:00:00","end_time":"17:00:00"}}
+        * @response 422 {"meta":{"code":422,"status":"error","message":"Validasi request gagal."},"errors":{"name":["The name has already been taken."]}}
      */
     public function store(StoreShiftRequest $request)
     {
@@ -40,6 +53,10 @@ class ShiftController extends Controller
 
     /**
      * Display the specified resource.
+        *
+        * @response 200 {"meta":{"status":"success","code":200,"message":"Detail shift ditemukan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef20","name":"Pagi","start_time":"08:00:00","end_time":"17:00:00"}}
+        * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
+        * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
      */
     public function show(Shift $shift)
     {
@@ -57,6 +74,10 @@ class ShiftController extends Controller
 
     /**
      * Update the specified resource in storage.
+        *
+        * @response 200 {"meta":{"status":"success","code":200,"message":"Data shift berhasil diperbarui"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef20","name":"Pagi (Updated)","start_time":"08:30:00","end_time":"17:30:00"}}
+          * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
+          * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
      */
     public function update(StoreShiftRequest $request, Shift $shift)
     {
@@ -67,6 +88,10 @@ class ShiftController extends Controller
 
     /**
      * Remove the specified resource from storage.
+        *
+        * @response 200 {"meta":{"status":"success","code":200,"message":"Shift berhasil dihapus (Soft Delete)"},"data":null}
+          * @response 403 {"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}
+          * @response 404 {"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}
      */
     public function destroy(Shift $shift)
     {

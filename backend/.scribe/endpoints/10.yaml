@@ -1,0 +1,497 @@
+name: 'HR Management - Performance Reviews'
+description: 'API pengelolaan penilaian performa karyawan.'
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/performanceReviews
+    metadata:
+      custom: []
+      groupName: 'HR Management - Performance Reviews'
+      groupDescription: 'API pengelolaan penilaian performa karyawan.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display a listing of the resource.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"meta":{"status":"success","code":200,"message":"Data review performa berhasil diambil"},"data":[{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef80","employee_id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efe9","review_period":"Q1-2026","final_score":89}]}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/performanceReviews
+    metadata:
+      custom: []
+      groupName: 'HR Management - Performance Reviews'
+      groupDescription: 'API pengelolaan penilaian performa karyawan.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Store a newly created resource in storage.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      employee_id:
+        custom: []
+        name: employee_id
+        description: 'ID karyawan yang dinilai. Must be a valid UUID. The <code>id</code> of an existing record in the employees table.'
+        required: true
+        example: 019d8f4d-38a7-72b3-aa65-20c9d3d0efe9
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      reviewer_id:
+        custom: []
+        name: reviewer_id
+        description: 'ID reviewer/penilai. Must be a valid UUID. The <code>id</code> of an existing record in the employees table.'
+        required: true
+        example: 019d8f4d-38a7-72b3-aa65-20c9d3d0ef90
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      review_period:
+        custom: []
+        name: review_period
+        description: 'Periode penilaian. Must not be greater than 255 characters.'
+        required: true
+        example: Q1-2026
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      score_discipline:
+        custom: []
+        name: score_discipline
+        description: 'Skor kedisiplinan (0-100). Must be at least 0. Must not be greater than 100.'
+        required: false
+        example: 88
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      note_discipline:
+        custom: []
+        name: note_discipline
+        description: 'Catatan kedisiplinan.'
+        required: false
+        example: 'Datang tepat waktu secara konsisten.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      score_target:
+        custom: []
+        name: score_target
+        description: 'Skor pencapaian target (0-100). Must be at least 0. Must not be greater than 100.'
+        required: false
+        example: 90
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      note_target:
+        custom: []
+        name: note_target
+        description: 'Catatan pencapaian target.'
+        required: false
+        example: 'Mencapai 95% KPI bulanan.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      final_score:
+        custom: []
+        name: final_score
+        description: 'Skor akhir performa. Must be at least 0. Must not be greater than 100.'
+        required: true
+        example: 89.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      is_locked:
+        custom: []
+        name: is_locked
+        description: 'Kunci hasil penilaian agar tidak bisa diubah.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      employee_id: 019d8f4d-38a7-72b3-aa65-20c9d3d0efe9
+      reviewer_id: 019d8f4d-38a7-72b3-aa65-20c9d3d0ef90
+      review_period: Q1-2026
+      score_discipline: 88
+      note_discipline: 'Datang tepat waktu secara konsisten.'
+      score_target: 90
+      note_target: 'Mencapai 95% KPI bulanan.'
+      final_score: 89.0
+      is_locked: false
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"meta":{"status":"success","code":201,"message":"Review performa baru berhasil ditambahkan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef80","review_period":"Q1-2026","final_score":89}}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/performanceReviews/{id}'
+    metadata:
+      custom: []
+      groupName: 'HR Management - Performance Reviews'
+      groupDescription: 'API pengelolaan penilaian performa karyawan.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display the specified resource.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the performanceReview.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"meta":{"status":"success","code":200,"message":"Detail review performa ditemukan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef80","review_period":"Q1-2026","final_score":89}}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'api/performanceReviews/{id}'
+    metadata:
+      custom: []
+      groupName: 'HR Management - Performance Reviews'
+      groupDescription: 'API pengelolaan penilaian performa karyawan.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update the specified resource in storage.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the performanceReview.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      employee_id:
+        custom: []
+        name: employee_id
+        description: 'ID karyawan yang dinilai. Must be a valid UUID. The <code>id</code> of an existing record in the employees table.'
+        required: true
+        example: 019d8f4d-38a7-72b3-aa65-20c9d3d0efe9
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      reviewer_id:
+        custom: []
+        name: reviewer_id
+        description: 'ID reviewer/penilai. Must be a valid UUID. The <code>id</code> of an existing record in the employees table.'
+        required: true
+        example: 019d8f4d-38a7-72b3-aa65-20c9d3d0ef90
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      review_period:
+        custom: []
+        name: review_period
+        description: 'Periode penilaian. Must not be greater than 255 characters.'
+        required: true
+        example: Q1-2026
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      score_discipline:
+        custom: []
+        name: score_discipline
+        description: 'Skor kedisiplinan (0-100). Must be at least 0. Must not be greater than 100.'
+        required: false
+        example: 88
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      note_discipline:
+        custom: []
+        name: note_discipline
+        description: 'Catatan kedisiplinan.'
+        required: false
+        example: 'Datang tepat waktu secara konsisten.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      score_target:
+        custom: []
+        name: score_target
+        description: 'Skor pencapaian target (0-100). Must be at least 0. Must not be greater than 100.'
+        required: false
+        example: 90
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      note_target:
+        custom: []
+        name: note_target
+        description: 'Catatan pencapaian target.'
+        required: false
+        example: 'Mencapai 95% KPI bulanan.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      final_score:
+        custom: []
+        name: final_score
+        description: 'Skor akhir performa. Must be at least 0. Must not be greater than 100.'
+        required: true
+        example: 89.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      is_locked:
+        custom: []
+        name: is_locked
+        description: 'Kunci hasil penilaian agar tidak bisa diubah.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      employee_id: 019d8f4d-38a7-72b3-aa65-20c9d3d0efe9
+      reviewer_id: 019d8f4d-38a7-72b3-aa65-20c9d3d0ef90
+      review_period: Q1-2026
+      score_discipline: 88
+      note_discipline: 'Datang tepat waktu secara konsisten.'
+      score_target: 90
+      note_target: 'Mencapai 95% KPI bulanan.'
+      final_score: 89.0
+      is_locked: false
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"meta":{"status":"success","code":200,"message":"Data review performa berhasil diperbarui"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef80","final_score":91}}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/performanceReviews/{id}'
+    metadata:
+      custom: []
+      groupName: 'HR Management - Performance Reviews'
+      groupDescription: 'API pengelolaan penilaian performa karyawan.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Remove the specified resource from storage.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the performanceReview.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"meta":{"status":"success","code":200,"message":"Data review performa berhasil dihapus"},"data":null}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

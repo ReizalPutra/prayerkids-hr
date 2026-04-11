@@ -1,0 +1,651 @@
+name: 'HR Management - Employees'
+description: 'API pengelolaan data karyawan.'
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/employees
+    metadata:
+      custom: []
+      groupName: 'HR Management - Employees'
+      groupDescription: 'API pengelolaan data karyawan.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display a listing of the resource.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"meta":{"status":"success","code":200,"message":"Data karyawan berhasil diambil"},"data":[{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efe9","nik":"EMP-2026-001","full_name":"Budi Setiawan","status":"active"}]}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/employees
+    metadata:
+      custom: []
+      groupName: 'HR Management - Employees'
+      groupDescription: 'API pengelolaan data karyawan.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Store a newly created resource in storage.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      user_id:
+        custom: []
+        name: user_id
+        description: 'ID user yang terhubung ke data karyawan. Must be a valid UUID. The <code>id</code> of an existing record in the users table.'
+        required: true
+        example: 019d8f4d-38a7-72b3-aa65-20c9d3d0efe9
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      nik:
+        custom: []
+        name: nik
+        description: 'Nomor induk karyawan (unik). Must not be greater than 50 characters.'
+        required: true
+        example: EMP-2026-001
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      full_name:
+        custom: []
+        name: full_name
+        description: 'Nama lengkap karyawan. Must not be greater than 255 characters.'
+        required: true
+        example: 'Budi Setiawan'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      division_id:
+        custom: []
+        name: division_id
+        description: 'ID divisi karyawan. Must be a valid UUID. The <code>id</code> of an existing record in the divisions table.'
+        required: false
+        example: 019d8f4d-38a7-72b3-aa65-20c9d3d0ef10
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      position_id:
+        custom: []
+        name: position_id
+        description: 'ID jabatan karyawan. Must be a valid UUID. The <code>id</code> of an existing record in the positions table.'
+        required: false
+        example: 019d8f4d-38a7-72b3-aa65-20c9d3d0ef11
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      phone:
+        custom: []
+        name: phone
+        description: 'Nomor telepon karyawan. Must not be greater than 20 characters.'
+        required: false
+        example: '081234567890'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      address:
+        custom: []
+        name: address
+        description: 'Alamat domisili karyawan.'
+        required: false
+        example: 'Jl. Melati No. 10, Jakarta'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      gender:
+        custom: []
+        name: gender
+        description: 'Jenis kelamin: L (Laki-laki) atau P (Perempuan).'
+        required: true
+        example: L
+        type: string
+        enumValues:
+          - L
+          - P
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      join_date:
+        custom: []
+        name: join_date
+        description: 'Tanggal mulai bekerja. Must be a valid date.'
+        required: true
+        example: '2026-01-10'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      contract_start_date:
+        custom: []
+        name: contract_start_date
+        description: 'Tanggal mulai kontrak. Must be a valid date.'
+        required: false
+        example: '2026-01-10'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      contract_end_date:
+        custom: []
+        name: contract_end_date
+        description: 'Tanggal akhir kontrak. Must be a valid date.'
+        required: false
+        example: '2027-01-09'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      contract_number:
+        custom: []
+        name: contract_number
+        description: 'Nomor dokumen kontrak.'
+        required: false
+        example: CTR-2026-001
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      leave_quota:
+        custom: []
+        name: leave_quota
+        description: 'Kuota cuti tahunan. Must be at least 0.'
+        required: false
+        example: 12
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      basic_salary:
+        custom: []
+        name: basic_salary
+        description: 'Gaji pokok karyawan. Must be at least 0.'
+        required: true
+        example: 6000000.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Status kepegawaian.'
+        required: false
+        example: active
+        type: string
+        enumValues:
+          - active
+          - resigned
+          - suspended
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      user_id: 019d8f4d-38a7-72b3-aa65-20c9d3d0efe9
+      nik: EMP-2026-001
+      full_name: 'Budi Setiawan'
+      division_id: 019d8f4d-38a7-72b3-aa65-20c9d3d0ef10
+      position_id: 019d8f4d-38a7-72b3-aa65-20c9d3d0ef11
+      phone: '081234567890'
+      address: 'Jl. Melati No. 10, Jakarta'
+      gender: L
+      join_date: '2026-01-10'
+      contract_start_date: '2026-01-10'
+      contract_end_date: '2027-01-09'
+      contract_number: CTR-2026-001
+      leave_quota: 12
+      basic_salary: 6000000.0
+      status: active
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"meta":{"status":"success","code":201,"message":"Karyawan baru berhasil ditambahkan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efe9","nik":"EMP-2026-001","full_name":"Budi Setiawan","status":"active"}}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/employees/{id}'
+    metadata:
+      custom: []
+      groupName: 'HR Management - Employees'
+      groupDescription: 'API pengelolaan data karyawan.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display the specified resource.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the employee.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"meta":{"status":"success","code":200,"message":"Detail karyawan ditemukan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efe9","nik":"EMP-2026-001","full_name":"Budi Setiawan","status":"active"}}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'api/employees/{id}'
+    metadata:
+      custom: []
+      groupName: 'HR Management - Employees'
+      groupDescription: 'API pengelolaan data karyawan.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update the specified resource in storage.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the employee.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      user_id:
+        custom: []
+        name: user_id
+        description: 'ID user yang terhubung ke data karyawan. Must be a valid UUID. The <code>id</code> of an existing record in the users table.'
+        required: true
+        example: 019d8f4d-38a7-72b3-aa65-20c9d3d0efe9
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      nik:
+        custom: []
+        name: nik
+        description: 'Nomor induk karyawan (unik). Must not be greater than 50 characters.'
+        required: true
+        example: EMP-2026-001
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      full_name:
+        custom: []
+        name: full_name
+        description: 'Nama lengkap karyawan. Must not be greater than 255 characters.'
+        required: true
+        example: 'Budi Setiawan'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      division_id:
+        custom: []
+        name: division_id
+        description: 'ID divisi karyawan. Must be a valid UUID. The <code>id</code> of an existing record in the divisions table.'
+        required: false
+        example: 019d8f4d-38a7-72b3-aa65-20c9d3d0ef10
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      position_id:
+        custom: []
+        name: position_id
+        description: 'ID jabatan karyawan. Must be a valid UUID. The <code>id</code> of an existing record in the positions table.'
+        required: false
+        example: 019d8f4d-38a7-72b3-aa65-20c9d3d0ef11
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      phone:
+        custom: []
+        name: phone
+        description: 'Nomor telepon karyawan. Must not be greater than 20 characters.'
+        required: false
+        example: '081234567890'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      address:
+        custom: []
+        name: address
+        description: 'Alamat domisili karyawan.'
+        required: false
+        example: 'Jl. Melati No. 10, Jakarta'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      gender:
+        custom: []
+        name: gender
+        description: 'Jenis kelamin: L (Laki-laki) atau P (Perempuan).'
+        required: true
+        example: L
+        type: string
+        enumValues:
+          - L
+          - P
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      join_date:
+        custom: []
+        name: join_date
+        description: 'Tanggal mulai bekerja. Must be a valid date.'
+        required: true
+        example: '2026-01-10'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      contract_start_date:
+        custom: []
+        name: contract_start_date
+        description: 'Tanggal mulai kontrak. Must be a valid date.'
+        required: false
+        example: '2026-01-10'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      contract_end_date:
+        custom: []
+        name: contract_end_date
+        description: 'Tanggal akhir kontrak. Must be a valid date.'
+        required: false
+        example: '2027-01-09'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      contract_number:
+        custom: []
+        name: contract_number
+        description: 'Nomor dokumen kontrak.'
+        required: false
+        example: CTR-2026-001
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      leave_quota:
+        custom: []
+        name: leave_quota
+        description: 'Kuota cuti tahunan. Must be at least 0.'
+        required: false
+        example: 12
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      basic_salary:
+        custom: []
+        name: basic_salary
+        description: 'Gaji pokok karyawan. Must be at least 0.'
+        required: true
+        example: 6000000.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Status kepegawaian.'
+        required: false
+        example: active
+        type: string
+        enumValues:
+          - active
+          - resigned
+          - suspended
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      user_id: 019d8f4d-38a7-72b3-aa65-20c9d3d0efe9
+      nik: EMP-2026-001
+      full_name: 'Budi Setiawan'
+      division_id: 019d8f4d-38a7-72b3-aa65-20c9d3d0ef10
+      position_id: 019d8f4d-38a7-72b3-aa65-20c9d3d0ef11
+      phone: '081234567890'
+      address: 'Jl. Melati No. 10, Jakarta'
+      gender: L
+      join_date: '2026-01-10'
+      contract_start_date: '2026-01-10'
+      contract_end_date: '2027-01-09'
+      contract_number: CTR-2026-001
+      leave_quota: 12
+      basic_salary: 6000000.0
+      status: active
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"meta":{"status":"success","code":200,"message":"Data karyawan berhasil diperbarui"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efe9","nik":"EMP-2026-001","full_name":"Budi S.","status":"active"}}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/employees/{id}'
+    metadata:
+      custom: []
+      groupName: 'HR Management - Employees'
+      groupDescription: 'API pengelolaan data karyawan.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Remove the specified resource from storage.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the employee.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"meta":{"status":"success","code":200,"message":"Karyawan berhasil dihapus (Soft Delete)"},"data":null}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

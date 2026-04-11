@@ -29,4 +29,17 @@ class StoreLeaveRequestRequest extends BaseApiRequest
             'status' => 'nullable|in:pending,approved,rejected',
         ];
     }
+
+    public function bodyParameters(): array
+    {
+        return [
+            'employee_id' => ['description' => 'ID karyawan pengaju cuti.', 'example' => '019d8f4d-38a7-72b3-aa65-20c9d3d0efe9'],
+            'type' => ['description' => 'Jenis cuti: sick, annual, unpaid.', 'example' => 'annual'],
+            'start_date' => ['description' => 'Tanggal mulai cuti.', 'example' => '2026-05-10'],
+            'end_date' => ['description' => 'Tanggal akhir cuti.', 'example' => '2026-05-12'],
+            'reason' => ['description' => 'Alasan pengajuan cuti.', 'example' => 'Keperluan keluarga'],
+            'proof_file' => ['description' => 'Path bukti lampiran jika ada.', 'example' => 'proofs/leave-001.pdf'],
+            'status' => ['description' => 'Status approval cuti.', 'example' => 'pending'],
+        ];
+    }
 }

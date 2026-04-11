@@ -37,4 +37,25 @@ class StoreEmployeeRequest extends BaseApiRequest
             'status' => 'nullable|in:active,resigned,suspended',
         ];
     }
+
+    public function bodyParameters(): array
+    {
+        return [
+            'user_id' => ['description' => 'ID user yang terhubung ke data karyawan.', 'example' => '019d8f4d-38a7-72b3-aa65-20c9d3d0efe9'],
+            'nik' => ['description' => 'Nomor induk karyawan (unik).', 'example' => 'EMP-2026-001'],
+            'full_name' => ['description' => 'Nama lengkap karyawan.', 'example' => 'Budi Setiawan'],
+            'division_id' => ['description' => 'ID divisi karyawan.', 'example' => '019d8f4d-38a7-72b3-aa65-20c9d3d0ef10'],
+            'position_id' => ['description' => 'ID jabatan karyawan.', 'example' => '019d8f4d-38a7-72b3-aa65-20c9d3d0ef11'],
+            'phone' => ['description' => 'Nomor telepon karyawan.', 'example' => '081234567890'],
+            'address' => ['description' => 'Alamat domisili karyawan.', 'example' => 'Jl. Melati No. 10, Jakarta'],
+            'gender' => ['description' => 'Jenis kelamin: L (Laki-laki) atau P (Perempuan).', 'example' => 'L'],
+            'join_date' => ['description' => 'Tanggal mulai bekerja.', 'example' => '2026-01-10'],
+            'contract_start_date' => ['description' => 'Tanggal mulai kontrak.', 'example' => '2026-01-10'],
+            'contract_end_date' => ['description' => 'Tanggal akhir kontrak.', 'example' => '2027-01-09'],
+            'contract_number' => ['description' => 'Nomor dokumen kontrak.', 'example' => 'CTR-2026-001'],
+            'leave_quota' => ['description' => 'Kuota cuti tahunan.', 'example' => 12],
+            'basic_salary' => ['description' => 'Gaji pokok karyawan.', 'example' => 6000000],
+            'status' => ['description' => 'Status kepegawaian.', 'example' => 'active'],
+        ];
+    }
 }

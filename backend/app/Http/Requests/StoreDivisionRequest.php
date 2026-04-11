@@ -24,4 +24,18 @@ class StoreDivisionRequest extends BaseApiRequest
             'description' => 'nullable|string',
         ];
     }
+
+    public function bodyParameters(): array
+    {
+        return [
+            'name' => [
+                'description' => 'Nama divisi yang unik.',
+                'example' => 'Human Resources',
+            ],
+            'description' => [
+                'description' => 'Deskripsi singkat divisi.',
+                'example' => 'Mengelola kebutuhan SDM dan administrasi karyawan.',
+            ],
+        ];
+    }
 }

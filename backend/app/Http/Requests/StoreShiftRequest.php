@@ -25,4 +25,22 @@ class StoreShiftRequest extends BaseApiRequest
             'end_time' => 'required|date_format:H:i:s',
         ];
     }
+
+    public function bodyParameters(): array
+    {
+        return [
+            'name' => [
+                'description' => 'Nama shift yang unik.',
+                'example' => 'Pagi',
+            ],
+            'start_time' => [
+                'description' => 'Jam mulai shift (format H:i:s).',
+                'example' => '08:00:00',
+            ],
+            'end_time' => [
+                'description' => 'Jam selesai shift (format H:i:s).',
+                'example' => '17:00:00',
+            ],
+        ];
+    }
 }

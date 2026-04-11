@@ -31,4 +31,19 @@ class StoreAttendanceRequest extends BaseApiRequest
             'check_in_long' => 'nullable|numeric|between:-180,180',
         ];
     }
+
+    public function bodyParameters(): array
+    {
+        return [
+            'employee_id' => ['description' => 'ID karyawan.', 'example' => '019d8f4d-38a7-72b3-aa65-20c9d3d0efe9'],
+            'shift_id' => ['description' => 'ID shift kerja terkait.', 'example' => '019d8f4d-38a7-72b3-aa65-20c9d3d0ef20'],
+            'location_id' => ['description' => 'ID lokasi presensi.', 'example' => '019d8f4d-38a7-72b3-aa65-20c9d3d0ef30'],
+            'date' => ['description' => 'Tanggal presensi.', 'example' => '2026-04-11'],
+            'clock_in' => ['description' => 'Waktu check-in (Y-m-d H:i:s).', 'example' => '2026-04-11 08:03:00'],
+            'clock_out' => ['description' => 'Waktu check-out (Y-m-d H:i:s).', 'example' => '2026-04-11 17:04:00'],
+            'status' => ['description' => 'Status presensi.', 'example' => 'on_time'],
+            'check_in_lat' => ['description' => 'Latitude saat check-in.', 'example' => -6.2009],
+            'check_in_long' => ['description' => 'Longitude saat check-in.', 'example' => 106.8166],
+        ];
+    }
 }

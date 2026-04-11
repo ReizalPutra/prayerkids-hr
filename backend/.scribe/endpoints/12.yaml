@@ -1,0 +1,437 @@
+name: 'Recruitment - Applicants'
+description: 'API pengelolaan data pelamar.'
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/applicants
+    metadata:
+      custom: []
+      groupName: 'Recruitment - Applicants'
+      groupDescription: 'API pengelolaan data pelamar.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display a listing of the resource.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"meta":{"status":"success","code":200,"message":"Data pelamar berhasil diambil"},"data":[{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efb1","name":"Siti Aminah","email":"siti.aminah@example.com","stage":"screening"}]}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/applicants
+    metadata:
+      custom: []
+      groupName: 'Recruitment - Applicants'
+      groupDescription: 'API pengelolaan data pelamar.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Store a newly created resource in storage.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      job_vacancy_id:
+        custom: []
+        name: job_vacancy_id
+        description: 'ID lowongan yang dilamar. Must be a valid UUID. The <code>id</code> of an existing record in the job_vacancies table.'
+        required: true
+        example: 019d8f4d-38a7-72b3-aa65-20c9d3d0efa1
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      name:
+        custom: []
+        name: name
+        description: 'Nama lengkap pelamar. Must not be greater than 255 characters.'
+        required: true
+        example: 'Siti Aminah'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      email:
+        custom: []
+        name: email
+        description: 'Email pelamar. Must be a valid email address. Must not be greater than 255 characters.'
+        required: true
+        example: siti.aminah@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      phone:
+        custom: []
+        name: phone
+        description: 'Nomor telepon pelamar. Must not be greater than 20 characters.'
+        required: true
+        example: '081234567899'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      resume_path:
+        custom: []
+        name: resume_path
+        description: 'Path file CV/resume.'
+        required: true
+        example: resumes/siti-aminah.pdf
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      stage:
+        custom: []
+        name: stage
+        description: 'Tahap proses rekrutmen.'
+        required: false
+        example: screening
+        type: string
+        enumValues:
+          - applied
+          - screening
+          - interview
+          - offering
+          - hired
+          - rejected
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      job_vacancy_id: 019d8f4d-38a7-72b3-aa65-20c9d3d0efa1
+      name: 'Siti Aminah'
+      email: siti.aminah@example.com
+      phone: '081234567899'
+      resume_path: resumes/siti-aminah.pdf
+      stage: screening
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"meta":{"status":"success","code":201,"message":"Pelamar baru berhasil ditambahkan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efb1","name":"Siti Aminah","email":"siti.aminah@example.com","stage":"screening"}}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/applicants/{id}'
+    metadata:
+      custom: []
+      groupName: 'Recruitment - Applicants'
+      groupDescription: 'API pengelolaan data pelamar.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display the specified resource.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the applicant.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"meta":{"status":"success","code":200,"message":"Detail pelamar ditemukan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efb1","name":"Siti Aminah","email":"siti.aminah@example.com","stage":"screening"}}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'api/applicants/{id}'
+    metadata:
+      custom: []
+      groupName: 'Recruitment - Applicants'
+      groupDescription: 'API pengelolaan data pelamar.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update the specified resource in storage.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the applicant.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      job_vacancy_id:
+        custom: []
+        name: job_vacancy_id
+        description: 'ID lowongan yang dilamar. Must be a valid UUID. The <code>id</code> of an existing record in the job_vacancies table.'
+        required: true
+        example: 019d8f4d-38a7-72b3-aa65-20c9d3d0efa1
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      name:
+        custom: []
+        name: name
+        description: 'Nama lengkap pelamar. Must not be greater than 255 characters.'
+        required: true
+        example: 'Siti Aminah'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      email:
+        custom: []
+        name: email
+        description: 'Email pelamar. Must be a valid email address. Must not be greater than 255 characters.'
+        required: true
+        example: siti.aminah@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      phone:
+        custom: []
+        name: phone
+        description: 'Nomor telepon pelamar. Must not be greater than 20 characters.'
+        required: true
+        example: '081234567899'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      resume_path:
+        custom: []
+        name: resume_path
+        description: 'Path file CV/resume.'
+        required: true
+        example: resumes/siti-aminah.pdf
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      stage:
+        custom: []
+        name: stage
+        description: 'Tahap proses rekrutmen.'
+        required: false
+        example: screening
+        type: string
+        enumValues:
+          - applied
+          - screening
+          - interview
+          - offering
+          - hired
+          - rejected
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      job_vacancy_id: 019d8f4d-38a7-72b3-aa65-20c9d3d0efa1
+      name: 'Siti Aminah'
+      email: siti.aminah@example.com
+      phone: '081234567899'
+      resume_path: resumes/siti-aminah.pdf
+      stage: screening
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"meta":{"status":"success","code":200,"message":"Data pelamar berhasil diperbarui"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efb1","stage":"interview"}}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/applicants/{id}'
+    metadata:
+      custom: []
+      groupName: 'Recruitment - Applicants'
+      groupDescription: 'API pengelolaan data pelamar.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Remove the specified resource from storage.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the applicant.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"meta":{"status":"success","code":200,"message":"Data pelamar berhasil dihapus"},"data":null}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

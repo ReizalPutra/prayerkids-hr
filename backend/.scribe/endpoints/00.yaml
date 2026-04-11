@@ -1,0 +1,201 @@
+name: Authentication
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/login
+    metadata:
+      custom: []
+      groupName: Authentication
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Login pengguna'
+      description: 'Men-generate personal access token Sanctum untuk dipakai pada endpoint lain.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      username:
+        custom: []
+        name: username
+        description: 'Username akun.'
+        required: true
+        example: admin_super
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: 'Password akun.'
+        required: true
+        example: password
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      username: admin_super
+      password: password
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+           "meta": {"status": "success", "code": 200, "message": "Login Berhasil"},
+           "data": {
+             "access_token": "1|example_plain_text_token",
+             "user": {"id": "019d8f4d-38a7-72b3-aa65-20c9d3d0efe9", "username": "admin_super", "name": "Super Admin"}
+           }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 401
+        content: |-
+          {
+           "meta": {"status": "error", "code": 401, "message": "Username atau password tidak valid."},
+           "errors": null
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+           "meta": {"code": 422, "status": "error", "message": "Validasi request gagal."},
+           "errors": {"username": ["The username field is required."], "password": ["The password field is required."]}
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/logout
+    metadata:
+      custom: []
+      groupName: Authentication
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Logout pengguna'
+      description: 'Menghapus token aktif saat ini (Bearer token), atau mengakhiri sesi jika login via session.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+           "meta": {"status": "success", "code": 200, "message": "Logout Berhasil"},
+           "data": null
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 401
+        content: |-
+          {
+           "meta": {"code": 401, "status": "error", "message": "Unauthenticated."},
+           "errors": null
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/me
+    metadata:
+      custom: []
+      groupName: Authentication
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Profil pengguna saat ini'
+      description: 'Mengembalikan data user dari token yang sedang digunakan.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+           "meta": {"status": "success", "code": 200, "message": "Success"},
+           "data": {"id": "019d8f4d-38a7-72b3-aa65-20c9d3d0efe9", "username": "admin_super", "name": "Super Admin"}
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 401
+        content: |-
+          {
+           "meta": {"code": 401, "status": "error", "message": "Unauthenticated."},
+           "errors": null
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

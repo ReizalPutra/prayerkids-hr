@@ -25,4 +25,22 @@ class StoreContractTemplateRequest extends BaseApiRequest
             'is_active' => 'nullable|boolean',
         ];
     }
+
+    public function bodyParameters(): array
+    {
+        return [
+            'name' => [
+                'description' => 'Nama template kontrak.',
+                'example' => 'PKWT Standard 1 Tahun',
+            ],
+            'body' => [
+                'description' => 'Isi template kontrak.',
+                'example' => 'Perjanjian kerja waktu tertentu selama 1 tahun ...',
+            ],
+            'is_active' => [
+                'description' => 'Status aktif template.',
+                'example' => true,
+            ],
+        ];
+    }
 }

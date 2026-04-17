@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Employee;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -19,34 +19,70 @@ class UserSeeder extends Seeder
         Role::firstOrCreate(['name' => 'hr']);
         Role::firstOrCreate(['name' => 'employee']);
 
-        // 2. Buat User Admin
-        $admin = User::firstOrCreate(
-            ['username' => 'admin_super'], // Unik ID
-            [
-                'name' => 'Super Admin',
-                'password' => Hash::make('password'), // Sebaiknya ganti saat production
-            ]
+        // 2. Buat User Admin (plus alias username umum)
+        $admin = $this->upsertUser(
+            username: 'admin_super',
+            name: 'Super Admin',
+            role: 'admin',
         );
-        $admin->assignRole('admin');
 
-        // 3. Buat User HR
-        $hr = User::firstOrCreate(
-            ['username' => 'hr_staff'],
-            [
-                'name' => 'Staff HRD',
-                'password' => Hash::make('password'),
-            ]
+        $this->upsertUser(
+            username: 'admin',
+            name: 'Admin',
+            role: 'admin',
         );
-        $hr->assignRole('hr');
+
+        // 3. Buat User HR (plus alias staff_hr)
+        $this->upsertUser(
+            username: 'hr_staff',
+            name: 'Staff HRD',
+            role: 'hr',
+        );
+
+        $this->upsertUser(
+            username: 'staff_hr',
+            name: 'Staff HRD',
+            role: 'hr',
+        );
 
         // 4. Buat User Karyawan (Contoh)
-        $employee = User::firstOrCreate(
-            ['username' => 'karyawan_01'],
+        $employee = $this->upsertUser(
+            username: 'karyawan_01',
+            name: 'Budi Setiawan',
+            role: 'employee',
+        );
+
+        Employee::updateOrCreate(
+            ['user_id' => $employee->id],
             [
-                'name' => 'Budi Setiawan',
+                'nik' => 'EMP-0001',
+                'contract_number' => 'PKHR/CTR/0001',
+                'full_name' => 'Budi Setiawan',
+                'phone' => '081234567890',
+                'address' => 'Jl. Contoh No. 1, Jakarta',
+                'gender' => 'L',
+                'join_date' => now()->toDateString(),
+                'contract_start_date' => now()->toDateString(),
+                'contract_end_date' => now()->addYear()->toDateString(),
+                'leave_quota' => 12,
+                'basic_salary' => 5000000,
+                'status' => 'active',
+            ]
+        );
+    }
+
+    private function upsertUser(string $username, string $name, string $role): User
+    {
+        $user = User::updateOrCreate(
+            ['username' => $username],
+            [
+                'name' => $name,
                 'password' => Hash::make('password'),
             ]
         );
-        $employee->assignRole('employee');
+
+        $user->syncRoles([$role]);
+
+        return $user;
     }
 }

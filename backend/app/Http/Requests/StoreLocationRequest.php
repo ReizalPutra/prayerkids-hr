@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
+
 class StoreLocationRequest extends BaseApiRequest
 {
     /**
@@ -19,12 +21,25 @@ class StoreLocationRequest extends BaseApiRequest
      */
     public function rules(): array
     {
+        $attendanceLocation = $this->route('attendanceLocation');
+        $attendanceLocationId = $attendanceLocation?->id;
+
         return [
-            'name' => 'required|string|max:255|unique:attendance_locations,name',
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('attendance_locations', 'name')->ignore($attendanceLocationId),
+            ],
             'latitude' => 'required|numeric|between:-90,90',
             'longitude' => 'required|numeric|between:-180,180',
             'radius_meter' => 'nullable|integer|min:1',
-            'qr_token' => 'nullable|string|max:255',
+            'qr_token' => [
+                'nullable',
+                'string',
+                'max:255',
+                Rule::unique('attendance_locations', 'qr_token')->ignore($attendanceLocationId),
+            ],
             'is_active' => 'nullable|boolean',
         ];
     }

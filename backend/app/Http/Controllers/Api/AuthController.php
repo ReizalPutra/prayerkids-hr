@@ -54,12 +54,17 @@ class AuthController extends Controller
         }
 
         RateLimiter::clear($throttleKey);
-        $user = User::where('username', $request->username)->firstOrFail();
+        $user = Auth::user();
+
+        if (!$user instanceof User) {
+            return $this->error('Gagal memuat data pengguna.', 500);
+        }
+
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return $this->success([
             'access_token' => $token,
-            'user' => $user
+            'user' => $this->transformUser($user),
         ], 'Login Berhasil');
     }
 
@@ -118,6 +123,22 @@ class AuthController extends Controller
      */
     public function me(Request $request)
     {
-        return $this->success($request->user());
+        $user = $request->user();
+
+        if (!$user instanceof User) {
+            return $this->error('Unauthenticated.', 401);
+        }
+
+        return $this->success($this->transformUser($user));
+    }
+
+    private function transformUser(User $user): array
+    {
+        return [
+            'id' => $user->id,
+            'name' => $user->name,
+            'username' => $user->username,
+            'role' => $user->getRoleNames()->first(),
+        ];
     }
 }

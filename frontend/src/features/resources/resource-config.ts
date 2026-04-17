@@ -136,6 +136,7 @@ export const resourceConfigs: ResourceConfig[] = [
     endpoint: "/attendanceLocations",
     columns: [
       { key: "name", label: "Name" },
+      { key: "qr_token", label: "QR Token" },
       { key: "latitude", label: "Latitude" },
       { key: "longitude", label: "Longitude" },
     ],
@@ -168,12 +169,25 @@ export const resourceConfigs: ResourceConfig[] = [
         required: true,
         placeholder: "100",
       },
+      {
+        key: "qr_token",
+        label: "QR Token (Static)",
+        type: "text",
+        placeholder: "LOC-HQ-QR-001",
+      },
+      {
+        key: "is_active",
+        label: "Is Active",
+        type: "checkbox",
+      },
     ],
     samplePayload: {
       name: "Kantor Pusat",
       latitude: -6.2009,
       longitude: 106.8166,
       radius_meter: 100,
+      qr_token: "LOC-HQ-QR-001",
+      is_active: true,
     },
   },
   {

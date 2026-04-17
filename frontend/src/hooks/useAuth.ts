@@ -55,10 +55,26 @@ export const getApiErrorMessage = (error: unknown): string => {
   }
 
   const axiosError = error as {
+    message?: string;
+    code?: string;
+    request?: unknown;
     response?: {
       data?: ApiErrorResponse;
     };
   };
 
-  return axiosError.response?.data?.meta?.message ?? fallback;
+  const backendMessage = axiosError.response?.data?.meta?.message;
+  if (backendMessage) {
+    return backendMessage;
+  }
+
+  if (axiosError.request && !axiosError.response) {
+    return "Tidak dapat terhubung ke server API. Cek URL API, CORS, dan koneksi internet.";
+  }
+
+  if (axiosError.code === "ECONNABORTED") {
+    return "Koneksi ke server timeout. Silakan coba lagi.";
+  }
+
+  return axiosError.message ?? fallback;
 };

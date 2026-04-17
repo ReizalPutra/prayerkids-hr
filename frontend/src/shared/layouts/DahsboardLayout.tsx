@@ -105,6 +105,8 @@ function DashboardLayout() {
     );
   }
 
+  const isEmployee = user.role === "employee";
+
   return (
     <div className="min-h-screen bg-muted/30">
       <div className="mx-auto grid min-h-screen max-w-7xl grid-cols-1 lg:grid-cols-[260px_1fr]">
@@ -113,7 +115,9 @@ function DashboardLayout() {
             <p className="text-xs uppercase tracking-wide text-muted-foreground">
               Prayerkids HR
             </p>
-            <h2 className="mt-1 text-lg font-semibold">Admin Panel</h2>
+            <h2 className="mt-1 text-lg font-semibold">
+              {isEmployee ? "Employee Panel" : "Admin Panel"}
+            </h2>
             <p className="mt-2 text-sm text-muted-foreground">
               {user.name} ({user.role})
             </p>
@@ -137,24 +141,28 @@ function DashboardLayout() {
             >
               <NavLink to="/employees">
                 <Users className="size-4" />
-                Employees
+                Scan Presensi
               </NavLink>
             </Button>
 
-            <Separator className="my-2" />
+            {!isEmployee ? (
+              <>
+                <Separator className="my-2" />
 
-            {resourceConfigs.map((resource) => (
-              <Button
-                key={resource.key}
-                asChild
-                variant="ghost"
-                className="w-full justify-start gap-2"
-              >
-                <NavLink to={`/resources/${resource.key}`}>
-                  {resource.title}
-                </NavLink>
-              </Button>
-            ))}
+                {resourceConfigs.map((resource) => (
+                  <Button
+                    key={resource.key}
+                    asChild
+                    variant="ghost"
+                    className="w-full justify-start gap-2"
+                  >
+                    <NavLink to={`/resources/${resource.key}`}>
+                      {resource.title}
+                    </NavLink>
+                  </Button>
+                ))}
+              </>
+            ) : null}
           </nav>
 
           <Separator className="my-4" />

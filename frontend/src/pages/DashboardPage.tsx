@@ -20,7 +20,8 @@ import { Link } from "react-router-dom";
 
 function DashboardPage() {
   const meQuery = useMeQuery();
-  const divisionsQuery = useDivisionsQuery();
+  const isEmployee = meQuery.data?.role === "employee";
+  const divisionsQuery = useDivisionsQuery(!isEmployee);
 
   const totalDivisions = divisionsQuery.data?.length ?? 0;
   const activityData = [42, 58, 35, 66, 73, 51, 80];
@@ -32,7 +33,9 @@ function DashboardPage() {
         <p className="text-sm text-muted-foreground">Overview Dashboard</p>
         <h2 className="mt-1 text-2xl font-semibold">Ringkasan Sistem HR</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Data ditarik dari endpoint backend seperti /api/me dan /api/divisions.
+          {isEmployee
+            ? "Dashboard karyawan untuk presensi dan informasi akun."
+            : "Data ditarik dari endpoint backend seperti /api/me dan /api/divisions."}
         </p>
       </div>
 
@@ -59,12 +62,18 @@ function DashboardPage() {
           </CardHeader>
           <CardContent>
             <p className="text-xl font-semibold">
-              {divisionsQuery.isSuccess ? totalDivisions : "-"}
+              {isEmployee
+                ? "-"
+                : divisionsQuery.isSuccess
+                  ? totalDivisions
+                  : "-"}
             </p>
             <p className="text-xs text-muted-foreground">
-              {divisionsQuery.isLoading
-                ? "Memuat data..."
-                : "Sumber: /api/divisions"}
+              {isEmployee
+                ? "Tidak ditampilkan untuk role employee"
+                : divisionsQuery.isLoading
+                  ? "Memuat data..."
+                  : "Sumber: /api/divisions"}
             </p>
           </CardContent>
         </Card>
@@ -107,30 +116,34 @@ function DashboardPage() {
           <CardHeader>
             <CardTitle>Aksi Cepat</CardTitle>
             <CardDescription>
-              Navigasi ke area yang sering dipakai admin.
+              {isEmployee
+                ? "Aksi utama untuk presensi karyawan."
+                : "Navigasi ke area yang sering dipakai admin."}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <Button asChild className="w-full justify-between">
               <Link to="/employees">
-                Kelola Data Employee
+                {isEmployee ? "Buka Scan Presensi" : "Kelola Data Employee"}
                 <ArrowRight className="size-4" />
               </Link>
             </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="w-full justify-between"
-            >
-              <a
-                href="http://localhost:8000/docs"
-                target="_blank"
-                rel="noreferrer"
+            {!isEmployee ? (
+              <Button
+                asChild
+                variant="outline"
+                className="w-full justify-between"
               >
-                Buka API Docs (Scribe)
-                <ArrowRight className="size-4" />
-              </a>
-            </Button>
+                <a
+                  href="http://localhost:8000/docs"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Buka API Docs (Scribe)
+                  <ArrowRight className="size-4" />
+                </a>
+              </Button>
+            ) : null}
           </CardContent>
         </Card>
 

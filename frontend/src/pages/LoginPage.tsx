@@ -21,8 +21,10 @@ function LoginPage() {
     event.preventDefault();
 
     try {
-      await loginMutation.mutateAsync({ username, password });
-      navigate("/dashboard", { replace: true });
+      const result = await loginMutation.mutateAsync({ username, password });
+      const nextPath =
+        result.user.role === "employee" ? "/employees" : "/dashboard";
+      navigate(nextPath, { replace: true });
     } catch {
       // Error state is shown through loginMutation and errorMessage.
     }

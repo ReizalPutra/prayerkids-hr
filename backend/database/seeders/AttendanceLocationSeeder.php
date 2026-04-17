@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\AttendanceLocation;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class AttendanceLocationSeeder extends Seeder
 {
@@ -20,7 +18,7 @@ class AttendanceLocationSeeder extends Seeder
                 'latitude' => -6.2088,
                 'longitude' => 106.8456,
                 'radius_meter' => 20,
-                'qr_token' => Str::random(32),
+                'qr_token' => 'pkhr_kantor_pusat_lt1_static_qr',
                 'is_active' => true,
             ],
             [
@@ -28,7 +26,7 @@ class AttendanceLocationSeeder extends Seeder
                 'latitude' => -6.2089,
                 'longitude' => 106.8457,
                 'radius_meter' => 20,
-                'qr_token' => Str::random(32),
+                'qr_token' => 'pkhr_kantor_pusat_lt2_static_qr',
                 'is_active' => true,
             ],
             [
@@ -36,7 +34,7 @@ class AttendanceLocationSeeder extends Seeder
                 'latitude' => -6.2500,
                 'longitude' => 106.8200,
                 'radius_meter' => 30,
-                'qr_token' => Str::random(32),
+                'qr_token' => 'pkhr_kantor_cabang_static_qr',
                 'is_active' => true,
             ],
             [
@@ -44,7 +42,7 @@ class AttendanceLocationSeeder extends Seeder
                 'latitude' => -6.3500,
                 'longitude' => 106.9500,
                 'radius_meter' => 50,
-                'qr_token' => Str::random(32),
+                'qr_token' => 'pkhr_warehouse_static_qr',
                 'is_active' => true,
             ],
         ];

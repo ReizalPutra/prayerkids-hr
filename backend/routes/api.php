@@ -29,10 +29,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('positions', PositionController::class);
     Route::apiResource('shifts', ShiftController::class);
     Route::apiResource('attendanceLocations', AttendanceLocationController::class);
+    Route::get('attendanceLocations/{attendanceLocation}/qr', [AttendanceLocationController::class, 'qr']);
     Route::apiResource('contractTemplates', ContractTemplateController::class);
 
     // HR Management Routes
     Route::apiResource('employees', EmployeeController::class);
+    Route::post('attendances/scan-qr', [AttendanceController::class, 'scanQr']);
     Route::apiResource('attendances', AttendanceController::class);
     Route::apiResource('leaveRequests', LeaveRequestController::class);
     Route::apiResource('payrolls', PayrollController::class);

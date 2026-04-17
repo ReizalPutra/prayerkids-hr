@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreLocationRequest;
 use App\Models\AttendanceLocation;
 use App\Contracts\Services\AttendanceLocationServiceInterface;
+use Illuminate\Support\Str;
 
 /**
  * @group Operational - Attendance Locations
@@ -46,8 +47,38 @@ class AttendanceLocationController extends Controller
     public function store(StoreLocationRequest $request)
     {
         $this->authorize('create', AttendanceLocation::class);
-        $location = $this->attendanceLocationService->create($request->validated());
+        $validated = $request->validated();
+
+        if (empty($validated['qr_token'])) {
+            $validated['qr_token'] = $this->generateUniqueQrToken();
+        }
+
+        $location = $this->attendanceLocationService->create($validated);
         return $this->success($location, 'Lokasi baru berhasil ditambahkan', 201);
+    }
+
+    /**
+     * Get stable QR payload for an attendance location.
+     *
+     * @response 200 {"meta":{"status":"success","code":200,"message":"QR lokasi berhasil diambil"},"data":{"location_id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef30","name":"Kantor Pusat","qr_token":"LOC-HQ-QR-001","qr_payload":"PKHR::ATTENDANCE_LOCATION::LOC-HQ-QR-001"}}
+     */
+    public function qr(AttendanceLocation $attendanceLocation)
+    {
+        $this->authorize('view', $attendanceLocation);
+
+        if (!$attendanceLocation->qr_token) {
+            $attendanceLocation->update([
+                'qr_token' => $this->generateUniqueQrToken(),
+            ]);
+        }
+
+        return $this->success([
+            'location_id' => $attendanceLocation->id,
+            'name' => $attendanceLocation->name,
+            'is_active' => (bool) $attendanceLocation->is_active,
+            'qr_token' => $attendanceLocation->qr_token,
+            'qr_payload' => sprintf('PKHR::ATTENDANCE_LOCATION::%s', $attendanceLocation->qr_token),
+        ], 'QR lokasi berhasil diambil');
     }
 
     /**
@@ -97,5 +128,14 @@ class AttendanceLocationController extends Controller
         $this->authorize('delete', $attendanceLocation);
         $deletedLocation = $this->attendanceLocationService->delete($attendanceLocation);
         return $this->success($deletedLocation, 'Lokasi berhasil dihapus (Soft Delete)');
+    }
+
+    private function generateUniqueQrToken(): string
+    {
+        do {
+            $token = 'LOC-' . Str::upper(Str::random(12));
+        } while (AttendanceLocation::query()->where('qr_token', $token)->exists());
+
+        return $token;
     }
 }

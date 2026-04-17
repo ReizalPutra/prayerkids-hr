@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ScanAttendanceQrRequest;
 use App\Http\Requests\StoreAttendanceRequest;
 use App\Models\Attendance;
+use App\Models\AttendanceLocation;
+use App\Models\Employee;
+use App\Models\Shift;
 use App\Contracts\Services\AttendanceServiceInterface;
+use Carbon\Carbon;
 
 /**
  * @group HR Management - Attendances
@@ -40,6 +45,94 @@ class AttendanceController extends Controller
         $this->authorize('create', Attendance::class);
         $attendance = $this->attendanceService->create($request->validated());
         return $this->success($attendance, 'Data kehadiran baru berhasil ditambahkan', 201);
+    }
+
+    /**
+     * Scan static QR token and auto-create attendance.
+     *
+     * @response 201 {"meta":{"status":"success","code":201,"message":"Presensi berhasil direkam dari scan QR"},"data":{"status":"on_time","late_minutes":0}}
+     * @response 409 {"meta":{"status":"error","code":409,"message":"Anda sudah melakukan presensi hari ini."},"errors":null}
+     * @response 422 {"meta":{"status":"error","code":422,"message":"Posisi Anda di luar radius lokasi presensi."},"errors":{"distance_meter":154.2,"allowed_radius_meter":100}}
+     */
+    public function scanQr(ScanAttendanceQrRequest $request)
+    {
+        $this->authorize('create', Attendance::class);
+
+        $user = $request->user();
+
+        $employee = Employee::query()
+            ->where('user_id', $user->id)
+            ->where('status', 'active')
+            ->first();
+
+        if (!$employee) {
+            return $this->error('Akun ini tidak terhubung ke karyawan aktif.', 422);
+        }
+
+        $location = AttendanceLocation::query()
+            ->where('qr_token', $request->string('qr_token')->toString())
+            ->where('is_active', true)
+            ->first();
+
+        if (!$location) {
+            return $this->error('QR lokasi tidak valid atau lokasi sedang nonaktif.', 404);
+        }
+
+        $shift = Shift::query()->find($request->string('shift_id')->toString());
+
+        if (!$shift) {
+            return $this->error('Shift tidak ditemukan.', 422);
+        }
+
+        $scanTime = $request->filled('scanned_at')
+            ? Carbon::createFromFormat('Y-m-d H:i:s', $request->string('scanned_at')->toString())
+            : now();
+
+        $distanceMeter = $this->haversineDistance(
+            (float) $request->input('check_in_lat'),
+            (float) $request->input('check_in_long'),
+            (float) $location->latitude,
+            (float) $location->longitude,
+        );
+
+        if ($distanceMeter > (float) $location->radius_meter) {
+            return $this->error('Posisi Anda di luar radius lokasi presensi.', 422, [
+                'distance_meter' => round($distanceMeter, 2),
+                'allowed_radius_meter' => (int) $location->radius_meter,
+            ]);
+        }
+
+        $alreadyCheckedIn = Attendance::query()
+            ->where('employee_id', $employee->id)
+            ->whereDate('date', $scanTime->toDateString())
+            ->exists();
+
+        if ($alreadyCheckedIn) {
+            return $this->error('Anda sudah melakukan presensi hari ini.', 409);
+        }
+
+        $shiftStart = Carbon::createFromFormat(
+            'Y-m-d H:i:s',
+            sprintf('%s %s', $scanTime->toDateString(), $shift->start_time),
+        );
+
+        $lateMinutes = $scanTime->greaterThan($shiftStart)
+            ? $shiftStart->diffInMinutes($scanTime)
+            : 0;
+
+        $attendance = $this->attendanceService->create([
+            'employee_id' => $employee->id,
+            'shift_id' => $shift->id,
+            'location_id' => $location->id,
+            'date' => $scanTime->toDateString(),
+            'clock_in' => $scanTime->format('Y-m-d H:i:s'),
+            'status' => $lateMinutes > 0 ? 'late' : 'on_time',
+            'late_minutes' => $lateMinutes,
+            'check_in_lat' => (float) $request->input('check_in_lat'),
+            'check_in_long' => (float) $request->input('check_in_long'),
+        ]);
+
+        return $this->success($attendance, 'Presensi berhasil direkam dari scan QR', 201);
     }
 
     /**
@@ -81,5 +174,29 @@ class AttendanceController extends Controller
         $this->authorize('delete', $attendance);
         $this->attendanceService->delete($attendance);
         return $this->success(null, 'Data kehadiran berhasil dihapus');
+    }
+
+    private function haversineDistance(
+        float $latitude1,
+        float $longitude1,
+        float $latitude2,
+        float $longitude2,
+    ): float {
+        $earthRadiusMeter = 6371000;
+
+        $latFrom = deg2rad($latitude1);
+        $lonFrom = deg2rad($longitude1);
+        $latTo = deg2rad($latitude2);
+        $lonTo = deg2rad($longitude2);
+
+        $latDelta = $latTo - $latFrom;
+        $lonDelta = $lonTo - $lonFrom;
+
+        $angle = 2 * asin(sqrt(
+            pow(sin($latDelta / 2), 2) +
+                cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)
+        ));
+
+        return $angle * $earthRadiusMeter;
     }
 }

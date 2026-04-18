@@ -327,7 +327,10 @@ function ResourceCrudView({ config }: ResourceCrudViewProps) {
               <div className="grid gap-3">
                 {config.fields.map((field) => renderField("create", field))}
               </div>
-              <Button onClick={handleCreate} disabled={createMutation.isPending}>
+              <Button
+                onClick={handleCreate}
+                disabled={createMutation.isPending}
+              >
                 {createMutation.isPending ? "Menyimpan..." : "Create Data"}
               </Button>
               {createMutation.isError ? (
@@ -345,7 +348,8 @@ function ResourceCrudView({ config }: ResourceCrudViewProps) {
               <div>
                 <CardTitle>Update</CardTitle>
                 <CardDescription>
-                  Pilih data dari tabel lalu edit lewat form visual endpoint PUT.
+                  Pilih data dari tabel lalu edit lewat form visual endpoint
+                  PUT.
                 </CardDescription>
               </div>
               <Button

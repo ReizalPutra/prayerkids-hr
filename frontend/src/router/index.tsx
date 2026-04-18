@@ -253,29 +253,95 @@ function AppRouter() {
             </RoleGuard>
           }
         />
-        <Route path="/dashboard/attendanceLocations" element={<Navigate to="/dashboard/attendance-locations" replace />} />
-        <Route path="/dashboard/contractTemplates" element={<Navigate to="/dashboard/contract-templates" replace />} />
-        <Route path="/dashboard/leaveRequests" element={<Navigate to="/dashboard/leave-requests" replace />} />
-        <Route path="/dashboard/performanceReviews" element={<Navigate to="/dashboard/performance-reviews" replace />} />
-        <Route path="/dashboard/jobVacancies" element={<Navigate to="/dashboard/job-vacancies" replace />} />
+        <Route
+          path="/dashboard/attendanceLocations"
+          element={<Navigate to="/dashboard/attendance-locations" replace />}
+        />
+        <Route
+          path="/dashboard/contractTemplates"
+          element={<Navigate to="/dashboard/contract-templates" replace />}
+        />
+        <Route
+          path="/dashboard/leaveRequests"
+          element={<Navigate to="/dashboard/leave-requests" replace />}
+        />
+        <Route
+          path="/dashboard/performanceReviews"
+          element={<Navigate to="/dashboard/performance-reviews" replace />}
+        />
+        <Route
+          path="/dashboard/jobVacancies"
+          element={<Navigate to="/dashboard/job-vacancies" replace />}
+        />
 
-        <Route path="/resources/divisions" element={<Navigate to="/dashboard/divisions" replace />} />
-        <Route path="/resources/positions" element={<Navigate to="/dashboard/positions" replace />} />
-        <Route path="/resources/shifts" element={<Navigate to="/dashboard/shifts" replace />} />
-        <Route path="/resources/attendanceLocations" element={<Navigate to="/dashboard/attendance-locations" replace />} />
-        <Route path="/resources/attendance-locations" element={<Navigate to="/dashboard/attendance-locations" replace />} />
-        <Route path="/resources/contractTemplates" element={<Navigate to="/dashboard/contract-templates" replace />} />
-        <Route path="/resources/contract-templates" element={<Navigate to="/dashboard/contract-templates" replace />} />
-        <Route path="/resources/employees" element={<Navigate to="/dashboard/employees" replace />} />
-        <Route path="/resources/attendances" element={<Navigate to="/dashboard/attendances" replace />} />
-        <Route path="/resources/leaveRequests" element={<Navigate to="/dashboard/leave-requests" replace />} />
-        <Route path="/resources/leave-requests" element={<Navigate to="/dashboard/leave-requests" replace />} />
-        <Route path="/resources/payrolls" element={<Navigate to="/dashboard/payrolls" replace />} />
-        <Route path="/resources/performanceReviews" element={<Navigate to="/dashboard/performance-reviews" replace />} />
-        <Route path="/resources/performance-reviews" element={<Navigate to="/dashboard/performance-reviews" replace />} />
-        <Route path="/resources/jobVacancies" element={<Navigate to="/dashboard/job-vacancies" replace />} />
-        <Route path="/resources/job-vacancies" element={<Navigate to="/dashboard/job-vacancies" replace />} />
-        <Route path="/resources/applicants" element={<Navigate to="/dashboard/applicants" replace />} />
+        <Route
+          path="/resources/divisions"
+          element={<Navigate to="/dashboard/divisions" replace />}
+        />
+        <Route
+          path="/resources/positions"
+          element={<Navigate to="/dashboard/positions" replace />}
+        />
+        <Route
+          path="/resources/shifts"
+          element={<Navigate to="/dashboard/shifts" replace />}
+        />
+        <Route
+          path="/resources/attendanceLocations"
+          element={<Navigate to="/dashboard/attendance-locations" replace />}
+        />
+        <Route
+          path="/resources/attendance-locations"
+          element={<Navigate to="/dashboard/attendance-locations" replace />}
+        />
+        <Route
+          path="/resources/contractTemplates"
+          element={<Navigate to="/dashboard/contract-templates" replace />}
+        />
+        <Route
+          path="/resources/contract-templates"
+          element={<Navigate to="/dashboard/contract-templates" replace />}
+        />
+        <Route
+          path="/resources/employees"
+          element={<Navigate to="/dashboard/employees" replace />}
+        />
+        <Route
+          path="/resources/attendances"
+          element={<Navigate to="/dashboard/attendances" replace />}
+        />
+        <Route
+          path="/resources/leaveRequests"
+          element={<Navigate to="/dashboard/leave-requests" replace />}
+        />
+        <Route
+          path="/resources/leave-requests"
+          element={<Navigate to="/dashboard/leave-requests" replace />}
+        />
+        <Route
+          path="/resources/payrolls"
+          element={<Navigate to="/dashboard/payrolls" replace />}
+        />
+        <Route
+          path="/resources/performanceReviews"
+          element={<Navigate to="/dashboard/performance-reviews" replace />}
+        />
+        <Route
+          path="/resources/performance-reviews"
+          element={<Navigate to="/dashboard/performance-reviews" replace />}
+        />
+        <Route
+          path="/resources/jobVacancies"
+          element={<Navigate to="/dashboard/job-vacancies" replace />}
+        />
+        <Route
+          path="/resources/job-vacancies"
+          element={<Navigate to="/dashboard/job-vacancies" replace />}
+        />
+        <Route
+          path="/resources/applicants"
+          element={<Navigate to="/dashboard/applicants" replace />}
+        />
       </Route>
 
       <Route

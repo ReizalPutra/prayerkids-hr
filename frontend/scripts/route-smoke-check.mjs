@@ -3,7 +3,13 @@ import path from "node:path";
 
 const root = process.cwd();
 const routerPath = path.join(root, "src", "router", "index.tsx");
-const layoutPath = path.join(root, "src", "shared", "layouts", "DahsboardLayout.tsx");
+const layoutPath = path.join(
+  root,
+  "src",
+  "shared",
+  "layouts",
+  "DahsboardLayout.tsx",
+);
 
 const routerContent = fs.readFileSync(routerPath, "utf8");
 const layoutContent = fs.readFileSync(layoutPath, "utf8");
@@ -76,7 +82,9 @@ if (missingDashboardRoutes.length > 0) {
 }
 
 if (missingLegacyRoutes.length > 0) {
-  failures.push(`Missing /resources redirects: ${missingLegacyRoutes.join(", ")}`);
+  failures.push(
+    `Missing /resources redirects: ${missingLegacyRoutes.join(", ")}`,
+  );
 }
 
 if (missingDashboardLegacyRoutes.length > 0) {
@@ -86,7 +94,9 @@ if (missingDashboardLegacyRoutes.length > 0) {
 }
 
 if (!sidebarUsesDashboardBase) {
-  failures.push("Sidebar links are not using /dashboard/<resource> path mapping.");
+  failures.push(
+    "Sidebar links are not using /dashboard/<resource> path mapping.",
+  );
 }
 
 if (failures.length > 0) {

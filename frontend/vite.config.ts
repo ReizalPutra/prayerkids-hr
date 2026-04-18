@@ -32,9 +32,7 @@ export default defineConfig(({ mode }) => {
               return "vendor_misc";
             }
 
-            const packageName = match[1]
-              .replace("/", "_")
-              .replaceAll("-", "_");
+            const packageName = match[1].replace("/", "_").replaceAll("-", "_");
 
             if (
               packageName === "react" ||

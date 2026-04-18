@@ -133,7 +133,11 @@ type LocationMapPickerProps = {
   onPick: (latitude: number, longitude: number) => void;
 };
 
-function MapClickHandler({ onPick }: { onPick: (latitude: number, longitude: number) => void }) {
+function MapClickHandler({
+  onPick,
+}: {
+  onPick: (latitude: number, longitude: number) => void;
+}) {
   useMapEvents({
     click(event) {
       onPick(event.latlng.lat, event.latlng.lng);
@@ -153,7 +157,11 @@ function MapViewSync({ center }: { center: [number, number] }) {
   return null;
 }
 
-function LocationMapPicker({ latitude, longitude, onPick }: LocationMapPickerProps) {
+function LocationMapPicker({
+  latitude,
+  longitude,
+  onPick,
+}: LocationMapPickerProps) {
   const center = useMemo(() => {
     const lat = toCoordinate(latitude);
     const lng = toCoordinate(longitude);
@@ -170,7 +178,8 @@ function LocationMapPicker({ latitude, longitude, onPick }: LocationMapPickerPro
       <div className="border-b border-border bg-background px-4 py-3">
         <p className="text-sm font-medium">Pilih titik lokasi</p>
         <p className="text-xs text-muted-foreground">
-          Klik peta atau geser marker. Latitude dan longitude akan terisi otomatis.
+          Klik peta atau geser marker. Latitude dan longitude akan terisi
+          otomatis.
         </p>
       </div>
       <MapContainer
@@ -203,11 +212,20 @@ function LocationMapPicker({ latitude, longitude, onPick }: LocationMapPickerPro
 }
 
 function AttendanceLocationsPage() {
-  const [createForm, setCreateForm] = useState<Record<string, unknown>>({});
-  const [editForm, setEditForm] = useState<Record<string, unknown>>({});
+  const [createForm, setCreateForm] = useState<Record<string, unknown>>(() =>
+    buildDefaultFormState(),
+  );
+  const [editForm, setEditForm] = useState<Record<string, unknown>>(() =>
+    buildDefaultFormState(),
+  );
+  const [isCreateFormOpen, setIsCreateFormOpen] = useState(false);
+  const [isEditFormOpen, setIsEditFormOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [selectedDetail, setSelectedDetail] = useState<ResourceRecord | null>(null);
-  const [selectedQrPreview, setSelectedQrPreview] = useState<QrPreviewData | null>(null);
+  const [selectedDetail, setSelectedDetail] = useState<ResourceRecord | null>(
+    null,
+  );
+  const [selectedQrPreview, setSelectedQrPreview] =
+    useState<QrPreviewData | null>(null);
   const [isLoadingQrPreview, setIsLoadingQrPreview] = useState(false);
   const [qrPreviewError, setQrPreviewError] = useState<string | null>(null);
   const [locationMessages, setLocationMessages] = useState<{
@@ -239,6 +257,8 @@ function AttendanceLocationsPage() {
   useEffect(() => {
     setCreateForm(buildDefaultFormState());
     setEditForm(buildDefaultFormState());
+    setIsCreateFormOpen(false);
+    setIsEditFormOpen(false);
     setEditingId(null);
     setSelectedDetail(null);
     setLocationMessages({ create: null, edit: null });
@@ -407,11 +427,13 @@ function AttendanceLocationsPage() {
     const payload = normalizePayload(createForm);
     await createMutation.mutateAsync(payload);
     setCreateForm(buildDefaultFormState());
+    setIsCreateFormOpen(false);
   };
 
   const handleStartEdit = (row: ResourceRecord) => {
     setEditingId(row.id);
     setEditForm(buildFormFromRecord(row));
+    setIsEditFormOpen(true);
   };
 
   const handleUpdate = async () => {
@@ -423,6 +445,7 @@ function AttendanceLocationsPage() {
     await updateMutation.mutateAsync({ id: editingId, payload });
     setEditingId(null);
     setEditForm(buildDefaultFormState());
+    setIsEditFormOpen(false);
   };
 
   const handleShow = async (id: string) => {
@@ -477,7 +500,9 @@ function AttendanceLocationsPage() {
 
     const popup = window.open("", "_blank", "width=900,height=700");
     if (!popup) {
-      setQrPreviewError("Popup diblokir browser. Izinkan popup untuk print QR.");
+      setQrPreviewError(
+        "Popup diblokir browser. Izinkan popup untuk print QR.",
+      );
       return;
     }
 
@@ -570,7 +595,9 @@ function AttendanceLocationsPage() {
             type="checkbox"
             className="h-4 w-4 rounded border-border"
             checked={Boolean(value)}
-            onChange={(event) => setFormValue(mode, field, event.target.checked)}
+            onChange={(event) =>
+              setFormValue(mode, field, event.target.checked)
+            }
           />
           {field.label}
         </label>
@@ -598,7 +625,9 @@ function AttendanceLocationsPage() {
     return (
       <div className="grid gap-3 md:grid-cols-2">
         {config.fields
-          .filter((field) => field.key === "latitude" || field.key === "longitude")
+          .filter(
+            (field) => field.key === "latitude" || field.key === "longitude",
+          )
           .map((field) => (
             <div key={`${mode}-${field.key}`} className="space-y-2">
               <Label htmlFor={`${mode}-${field.key}`}>{field.label}</Label>
@@ -609,7 +638,9 @@ function AttendanceLocationsPage() {
                 required={field.required}
                 placeholder={field.placeholder}
                 value={String(form[field.key] ?? "")}
-                onChange={(event) => setFormValue(mode, field, event.target.value)}
+                onChange={(event) =>
+                  setFormValue(mode, field, event.target.value)
+                }
               />
             </div>
           ))}
@@ -629,133 +660,179 @@ function AttendanceLocationsPage() {
       <div className="grid gap-4 lg:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Create</CardTitle>
-            <CardDescription>
-              Klik peta untuk mengisi latitude dan longitude, atau isi manual lewat form di bawah.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <CardTitle>Create</CardTitle>
+                <CardDescription>
+                  Klik peta untuk mengisi latitude dan longitude, atau isi manual
+                  lewat form di bawah.
+                </CardDescription>
+              </div>
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => requestCurrentLocation("create")}
-                disabled={isLocating.create}
+                onClick={() => setIsCreateFormOpen((previous) => !previous)}
               >
-                {isLocating.create ? "Mengambil lokasi..." : "Gunakan Lokasi Saya"}
+                {isCreateFormOpen ? "Tutup Form" : "Buka Form Tambah"}
               </Button>
-              {locationMessages.create ? (
-                <p className="text-sm text-muted-foreground">
-                  {locationMessages.create}
+            </div>
+          </CardHeader>
+          {isCreateFormOpen ? (
+            <CardContent className="space-y-4">
+              <div className="flex flex-wrap items-center gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => requestCurrentLocation("create")}
+                  disabled={isLocating.create}
+                >
+                  {isLocating.create
+                    ? "Mengambil lokasi..."
+                    : "Gunakan Lokasi Saya"}
+                </Button>
+                {locationMessages.create ? (
+                  <p className="text-sm text-muted-foreground">
+                    {locationMessages.create}
+                  </p>
+                ) : null}
+              </div>
+
+              <LocationMapPicker
+                latitude={createForm.latitude}
+                longitude={createForm.longitude}
+                onPick={(latitude, longitude) =>
+                  setCoordinates("create", latitude, longitude)
+                }
+              />
+
+              <div className="grid gap-3">
+                {renderCoordinateInputs("create")}
+                <div className="rounded-lg border border-border bg-muted/20 px-3 py-2 text-sm">
+                  <p className="font-medium">Alamat dari titik peta</p>
+                  <p className="mt-1 text-muted-foreground">
+                    {isResolvingAddress.create
+                      ? "Mencari alamat..."
+                      : (resolvedAddress.create ??
+                        "Alamat akan muncul setelah koordinat valid.")}
+                  </p>
+                </div>
+                {config.fields
+                  .filter(
+                    (field) =>
+                      field.key !== "latitude" && field.key !== "longitude",
+                  )
+                  .map((field) => renderField("create", field))}
+              </div>
+
+              <Button onClick={handleCreate} disabled={createMutation.isPending}>
+                {createMutation.isPending ? "Menyimpan..." : "Create Data"}
+              </Button>
+              {createMutation.isError ? (
+                <p className="text-sm text-destructive">
+                  {getApiErrorMessage(createMutation.error)}
                 </p>
               ) : null}
-            </div>
-
-            <LocationMapPicker
-              latitude={createForm.latitude}
-              longitude={createForm.longitude}
-              onPick={(latitude, longitude) => setCoordinates("create", latitude, longitude)}
-            />
-
-            <div className="grid gap-3">
-              {renderCoordinateInputs("create")}
-              <div className="rounded-lg border border-border bg-muted/20 px-3 py-2 text-sm">
-                <p className="font-medium">Alamat dari titik peta</p>
-                <p className="mt-1 text-muted-foreground">
-                  {isResolvingAddress.create
-                    ? "Mencari alamat..."
-                    : (resolvedAddress.create ?? "Alamat akan muncul setelah koordinat valid.")}
-                </p>
-              </div>
-              {config.fields
-                .filter((field) => field.key !== "latitude" && field.key !== "longitude")
-                .map((field) => renderField("create", field))}
-            </div>
-
-            <Button onClick={handleCreate} disabled={createMutation.isPending}>
-              {createMutation.isPending ? "Menyimpan..." : "Create Data"}
-            </Button>
-            {createMutation.isError ? (
-              <p className="text-sm text-destructive">
-                {getApiErrorMessage(createMutation.error)}
-              </p>
-            ) : null}
-          </CardContent>
+            </CardContent>
+          ) : null}
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle>Update</CardTitle>
-            <CardDescription>
-              Pilih data dari tabel lalu geser titik peta atau edit koordinat secara manual.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-xs text-muted-foreground">
-              Editing ID: {editingId ?? "-"}
-            </p>
-
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <CardTitle>Update</CardTitle>
+                <CardDescription>
+                  Pilih data dari tabel lalu geser titik peta atau edit koordinat
+                  secara manual.
+                </CardDescription>
+              </div>
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => requestCurrentLocation("edit")}
-                disabled={isLocating.edit}
+                onClick={() => setIsEditFormOpen((previous) => !previous)}
+                disabled={!editingId && !isEditFormOpen}
               >
-                {isLocating.edit ? "Mengambil lokasi..." : "Gunakan Lokasi Saya"}
+                {isEditFormOpen ? "Tutup Form" : "Buka Form Edit"}
               </Button>
-              {locationMessages.edit ? (
-                <p className="text-sm text-muted-foreground">
-                  {locationMessages.edit}
+            </div>
+          </CardHeader>
+          {isEditFormOpen ? (
+            <CardContent className="space-y-4">
+              <p className="text-xs text-muted-foreground">
+                Editing ID: {editingId ?? "-"}
+              </p>
+
+              <div className="flex flex-wrap items-center gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => requestCurrentLocation("edit")}
+                  disabled={isLocating.edit}
+                >
+                  {isLocating.edit
+                    ? "Mengambil lokasi..."
+                    : "Gunakan Lokasi Saya"}
+                </Button>
+                {locationMessages.edit ? (
+                  <p className="text-sm text-muted-foreground">
+                    {locationMessages.edit}
+                  </p>
+                ) : null}
+              </div>
+
+              <LocationMapPicker
+                latitude={editForm.latitude}
+                longitude={editForm.longitude}
+                onPick={(latitude, longitude) =>
+                  setCoordinates("edit", latitude, longitude)
+                }
+              />
+
+              <div className="grid gap-3">
+                {renderCoordinateInputs("edit")}
+                <div className="rounded-lg border border-border bg-muted/20 px-3 py-2 text-sm">
+                  <p className="font-medium">Alamat dari titik peta</p>
+                  <p className="mt-1 text-muted-foreground">
+                    {isResolvingAddress.edit
+                      ? "Mencari alamat..."
+                      : (resolvedAddress.edit ??
+                        "Alamat akan muncul setelah koordinat valid.")}
+                  </p>
+                </div>
+                {config.fields
+                  .filter(
+                    (field) =>
+                      field.key !== "latitude" && field.key !== "longitude",
+                  )
+                  .map((field) => renderField("edit", field))}
+              </div>
+
+              <div className="flex gap-2">
+                <Button
+                  onClick={handleUpdate}
+                  disabled={!editingId || updateMutation.isPending}
+                >
+                  {updateMutation.isPending ? "Memperbarui..." : "Update Data"}
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setEditingId(null);
+                    setIsEditFormOpen(false);
+                    setEditForm(buildDefaultFormState());
+                  }}
+                >
+                  Reset
+                </Button>
+              </div>
+
+              {updateMutation.isError ? (
+                <p className="text-sm text-destructive">
+                  {getApiErrorMessage(updateMutation.error)}
                 </p>
               ) : null}
-            </div>
-
-            <LocationMapPicker
-              latitude={editForm.latitude}
-              longitude={editForm.longitude}
-              onPick={(latitude, longitude) => setCoordinates("edit", latitude, longitude)}
-            />
-
-            <div className="grid gap-3">
-              {renderCoordinateInputs("edit")}
-              <div className="rounded-lg border border-border bg-muted/20 px-3 py-2 text-sm">
-                <p className="font-medium">Alamat dari titik peta</p>
-                <p className="mt-1 text-muted-foreground">
-                  {isResolvingAddress.edit
-                    ? "Mencari alamat..."
-                    : (resolvedAddress.edit ?? "Alamat akan muncul setelah koordinat valid.")}
-                </p>
-              </div>
-              {config.fields
-                .filter((field) => field.key !== "latitude" && field.key !== "longitude")
-                .map((field) => renderField("edit", field))}
-            </div>
-
-            <div className="flex gap-2">
-              <Button
-                onClick={handleUpdate}
-                disabled={!editingId || updateMutation.isPending}
-              >
-                {updateMutation.isPending ? "Memperbarui..." : "Update Data"}
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setEditingId(null);
-                  setEditForm(buildDefaultFormState());
-                }}
-              >
-                Reset
-              </Button>
-            </div>
-
-            {updateMutation.isError ? (
-              <p className="text-sm text-destructive">
-                {getApiErrorMessage(updateMutation.error)}
-              </p>
-            ) : null}
-          </CardContent>
+            </CardContent>
+          ) : null}
         </Card>
       </div>
 
@@ -846,12 +923,15 @@ function AttendanceLocationsPage() {
         <CardHeader>
           <CardTitle>QR Presensi Lokasi</CardTitle>
           <CardDescription>
-            Klik tombol QR pada tabel, lalu print agar siap dipasang di lokasi absensi.
+            Klik tombol QR pada tabel, lalu print agar siap dipasang di lokasi
+            absensi.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {isLoadingQrPreview ? (
-            <p className="text-sm text-muted-foreground">Menyiapkan QR image...</p>
+            <p className="text-sm text-muted-foreground">
+              Menyiapkan QR image...
+            </p>
           ) : null}
 
           {qrPreviewError ? (
@@ -868,10 +948,19 @@ function AttendanceLocationsPage() {
                 />
               </div>
               <div className="space-y-2 text-sm">
-                <p><strong>Nama Lokasi:</strong> {selectedQrPreview.name}</p>
-                <p><strong>Status:</strong> {selectedQrPreview.is_active ? "Aktif" : "Nonaktif"}</p>
-                <p className="break-all"><strong>Token:</strong> {selectedQrPreview.qr_token}</p>
-                <p className="break-all"><strong>Payload:</strong> {selectedQrPreview.qr_payload}</p>
+                <p>
+                  <strong>Nama Lokasi:</strong> {selectedQrPreview.name}
+                </p>
+                <p>
+                  <strong>Status:</strong>{" "}
+                  {selectedQrPreview.is_active ? "Aktif" : "Nonaktif"}
+                </p>
+                <p className="break-all">
+                  <strong>Token:</strong> {selectedQrPreview.qr_token}
+                </p>
+                <p className="break-all">
+                  <strong>Payload:</strong> {selectedQrPreview.qr_payload}
+                </p>
 
                 <div className="flex flex-wrap gap-2 pt-2">
                   <Button type="button" onClick={handlePrintQr}>
@@ -881,7 +970,9 @@ function AttendanceLocationsPage() {
                     type="button"
                     variant="outline"
                     onClick={() => {
-                      void navigator.clipboard.writeText(selectedQrPreview.qr_payload);
+                      void navigator.clipboard.writeText(
+                        selectedQrPreview.qr_payload,
+                      );
                     }}
                   >
                     Copy Payload
@@ -890,7 +981,9 @@ function AttendanceLocationsPage() {
                     type="button"
                     variant="outline"
                     onClick={() => {
-                      void navigator.clipboard.writeText(selectedQrPreview.qr_token);
+                      void navigator.clipboard.writeText(
+                        selectedQrPreview.qr_token,
+                      );
                     }}
                   >
                     Copy Token

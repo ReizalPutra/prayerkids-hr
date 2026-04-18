@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useQueries } from "@tanstack/react-query";
 import {
   Card,
@@ -100,8 +100,14 @@ type ResourceCrudViewProps = {
 };
 
 function ResourceCrudView({ config }: ResourceCrudViewProps) {
-  const [createForm, setCreateForm] = useState<Record<string, unknown>>({});
-  const [editForm, setEditForm] = useState<Record<string, unknown>>({});
+  const [createForm, setCreateForm] = useState<Record<string, unknown>>(() =>
+    buildDefaultFormState(config),
+  );
+  const [editForm, setEditForm] = useState<Record<string, unknown>>(() =>
+    buildDefaultFormState(config),
+  );
+  const [isCreateFormOpen, setIsCreateFormOpen] = useState(false);
+  const [isEditFormOpen, setIsEditFormOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [selectedDetail, setSelectedDetail] = useState<ResourceRecord | null>(
     null,
@@ -144,13 +150,6 @@ function ResourceCrudView({ config }: ResourceCrudViewProps) {
     );
   }, [relationQueries, relationSources]);
 
-  useEffect(() => {
-    setCreateForm(buildDefaultFormState(config));
-    setEditForm(buildDefaultFormState(config));
-    setEditingId(null);
-    setSelectedDetail(null);
-  }, [config]);
-
   const relationLoading = relationQueries.some((query) => query.isLoading);
   const relationError = relationQueries.find((query) => query.isError);
 
@@ -171,11 +170,13 @@ function ResourceCrudView({ config }: ResourceCrudViewProps) {
     const payload = normalizePayload(config, createForm);
     await createMutation.mutateAsync(payload);
     setCreateForm(buildDefaultFormState(config));
+    setIsCreateFormOpen(false);
   };
 
   const handleStartEdit = (row: ResourceRecord) => {
     setEditingId(row.id);
     setEditForm(buildFormFromRecord(config, row));
+    setIsEditFormOpen(true);
   };
 
   const handleUpdate = async () => {
@@ -187,6 +188,7 @@ function ResourceCrudView({ config }: ResourceCrudViewProps) {
     await updateMutation.mutateAsync({ id: editingId, payload });
     setEditingId(null);
     setEditForm(buildDefaultFormState(config));
+    setIsEditFormOpen(false);
   };
 
   const handleShow = async (id: string) => {
@@ -304,63 +306,91 @@ function ResourceCrudView({ config }: ResourceCrudViewProps) {
       <div className="grid gap-4 lg:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Create</CardTitle>
-            <CardDescription>
-              Form visual untuk endpoint POST {config.endpoint}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="grid gap-3">
-              {config.fields.map((field) => renderField("create", field))}
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <CardTitle>Create</CardTitle>
+                <CardDescription>
+                  Form visual untuk endpoint POST {config.endpoint}
+                </CardDescription>
+              </div>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsCreateFormOpen((previous) => !previous)}
+              >
+                {isCreateFormOpen ? "Tutup Form" : "Buka Form Tambah"}
+              </Button>
             </div>
-            <Button onClick={handleCreate} disabled={createMutation.isPending}>
-              {createMutation.isPending ? "Menyimpan..." : "Create Data"}
-            </Button>
-            {createMutation.isError ? (
-              <p className="text-sm text-destructive">
-                {getApiErrorMessage(createMutation.error)}
-              </p>
-            ) : null}
-          </CardContent>
+          </CardHeader>
+          {isCreateFormOpen ? (
+            <CardContent className="space-y-3">
+              <div className="grid gap-3">
+                {config.fields.map((field) => renderField("create", field))}
+              </div>
+              <Button onClick={handleCreate} disabled={createMutation.isPending}>
+                {createMutation.isPending ? "Menyimpan..." : "Create Data"}
+              </Button>
+              {createMutation.isError ? (
+                <p className="text-sm text-destructive">
+                  {getApiErrorMessage(createMutation.error)}
+                </p>
+              ) : null}
+            </CardContent>
+          ) : null}
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle>Update</CardTitle>
-            <CardDescription>
-              Pilih data dari tabel lalu edit lewat form visual endpoint PUT.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <p className="text-xs text-muted-foreground">
-              Editing ID: {editingId ?? "-"}
-            </p>
-            <div className="grid gap-3">
-              {config.fields.map((field) => renderField("edit", field))}
-            </div>
-            <div className="flex gap-2">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <CardTitle>Update</CardTitle>
+                <CardDescription>
+                  Pilih data dari tabel lalu edit lewat form visual endpoint PUT.
+                </CardDescription>
+              </div>
               <Button
-                onClick={handleUpdate}
-                disabled={!editingId || updateMutation.isPending}
-              >
-                {updateMutation.isPending ? "Memperbarui..." : "Update Data"}
-              </Button>
-              <Button
+                type="button"
                 variant="outline"
-                onClick={() => {
-                  setEditingId(null);
-                  setEditForm(buildDefaultFormState(config));
-                }}
+                onClick={() => setIsEditFormOpen((previous) => !previous)}
+                disabled={!editingId && !isEditFormOpen}
               >
-                Reset
+                {isEditFormOpen ? "Tutup Form" : "Buka Form Edit"}
               </Button>
             </div>
-            {updateMutation.isError ? (
-              <p className="text-sm text-destructive">
-                {getApiErrorMessage(updateMutation.error)}
+          </CardHeader>
+          {isEditFormOpen ? (
+            <CardContent className="space-y-3">
+              <p className="text-xs text-muted-foreground">
+                Editing ID: {editingId ?? "-"}
               </p>
-            ) : null}
-          </CardContent>
+              <div className="grid gap-3">
+                {config.fields.map((field) => renderField("edit", field))}
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  onClick={handleUpdate}
+                  disabled={!editingId || updateMutation.isPending}
+                >
+                  {updateMutation.isPending ? "Memperbarui..." : "Update Data"}
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setEditingId(null);
+                    setIsEditFormOpen(false);
+                    setEditForm(buildDefaultFormState(config));
+                  }}
+                >
+                  Reset
+                </Button>
+              </div>
+              {updateMutation.isError ? (
+                <p className="text-sm text-destructive">
+                  {getApiErrorMessage(updateMutation.error)}
+                </p>
+              ) : null}
+            </CardContent>
+          ) : null}
         </Card>
       </div>
 

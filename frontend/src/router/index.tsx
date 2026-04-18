@@ -7,24 +7,30 @@ import type { User } from "@/types";
 
 const DashboardPage = lazy(() => import("../pages/DashboardPage"));
 const EmployeePage = lazy(() => import("../pages/EmployeePage"));
-const DivisionsPage = lazy(() => import("../pages/resources/DivisionsPage"));
-const PositionsPage = lazy(() => import("../pages/resources/PositionsPage"));
-const ShiftsPage = lazy(() => import("../pages/resources/ShiftsPage"));
+const DivisionsPage = lazy(() => import("../pages/dashboard/DivisionsPage"));
+const PositionsPage = lazy(() => import("../pages/dashboard/PositionsPage"));
+const ShiftsPage = lazy(() => import("../pages/dashboard/ShiftsPage"));
 const AttendanceLocationsPage = lazy(
-  () => import("../pages/resources/AttendanceLocationsPage"),
+  () => import("../pages/dashboard/AttendanceLocationsPage"),
 );
 const ContractTemplatesPage = lazy(
-  () => import("../pages/resources/ContractTemplatesPage"),
+  () => import("../pages/dashboard/ContractTemplatesPage"),
 );
-const EmployeesPage = lazy(() => import("../pages/resources/EmployeesPage"));
-const AttendancesPage = lazy(() => import("../pages/resources/AttendancesPage"));
-const LeaveRequestsPage = lazy(() => import("../pages/resources/LeaveRequestsPage"));
-const PayrollsPage = lazy(() => import("../pages/resources/PayrollsPage"));
+const EmployeesPage = lazy(() => import("../pages/dashboard/EmployeesPage"));
+const AttendancesPage = lazy(
+  () => import("../pages/dashboard/AttendancesPage"),
+);
+const LeaveRequestsPage = lazy(
+  () => import("../pages/dashboard/LeaveRequestsPage"),
+);
+const PayrollsPage = lazy(() => import("../pages/dashboard/PayrollsPage"));
 const PerformanceReviewsPage = lazy(
-  () => import("../pages/resources/PerformanceReviewsPage"),
+  () => import("../pages/dashboard/PerformanceReviewsPage"),
 );
-const JobVacanciesPage = lazy(() => import("../pages/resources/JobVacanciesPage"));
-const ApplicantsPage = lazy(() => import("../pages/resources/ApplicantsPage"));
+const JobVacanciesPage = lazy(
+  () => import("../pages/dashboard/JobVacanciesPage"),
+);
+const ApplicantsPage = lazy(() => import("../pages/dashboard/ApplicantsPage"));
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -47,7 +53,9 @@ const PublicRoute = ({ children }: ProtectedRouteProps) => {
 };
 
 const LoadingGuard = () => (
-  <div className="p-6 text-sm text-muted-foreground">Memuat akses pengguna...</div>
+  <div className="p-6 text-sm text-muted-foreground">
+    Memuat akses pengguna...
+  </div>
 );
 
 const RouteSuspense = ({ children }: { children: ReactNode }) => (
@@ -126,7 +134,7 @@ function AppRouter() {
           }
         />
         <Route
-          path="/resources/divisions"
+          path="/dashboard/divisions"
           element={
             <RoleGuard allowedRoles={["admin", "hr"]} fallback="/employees">
               <RouteSuspense>
@@ -136,7 +144,7 @@ function AppRouter() {
           }
         />
         <Route
-          path="/resources/positions"
+          path="/dashboard/positions"
           element={
             <RoleGuard allowedRoles={["admin", "hr"]} fallback="/employees">
               <RouteSuspense>
@@ -146,7 +154,7 @@ function AppRouter() {
           }
         />
         <Route
-          path="/resources/shifts"
+          path="/dashboard/shifts"
           element={
             <RoleGuard allowedRoles={["admin", "hr"]} fallback="/employees">
               <RouteSuspense>
@@ -156,7 +164,7 @@ function AppRouter() {
           }
         />
         <Route
-          path="/resources/attendanceLocations"
+          path="/dashboard/attendance-locations"
           element={
             <RoleGuard allowedRoles={["admin", "hr"]} fallback="/employees">
               <RouteSuspense>
@@ -166,7 +174,7 @@ function AppRouter() {
           }
         />
         <Route
-          path="/resources/contractTemplates"
+          path="/dashboard/contract-templates"
           element={
             <RoleGuard allowedRoles={["admin", "hr"]} fallback="/employees">
               <RouteSuspense>
@@ -176,7 +184,7 @@ function AppRouter() {
           }
         />
         <Route
-          path="/resources/employees"
+          path="/dashboard/employees"
           element={
             <RoleGuard allowedRoles={["admin", "hr"]} fallback="/employees">
               <RouteSuspense>
@@ -186,7 +194,7 @@ function AppRouter() {
           }
         />
         <Route
-          path="/resources/attendances"
+          path="/dashboard/attendances"
           element={
             <RoleGuard allowedRoles={["admin", "hr"]} fallback="/employees">
               <RouteSuspense>
@@ -196,7 +204,7 @@ function AppRouter() {
           }
         />
         <Route
-          path="/resources/leaveRequests"
+          path="/dashboard/leave-requests"
           element={
             <RoleGuard allowedRoles={["admin", "hr"]} fallback="/employees">
               <RouteSuspense>
@@ -206,7 +214,7 @@ function AppRouter() {
           }
         />
         <Route
-          path="/resources/payrolls"
+          path="/dashboard/payrolls"
           element={
             <RoleGuard allowedRoles={["admin", "hr"]} fallback="/employees">
               <RouteSuspense>
@@ -216,7 +224,7 @@ function AppRouter() {
           }
         />
         <Route
-          path="/resources/performanceReviews"
+          path="/dashboard/performance-reviews"
           element={
             <RoleGuard allowedRoles={["admin", "hr"]} fallback="/employees">
               <RouteSuspense>
@@ -226,7 +234,7 @@ function AppRouter() {
           }
         />
         <Route
-          path="/resources/jobVacancies"
+          path="/dashboard/job-vacancies"
           element={
             <RoleGuard allowedRoles={["admin", "hr"]} fallback="/employees">
               <RouteSuspense>
@@ -236,7 +244,7 @@ function AppRouter() {
           }
         />
         <Route
-          path="/resources/applicants"
+          path="/dashboard/applicants"
           element={
             <RoleGuard allowedRoles={["admin", "hr"]} fallback="/employees">
               <RouteSuspense>
@@ -245,6 +253,29 @@ function AppRouter() {
             </RoleGuard>
           }
         />
+        <Route path="/dashboard/attendanceLocations" element={<Navigate to="/dashboard/attendance-locations" replace />} />
+        <Route path="/dashboard/contractTemplates" element={<Navigate to="/dashboard/contract-templates" replace />} />
+        <Route path="/dashboard/leaveRequests" element={<Navigate to="/dashboard/leave-requests" replace />} />
+        <Route path="/dashboard/performanceReviews" element={<Navigate to="/dashboard/performance-reviews" replace />} />
+        <Route path="/dashboard/jobVacancies" element={<Navigate to="/dashboard/job-vacancies" replace />} />
+
+        <Route path="/resources/divisions" element={<Navigate to="/dashboard/divisions" replace />} />
+        <Route path="/resources/positions" element={<Navigate to="/dashboard/positions" replace />} />
+        <Route path="/resources/shifts" element={<Navigate to="/dashboard/shifts" replace />} />
+        <Route path="/resources/attendanceLocations" element={<Navigate to="/dashboard/attendance-locations" replace />} />
+        <Route path="/resources/attendance-locations" element={<Navigate to="/dashboard/attendance-locations" replace />} />
+        <Route path="/resources/contractTemplates" element={<Navigate to="/dashboard/contract-templates" replace />} />
+        <Route path="/resources/contract-templates" element={<Navigate to="/dashboard/contract-templates" replace />} />
+        <Route path="/resources/employees" element={<Navigate to="/dashboard/employees" replace />} />
+        <Route path="/resources/attendances" element={<Navigate to="/dashboard/attendances" replace />} />
+        <Route path="/resources/leaveRequests" element={<Navigate to="/dashboard/leave-requests" replace />} />
+        <Route path="/resources/leave-requests" element={<Navigate to="/dashboard/leave-requests" replace />} />
+        <Route path="/resources/payrolls" element={<Navigate to="/dashboard/payrolls" replace />} />
+        <Route path="/resources/performanceReviews" element={<Navigate to="/dashboard/performance-reviews" replace />} />
+        <Route path="/resources/performance-reviews" element={<Navigate to="/dashboard/performance-reviews" replace />} />
+        <Route path="/resources/jobVacancies" element={<Navigate to="/dashboard/job-vacancies" replace />} />
+        <Route path="/resources/job-vacancies" element={<Navigate to="/dashboard/job-vacancies" replace />} />
+        <Route path="/resources/applicants" element={<Navigate to="/dashboard/applicants" replace />} />
       </Route>
 
       <Route

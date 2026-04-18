@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { BrowserMultiFormatReader, type IScannerControls } from "@zxing/browser";
+import {
+  BrowserMultiFormatReader,
+  type IScannerControls,
+} from "@zxing/browser";
 import { getApiErrorMessage } from "@/hooks/useAuth";
 import { useResourceListQuery } from "@/hooks/useResourceCrud";
 import { Button } from "@/components/ui/button";
@@ -47,7 +50,9 @@ const SCAN_COOLDOWN_MS = 5000;
 const AUTO_RESTART_MS = 2500;
 
 const isLocalhostHost = (hostname: string) => {
-  return hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1";
+  return (
+    hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1"
+  );
 };
 
 const getCameraStartErrorMessage = (error: unknown) => {
@@ -55,7 +60,10 @@ const getCameraStartErrorMessage = (error: unknown) => {
     return "Gagal mengaktifkan kamera.";
   }
 
-  if (error.name === "NotAllowedError" || error.name === "PermissionDeniedError") {
+  if (
+    error.name === "NotAllowedError" ||
+    error.name === "PermissionDeniedError"
+  ) {
     return "Izin kamera ditolak. Aktifkan izin kamera untuk browser ini di pengaturan HP.";
   }
 
@@ -133,7 +141,9 @@ function EmployeePage() {
   const scannerReaderRef = useRef<BrowserMultiFormatReader | null>(null);
   const scannerControlsRef = useRef<IScannerControls | null>(null);
   const lastScanRef = useRef<{ token: string; timestamp: number } | null>(null);
-  const handleScannedTokenRef = useRef<(token: string) => void>(() => undefined);
+  const handleScannedTokenRef = useRef<(token: string) => void>(
+    () => undefined,
+  );
   const restartTimerRef = useRef<number | null>(null);
 
   const shifts = useMemo<ShiftOption[]>(
@@ -180,28 +190,32 @@ function EmployeePage() {
   });
 
   const requestCurrentLocation = useCallback(() => {
-    return new Promise<{ latitude: number; longitude: number }>((resolve, reject) => {
-      if (!navigator.geolocation) {
-        reject(new Error("Browser tidak mendukung geolocation."));
-        return;
-      }
+    return new Promise<{ latitude: number; longitude: number }>(
+      (resolve, reject) => {
+        if (!navigator.geolocation) {
+          reject(new Error("Browser tidak mendukung geolocation."));
+          return;
+        }
 
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          resolve({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-        },
-        (error) => {
-          reject(new Error(error.message || "Gagal mengambil lokasi saat ini."));
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-        },
-      );
-    });
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            resolve({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            });
+          },
+          (error) => {
+            reject(
+              new Error(error.message || "Gagal mengambil lokasi saat ini."),
+            );
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 10000,
+          },
+        );
+      },
+    );
   }, []);
 
   const submitAttendance = useCallback(
@@ -229,7 +243,13 @@ function EmployeePage() {
         check_in_long: long,
       });
     },
-    [latitude, longitude, requestCurrentLocation, scanMutation, selectedShiftId],
+    [
+      latitude,
+      longitude,
+      requestCurrentLocation,
+      scanMutation,
+      selectedShiftId,
+    ],
   );
 
   const stopScanner = useCallback(() => {
@@ -268,8 +288,7 @@ function EmployeePage() {
     setScanMessage("Arahkan kamera ke QR lokasi...");
 
     try {
-      const reader =
-        scannerReaderRef.current ?? new BrowserMultiFormatReader();
+      const reader = scannerReaderRef.current ?? new BrowserMultiFormatReader();
 
       scannerReaderRef.current = reader;
 
@@ -304,7 +323,11 @@ function EmployeePage() {
       const now = Date.now();
       const last = lastScanRef.current;
 
-      if (last && last.token === token && now - last.timestamp < SCAN_COOLDOWN_MS) {
+      if (
+        last &&
+        last.token === token &&
+        now - last.timestamp < SCAN_COOLDOWN_MS
+      ) {
         setScanMessage("QR yang sama baru saja terbaca. Tunggu sebentar...");
         return;
       }
@@ -318,7 +341,9 @@ function EmployeePage() {
         await submitAttendance(token);
 
         if (isAutoRestartEnabled) {
-          setScanMessage("Presensi otomatis berhasil dikirim. Scanner akan aktif lagi...");
+          setScanMessage(
+            "Presensi otomatis berhasil dikirim. Scanner akan aktif lagi...",
+          );
 
           restartTimerRef.current = window.setTimeout(() => {
             restartTimerRef.current = null;
@@ -400,7 +425,12 @@ function EmployeePage() {
     const lat = Number(latitude);
     const long = Number(longitude);
 
-    if (!selectedShiftId || !qrToken || Number.isNaN(lat) || Number.isNaN(long)) {
+    if (
+      !selectedShiftId ||
+      !qrToken ||
+      Number.isNaN(lat) ||
+      Number.isNaN(long)
+    ) {
       return;
     }
 
@@ -418,8 +448,8 @@ function EmployeePage() {
         <CardHeader>
           <CardTitle>Scan QR Presensi</CardTitle>
           <CardDescription>
-            Pilih shift, isi token QR lokasi, lalu kirim presensi dengan koordinat
-            GPS Anda.
+            Pilih shift, isi token QR lokasi, lalu kirim presensi dengan
+            koordinat GPS Anda.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -457,7 +487,9 @@ function EmployeePage() {
                 ))}
               </select>
               {locationsQuery.isLoading ? (
-                <p className="text-xs text-muted-foreground">Memuat lokasi...</p>
+                <p className="text-xs text-muted-foreground">
+                  Memuat lokasi...
+                </p>
               ) : null}
             </div>
 
@@ -489,7 +521,8 @@ function EmployeePage() {
                   </Button>
                 </div>
                 <p className="mt-2 text-xs text-muted-foreground">
-                  Scanner kamera aktif otomatis saat halaman dibuka. Input manual tetap tersedia.
+                  Scanner kamera aktif otomatis saat halaman dibuka. Input
+                  manual tetap tersedia.
                 </p>
                 <p className="mt-1 text-xs text-muted-foreground">
                   Catatan HP: kamera memerlukan HTTPS dan izin kamera browser.
@@ -498,7 +531,9 @@ function EmployeePage() {
                   <input
                     type="checkbox"
                     checked={isAutoRestartEnabled}
-                    onChange={(event) => setIsAutoRestartEnabled(event.target.checked)}
+                    onChange={(event) =>
+                      setIsAutoRestartEnabled(event.target.checked)
+                    }
                   />
                   Aktifkan auto-restart scanner setelah presensi berhasil
                 </label>
@@ -541,7 +576,10 @@ function EmployeePage() {
               >
                 Gunakan Lokasi Saya
               </Button>
-              <Button type="submit" disabled={scanMutation.isPending || isAutoSubmitting}>
+              <Button
+                type="submit"
+                disabled={scanMutation.isPending || isAutoSubmitting}
+              >
                 {scanMutation.isPending || isAutoSubmitting
                   ? "Memproses..."
                   : "Kirim Presensi"}
@@ -570,7 +608,8 @@ function EmployeePage() {
 
             {scanMutation.isSuccess ? (
               <div className="rounded-md border border-emerald-600/20 bg-emerald-50 p-3 text-sm text-emerald-900">
-                Presensi berhasil. Status: <strong>{scanMutation.data.status}</strong>
+                Presensi berhasil. Status:{" "}
+                <strong>{scanMutation.data.status}</strong>
                 {scanMutation.data.status === "late"
                   ? ` (${scanMutation.data.late_minutes} menit terlambat)`
                   : ""}

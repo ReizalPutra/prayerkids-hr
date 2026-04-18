@@ -17,23 +17,25 @@ import { Separator } from "@/components/ui/separator";
 import { LayoutDashboard, Users, LogOut, Moon, Sun } from "lucide-react";
 import { resourceConfigs } from "@/features/resources/resource-config";
 
+const toKebabCase = (value: string) =>
+  value.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+
 function DashboardLayout() {
   const navigate = useNavigate();
   const meQuery = useMeQuery();
   const logoutMutation = useLogoutMutation();
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    const root = document.documentElement;
+  const [isDark, setIsDark] = useState(() => {
     const storedTheme = localStorage.getItem("theme");
     const prefersDark = window.matchMedia(
       "(prefers-color-scheme: dark)",
     ).matches;
-    const enableDark = storedTheme ? storedTheme === "dark" : prefersDark;
+    return storedTheme ? storedTheme === "dark" : prefersDark;
+  });
 
-    root.classList.toggle("dark", enableDark);
-    setIsDark(enableDark);
-  }, []);
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.toggle("dark", isDark);
+  }, [isDark]);
 
   const toggleTheme = () => {
     const root = document.documentElement;
@@ -156,7 +158,7 @@ function DashboardLayout() {
                     variant="ghost"
                     className="w-full justify-start gap-2"
                   >
-                    <NavLink to={`/resources/${resource.key}`}>
+                    <NavLink to={`/dashboard/${toKebabCase(resource.key)}`}>
                       {resource.title}
                     </NavLink>
                   </Button>

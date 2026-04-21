@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class StorePositionRequest extends FormRequest
+class StorePositionRequest extends BaseApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,6 +22,20 @@ class StorePositionRequest extends FormRequest
         return [
             'title' => 'required|string|max:255|unique:positions,title',
             'base_salary' => 'required|numeric|min:0',
+        ];
+    }
+
+    public function bodyParameters(): array
+    {
+        return [
+            'title' => [
+                'description' => 'Nama jabatan yang unik.',
+                'example' => 'HR Officer',
+            ],
+            'base_salary' => [
+                'description' => 'Gaji pokok default untuk jabatan ini.',
+                'example' => 5500000,
+            ],
         ];
     }
 }

@@ -1,0 +1,359 @@
+name: 'Operational - Shifts'
+description: 'API pengelolaan data shift kerja.'
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/shifts
+    metadata:
+      custom: []
+      groupName: 'Operational - Shifts'
+      groupDescription: 'API pengelolaan data shift kerja.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display a listing of the resource.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"meta":{"status":"success","code":200,"message":"Data shift berhasil diambil"},"data":[{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef20","name":"Pagi","start_time":"08:00:00","end_time":"17:00:00"}]}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/shifts
+    metadata:
+      custom: []
+      groupName: 'Operational - Shifts'
+      groupDescription: 'API pengelolaan data shift kerja.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Store a newly created resource in storage.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'Nama shift yang unik. Must not be greater than 255 characters.'
+        required: true
+        example: Pagi
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      start_time:
+        custom: []
+        name: start_time
+        description: 'Jam mulai shift (format H:i:s). Must be a valid date in the format <code>H:i:s</code>.'
+        required: true
+        example: '08:00:00'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      end_time:
+        custom: []
+        name: end_time
+        description: 'Jam selesai shift (format H:i:s). Must be a valid date in the format <code>H:i:s</code>.'
+        required: true
+        example: '17:00:00'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: Pagi
+      start_time: '08:00:00'
+      end_time: '17:00:00'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"meta":{"status":"success","code":201,"message":"Shift baru berhasil ditambahkan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef20","name":"Pagi","start_time":"08:00:00","end_time":"17:00:00"}}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: '{"meta":{"code":422,"status":"error","message":"Validasi request gagal."},"errors":{"name":["The name has already been taken."]}}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/shifts/{id}'
+    metadata:
+      custom: []
+      groupName: 'Operational - Shifts'
+      groupDescription: 'API pengelolaan data shift kerja.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display the specified resource.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the shift.'
+        required: true
+        example: 019d7a4d-3893-7023-b13b-1e0b381a8150
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 019d7a4d-3893-7023-b13b-1e0b381a8150
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"meta":{"status":"success","code":200,"message":"Detail shift ditemukan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef20","name":"Pagi","start_time":"08:00:00","end_time":"17:00:00"}}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'api/shifts/{id}'
+    metadata:
+      custom: []
+      groupName: 'Operational - Shifts'
+      groupDescription: 'API pengelolaan data shift kerja.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update the specified resource in storage.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the shift.'
+        required: true
+        example: 019d7a4d-3893-7023-b13b-1e0b381a8150
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 019d7a4d-3893-7023-b13b-1e0b381a8150
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'Nama shift yang unik. Must not be greater than 255 characters.'
+        required: true
+        example: Pagi
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      start_time:
+        custom: []
+        name: start_time
+        description: 'Jam mulai shift (format H:i:s). Must be a valid date in the format <code>H:i:s</code>.'
+        required: true
+        example: '08:00:00'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      end_time:
+        custom: []
+        name: end_time
+        description: 'Jam selesai shift (format H:i:s). Must be a valid date in the format <code>H:i:s</code>.'
+        required: true
+        example: '17:00:00'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: Pagi
+      start_time: '08:00:00'
+      end_time: '17:00:00'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"meta":{"status":"success","code":200,"message":"Data shift berhasil diperbarui"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef20","name":"Pagi (Updated)","start_time":"08:30:00","end_time":"17:30:00"}}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/shifts/{id}'
+    metadata:
+      custom: []
+      groupName: 'Operational - Shifts'
+      groupDescription: 'API pengelolaan data shift kerja.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Remove the specified resource from storage.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the shift.'
+        required: true
+        example: 019d7a4d-3893-7023-b13b-1e0b381a8150
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 019d7a4d-3893-7023-b13b-1e0b381a8150
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"meta":{"status":"success","code":200,"message":"Shift berhasil dihapus (Soft Delete)"},"data":null}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

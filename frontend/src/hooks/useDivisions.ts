@@ -5,9 +5,10 @@ export const divisionKeys = {
   all: ["divisions"] as const,
 };
 
-export const useDivisionsQuery = () => {
+export const useDivisionsQuery = (enabled = true) => {
   return useQuery({
     queryKey: divisionKeys.all,
     queryFn: divisionService.getAll,
+    enabled,
   });
 };

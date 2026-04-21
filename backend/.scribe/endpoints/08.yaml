@@ -1,0 +1,461 @@
+name: 'HR Management - Leave Requests'
+description: 'API pengelolaan pengajuan cuti.'
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/leaveRequests
+    metadata:
+      custom: []
+      groupName: 'HR Management - Leave Requests'
+      groupDescription: 'API pengelolaan pengajuan cuti.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display a listing of the resource.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"meta":{"status":"success","code":200,"message":"Data cuti berhasil diambil"},"data":[{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef60","employee_id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efe9","type":"annual","status":"pending"}]}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/leaveRequests
+    metadata:
+      custom: []
+      groupName: 'HR Management - Leave Requests'
+      groupDescription: 'API pengelolaan pengajuan cuti.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Store a newly created resource in storage.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      employee_id:
+        custom: []
+        name: employee_id
+        description: 'ID karyawan pengaju cuti. Must be a valid UUID. The <code>id</code> of an existing record in the employees table.'
+        required: true
+        example: 019d8f4d-38a7-72b3-aa65-20c9d3d0efe9
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      type:
+        custom: []
+        name: type
+        description: 'Jenis cuti: sick, annual, unpaid.'
+        required: true
+        example: annual
+        type: string
+        enumValues:
+          - sick
+          - annual
+          - unpaid
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      start_date:
+        custom: []
+        name: start_date
+        description: 'Tanggal mulai cuti. Must be a valid date.'
+        required: true
+        example: '2026-05-10'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      end_date:
+        custom: []
+        name: end_date
+        description: 'Tanggal akhir cuti. Must be a valid date. Must be a date after or equal to <code>start_date</code>.'
+        required: true
+        example: '2026-05-12'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      reason:
+        custom: []
+        name: reason
+        description: 'Alasan pengajuan cuti.'
+        required: true
+        example: 'Keperluan keluarga'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      proof_file:
+        custom: []
+        name: proof_file
+        description: 'Path bukti lampiran jika ada.'
+        required: false
+        example: proofs/leave-001.pdf
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Status approval cuti.'
+        required: false
+        example: pending
+        type: string
+        enumValues:
+          - pending
+          - approved
+          - rejected
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      employee_id: 019d8f4d-38a7-72b3-aa65-20c9d3d0efe9
+      type: annual
+      start_date: '2026-05-10'
+      end_date: '2026-05-12'
+      reason: 'Keperluan keluarga'
+      proof_file: proofs/leave-001.pdf
+      status: pending
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"meta":{"status":"success","code":201,"message":"Pengajuan cuti baru berhasil ditambahkan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef60","employee_id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efe9","type":"annual","status":"pending"}}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/leaveRequests/{id}'
+    metadata:
+      custom: []
+      groupName: 'HR Management - Leave Requests'
+      groupDescription: 'API pengelolaan pengajuan cuti.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display the specified resource.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the leaveRequest.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"meta":{"status":"success","code":200,"message":"Detail cuti ditemukan"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef60","type":"annual","status":"pending"}}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'api/leaveRequests/{id}'
+    metadata:
+      custom: []
+      groupName: 'HR Management - Leave Requests'
+      groupDescription: 'API pengelolaan pengajuan cuti.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update the specified resource in storage.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the leaveRequest.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      employee_id:
+        custom: []
+        name: employee_id
+        description: 'ID karyawan pengaju cuti. Must be a valid UUID. The <code>id</code> of an existing record in the employees table.'
+        required: true
+        example: 019d8f4d-38a7-72b3-aa65-20c9d3d0efe9
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      type:
+        custom: []
+        name: type
+        description: 'Jenis cuti: sick, annual, unpaid.'
+        required: true
+        example: annual
+        type: string
+        enumValues:
+          - sick
+          - annual
+          - unpaid
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      start_date:
+        custom: []
+        name: start_date
+        description: 'Tanggal mulai cuti. Must be a valid date.'
+        required: true
+        example: '2026-05-10'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      end_date:
+        custom: []
+        name: end_date
+        description: 'Tanggal akhir cuti. Must be a valid date. Must be a date after or equal to <code>start_date</code>.'
+        required: true
+        example: '2026-05-12'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      reason:
+        custom: []
+        name: reason
+        description: 'Alasan pengajuan cuti.'
+        required: true
+        example: 'Keperluan keluarga'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      proof_file:
+        custom: []
+        name: proof_file
+        description: 'Path bukti lampiran jika ada.'
+        required: false
+        example: proofs/leave-001.pdf
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Status approval cuti.'
+        required: false
+        example: pending
+        type: string
+        enumValues:
+          - pending
+          - approved
+          - rejected
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      employee_id: 019d8f4d-38a7-72b3-aa65-20c9d3d0efe9
+      type: annual
+      start_date: '2026-05-10'
+      end_date: '2026-05-12'
+      reason: 'Keperluan keluarga'
+      proof_file: proofs/leave-001.pdf
+      status: pending
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"meta":{"status":"success","code":200,"message":"Data cuti berhasil diperbarui"},"data":{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0ef60","status":"approved"}}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/leaveRequests/{id}'
+    metadata:
+      custom: []
+      groupName: 'HR Management - Leave Requests'
+      groupDescription: 'API pengelolaan pengajuan cuti.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Remove the specified resource from storage.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the leaveRequest.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"meta":{"status":"success","code":200,"message":"Data cuti berhasil dihapus"},"data":null}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{"meta":{"code":403,"status":"error","message":"Anda tidak memiliki izin untuk mengakses resource ini."},"errors":null}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"meta":{"code":404,"status":"error","message":"Data yang diminta tidak ditemukan."},"errors":null}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

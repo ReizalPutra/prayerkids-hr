@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('job_vacancies', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('position_id')->constrained('positions')->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('position_id')->constrained('positions')->cascadeOnDelete();
             $table->string('title');
             $table->text('description');
             $table->text('requirements');

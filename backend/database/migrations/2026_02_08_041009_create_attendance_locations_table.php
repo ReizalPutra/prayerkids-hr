@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('attendance_locations', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name');
             $table->double('latitude');
             $table->double('longitude');
             $table->integer('radius_meter')->default(20);
-            $table->string('qr_token')->nullable(); 
+            $table->string('qr_token')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
             $table->softDeletes();

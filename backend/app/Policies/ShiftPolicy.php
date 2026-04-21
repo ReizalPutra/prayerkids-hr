@@ -13,7 +13,7 @@ class ShiftPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo('view_operational');
+        return $user->hasPermissionTo('view_shifts');
     }
 
     /**
@@ -21,7 +21,7 @@ class ShiftPolicy
      */
     public function view(User $user, Shift $shift): bool
     {
-        return $user->hasPermissionTo('view_operational');
+        return $user->hasPermissionTo('view_shifts');
     }
 
     /**
@@ -29,7 +29,7 @@ class ShiftPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo('manage_operational');
+        return $user->hasPermissionTo('manage_shifts');
     }
 
     /**
@@ -37,7 +37,7 @@ class ShiftPolicy
      */
     public function update(User $user, Shift $shift): bool
     {
-        return $user->hasPermissionTo('manage_operational');
+        return $user->hasPermissionTo('manage_shifts');
     }
 
     /**
@@ -45,7 +45,7 @@ class ShiftPolicy
      */
     public function delete(User $user, Shift $shift): bool
     {
-        return $user->hasPermissionTo('manage_operational');
+        return $user->hasPermissionTo('manage_shifts');
     }
 
     /**
@@ -53,7 +53,7 @@ class ShiftPolicy
      */
     public function restore(User $user, Shift $shift): bool
     {
-        return $user->hasPermissionTo('manage_operational');
+        return $user->hasPermissionTo('manage_shifts');
     }
 
     /**
@@ -61,6 +61,6 @@ class ShiftPolicy
      */
     public function forceDelete(User $user, Shift $shift): bool
     {
-        return $user->hasPermissionTo('manage_operational');
+        return $user->hasPermissionTo('manage_shifts');
     }
 }

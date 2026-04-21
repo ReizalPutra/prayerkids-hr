@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class StoreShiftRequest extends FormRequest
+class StoreShiftRequest extends BaseApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,6 +23,24 @@ class StoreShiftRequest extends FormRequest
             'name' => 'required|string|max:255|unique:shifts,name',
             'start_time' => 'required|date_format:H:i:s',
             'end_time' => 'required|date_format:H:i:s',
+        ];
+    }
+
+    public function bodyParameters(): array
+    {
+        return [
+            'name' => [
+                'description' => 'Nama shift yang unik.',
+                'example' => 'Pagi',
+            ],
+            'start_time' => [
+                'description' => 'Jam mulai shift (format H:i:s).',
+                'example' => '08:00:00',
+            ],
+            'end_time' => [
+                'description' => 'Jam selesai shift (format H:i:s).',
+                'example' => '17:00:00',
+            ],
         ];
     }
 }

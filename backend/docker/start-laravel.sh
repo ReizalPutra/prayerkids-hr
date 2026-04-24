@@ -30,6 +30,12 @@ exit(1);
 
 DB_HOST="${DB_HOST:-mysql}"
 DB_PORT="${DB_PORT:-3306}"
+DB_CONNECTION="${DB_CONNECTION:-mysql}"
+DB_DATABASE="${DB_DATABASE:-prayerkids_hr}"
+DB_USERNAME="${DB_USERNAME:-root}"
+DB_PASSWORD="${DB_PASSWORD:-root}"
+
+export DB_CONNECTION DB_HOST DB_PORT DB_DATABASE DB_USERNAME DB_PASSWORD
 
 echo "Waiting for database at ${DB_HOST}:${DB_PORT}..."
 php -r '
@@ -49,5 +55,11 @@ fwrite(STDERR, "Database is not reachable.\n");
 exit(1);
 '
 
+php artisan optimize:clear || true
 php artisan migrate --force
+
+if [ "${RUN_DB_SEEDER:-true}" = "true" ]; then
+  php artisan db:seed --force
+fi
+
 php artisan serve --host=0.0.0.0 --port=8000

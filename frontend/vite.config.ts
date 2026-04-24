@@ -8,6 +8,9 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   const devProxyTarget =
     env.VITE_DEV_PROXY_TARGET?.trim() || "http://127.0.0.1:8000";
+  const allowedHosts = env.VITE_ALLOWED_HOSTS?.split(",")
+    .map((host) => host.trim())
+    .filter(Boolean);
 
   return {
     plugins: [react(), tailwindcss()],
@@ -97,6 +100,7 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       host: true,
+      allowedHosts: allowedHosts?.length ? allowedHosts : ["hrms.zeepyro.cloud"],
       proxy: {
         "/api": {
           target: devProxyTarget,

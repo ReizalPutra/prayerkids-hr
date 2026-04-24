@@ -100,7 +100,9 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       host: true,
-      allowedHosts: allowedHosts?.length ? allowedHosts : ["hrms.zeepyro.cloud"],
+      allowedHosts: allowedHosts?.length
+        ? allowedHosts
+        : ["hrms.zeepyro.cloud"],
       proxy: {
         "/api": {
           target: devProxyTarget,

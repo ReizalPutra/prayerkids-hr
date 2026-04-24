@@ -17,6 +17,8 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 COPY docker/start-laravel.sh /usr/local/bin/start-laravel.sh
 RUN chmod +x /usr/local/bin/start-laravel.sh
 
+COPY . /var/www/html
+
 EXPOSE 8000
 
 CMD ["start-laravel.sh"]

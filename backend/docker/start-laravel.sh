@@ -2,7 +2,18 @@
 set -eu
 
 if [ ! -f .env ]; then
-  cp .env.example .env
+  if [ -f .env.example ]; then
+    cp .env.example .env
+  else
+    echo "Warning: .env.example not found, creating minimal .env"
+    cat > .env <<EOF
+APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost:8000
+EOF
+  fi
 fi
 
 if [ ! -d vendor ]; then

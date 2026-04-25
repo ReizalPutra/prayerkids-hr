@@ -16,10 +16,6 @@ EOF
   fi
 fi
 
-if [ ! -d vendor ]; then
-  composer install --no-interaction --prefer-dist
-fi
-
 php -r '
 $env = parse_ini_file(".env");
 if (!isset($env["APP_KEY"]) || trim((string) $env["APP_KEY"]) === "") {
@@ -56,10 +52,17 @@ exit(1);
 '
 
 php artisan optimize:clear || true
+php artisan package:discover --ansi || true
 php artisan migrate --force
 
 if [ "${RUN_DB_SEEDER:-true}" = "true" ]; then
   php artisan db:seed --force
+fi
+
+if [ "${APP_ENV:-local}" = "production" ]; then
+  php artisan config:cache || true
+  php artisan route:cache || true
+  php artisan view:cache || true
 fi
 
 php artisan serve --host=0.0.0.0 --port=8000

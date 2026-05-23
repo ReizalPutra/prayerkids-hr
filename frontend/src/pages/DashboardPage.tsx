@@ -16,6 +16,7 @@ import {
   ArrowRight,
   BarChart3,
 } from "lucide-react";
+import { getTilesForRole } from "@/lib/permissions";
 import { Link } from "react-router-dom";
 
 function DashboardPage() {
@@ -37,6 +38,29 @@ function DashboardPage() {
             ? "Dashboard karyawan untuk presensi dan informasi akun."
             : "Data ditarik dari endpoint backend seperti /api/me dan /api/divisions."}
         </p>
+      </div>
+
+      {/* Role-based quick access tiles */}
+      <div>
+        <h3 className="text-lg font-semibold">Akses Cepat</h3>
+        <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {getTilesForRole(meQuery.data?.role).map((tile) => (
+            <Card key={tile.id}>
+              <CardHeader className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="text-sm">{tile.title}</CardTitle>
+                  <CardDescription className="text-xs">{tile.description}</CardDescription>
+                </div>
+                <tile.Icon className="size-5 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <Button asChild className="w-full">
+                  <Link to={tile.route}>{"Buka " + tile.title}</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">

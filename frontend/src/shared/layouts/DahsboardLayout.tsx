@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Outlet, NavLink, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import {
   getApiErrorMessage,
   useLogoutMutation,
@@ -13,17 +13,23 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { LayoutDashboard, Users, LogOut, Moon, Sun, Shield } from "lucide-react";
-import { resourceConfigs } from "@/features/resources/resource-config";
-
-const toKebabCase = (value: string) =>
-  value.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+import DashboardSidebar from "./dashboard/DashboardSidebar";
+import DashboardTopbar from "./dashboard/DashboardTopbar";
 
 function DashboardLayout() {
   const navigate = useNavigate();
+  const location = useLocation();
   const meQuery = useMeQuery();
   const logoutMutation = useLogoutMutation();
+  const [isDesktop, setIsDesktop] = useState(() => {
+    if (typeof window === "undefined") {
+      return true;
+    }
+
+    return window.matchMedia("(min-width: 1024px)").matches;
+  });
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [isDark, setIsDark] = useState(() => {
     const storedTheme = localStorage.getItem("theme");
     const prefersDark = window.matchMedia(
@@ -36,6 +42,36 @@ function DashboardLayout() {
     const root = document.documentElement;
     root.classList.toggle("dark", isDark);
   }, [isDark]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 1024px)");
+
+    const updateViewport = () => {
+      setIsDesktop(mediaQuery.matches);
+    };
+
+    updateViewport();
+    mediaQuery.addEventListener("change", updateViewport);
+
+    return () => mediaQuery.removeEventListener("change", updateViewport);
+  }, []);
+
+  useEffect(() => {
+    if (isDesktop) {
+      return;
+    }
+
+    setSidebarOpen(false);
+  }, [isDesktop, location.pathname]);
+
+  const toggleSidebar = () => {
+    if (isDesktop) {
+      setSidebarCollapsed((current) => !current);
+      return;
+    }
+
+    setSidebarOpen((current) => !current);
+  };
 
   const toggleTheme = () => {
     const root = document.documentElement;
@@ -108,116 +144,49 @@ function DashboardLayout() {
   }
 
   const isEmployee = user.role === "employee";
+  const sidebarExpanded = isDesktop ? !sidebarCollapsed : sidebarOpen;
 
   return (
     <div className="min-h-screen bg-muted/30">
-      <div className="mx-auto grid min-h-screen max-w-7xl grid-cols-1 lg:grid-cols-[260px_1fr]">
-        <aside className="border-b border-border bg-background/80 p-4 backdrop-blur lg:border-r lg:border-b-0">
-          <div className="mb-4 rounded-lg border border-border bg-background p-4">
-            <p className="text-xs uppercase tracking-wide text-muted-foreground">
-              Prayerkids HR
-            </p>
-            <h2 className="mt-1 text-lg font-semibold">
-              {isEmployee ? "Employee Panel" : "Admin Panel"}
-            </h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {user.name} ({user.role})
-            </p>
-          </div>
+      <DashboardSidebar
+        isDesktop={isDesktop}
+        sidebarExpanded={sidebarExpanded}
+        isEmployee={isEmployee}
+        userName={user.name}
+        userRole={user.role}
+        logoutPending={logoutMutation.isPending}
+        onLogout={handleLogout}
+      />
 
-          <nav className="space-y-2">
-            <Button
-              asChild
-              variant="ghost"
-              className="w-full justify-start gap-2"
-            >
-              <NavLink to="/dashboard">
-                <LayoutDashboard className="size-4" />
-                Dashboard
-              </NavLink>
-            </Button>
-            <Button
-              asChild
-              variant="ghost"
-              className="w-full justify-start gap-2"
-            >
-              <NavLink to="/employees">
-                <Users className="size-4" />
-                Scan Presensi
-              </NavLink>
-            </Button>
+      {sidebarOpen ? (
+        <div
+          className="fixed inset-0 z-30 bg-black/40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+          aria-hidden
+        />
+      ) : null}
 
-            {!isEmployee ? (
-              <>
-                <Separator className="my-2" />
+      <div
+        className={
+          "min-h-screen w-full transition-[padding] duration-200 " +
+          (isDesktop
+            ? sidebarCollapsed
+              ? "lg:pl-20"
+              : "lg:pl-64"
+            : "lg:pl-0")
+        }
+      >
+        <DashboardTopbar
+          isDesktop={isDesktop}
+          sidebarExpanded={sidebarExpanded}
+          isDark={isDark}
+          onToggleSidebar={toggleSidebar}
+          onToggleTheme={toggleTheme}
+        />
 
-                {resourceConfigs.map((resource) => (
-                  <Button
-                    key={resource.key}
-                    asChild
-                    variant="ghost"
-                    className="w-full justify-start gap-2"
-                  >
-                    <NavLink to={`/dashboard/${toKebabCase(resource.key)}`}>
-                      {resource.title}
-                    </NavLink>
-                  </Button>
-                ))}
-
-                {user.role === "admin" ? (
-                  <Button asChild variant="ghost" className="w-full justify-start gap-2">
-                    <NavLink to="/dashboard/user-management">
-                      <Shield className="size-4" />
-                      User Management
-                    </NavLink>
-                  </Button>
-                ) : null}
-              </>
-            ) : null}
-          </nav>
-
-          <Separator className="my-4" />
-
-          <Button
-            type="button"
-            variant="outline"
-            className="w-full justify-start gap-2"
-            onClick={handleLogout}
-            disabled={logoutMutation.isPending}
-          >
-            <LogOut className="size-4" />
-            {logoutMutation.isPending ? "Keluar..." : "Logout"}
-          </Button>
-        </aside>
-
-        <div className="flex min-h-screen flex-col">
-          <header className="flex items-center justify-between border-b border-border bg-background/80 px-6 py-4 backdrop-blur">
-            <div>
-              <p className="text-sm text-muted-foreground">
-                Selamat datang kembali
-              </p>
-              <h1 className="text-xl font-semibold">Sistem HR Prayerkids</h1>
-            </div>
-
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={toggleTheme}
-            >
-              {isDark ? (
-                <Sun className="size-4" />
-              ) : (
-                <Moon className="size-4" />
-              )}
-              {isDark ? "Light" : "Dark"}
-            </Button>
-          </header>
-
-          <main className="flex-1 p-6">
-            <Outlet />
-          </main>
-        </div>
+        <main className="min-h-[calc(100vh-73px)] w-full p-6">
+          <Outlet />
+        </main>
       </div>
     </div>
   );

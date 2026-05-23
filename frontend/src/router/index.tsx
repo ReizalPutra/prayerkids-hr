@@ -31,6 +31,9 @@ const JobVacanciesPage = lazy(
   () => import("../pages/dashboard/JobVacanciesPage"),
 );
 const ApplicantsPage = lazy(() => import("../pages/dashboard/ApplicantsPage"));
+const UserManagementPage = lazy(
+  () => import("@/pages/dashboard/UserManagementPage"),
+);
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -126,7 +129,10 @@ function AppRouter() {
         <Route
           path="/employees"
           element={
-            <RoleGuard allowedRoles={["employee"]} fallback="/dashboard">
+            <RoleGuard
+              allowedRoles={["admin", "hr", "employee"]}
+              fallback="/dashboard"
+            >
               <RouteSuspense>
                 <EmployeePage />
               </RouteSuspense>
@@ -254,6 +260,16 @@ function AppRouter() {
           }
         />
         <Route
+          path="/dashboard/user-management"
+          element={
+            <RoleGuard allowedRoles={["admin"]} fallback="/dashboard">
+              <RouteSuspense>
+                <UserManagementPage />
+              </RouteSuspense>
+            </RoleGuard>
+          }
+        />
+        <Route
           path="/dashboard/attendanceLocations"
           element={<Navigate to="/dashboard/attendance-locations" replace />}
         />
@@ -341,6 +357,10 @@ function AppRouter() {
         <Route
           path="/resources/applicants"
           element={<Navigate to="/dashboard/applicants" replace />}
+        />
+        <Route
+          path="/resources/user-management"
+          element={<Navigate to="/dashboard/user-management" replace />}
         />
       </Route>
 

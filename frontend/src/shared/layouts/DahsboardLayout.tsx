@@ -14,7 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { LayoutDashboard, Users, LogOut, Moon, Sun } from "lucide-react";
+import { LayoutDashboard, Users, LogOut, Moon, Sun, Shield } from "lucide-react";
 import { resourceConfigs } from "@/features/resources/resource-config";
 
 const toKebabCase = (value: string) =>
@@ -163,6 +163,15 @@ function DashboardLayout() {
                     </NavLink>
                   </Button>
                 ))}
+
+                {user.role === "admin" ? (
+                  <Button asChild variant="ghost" className="w-full justify-start gap-2">
+                    <NavLink to="/dashboard/user-management">
+                      <Shield className="size-4" />
+                      User Management
+                    </NavLink>
+                  </Button>
+                ) : null}
               </>
             ) : null}
           </nav>

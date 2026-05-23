@@ -169,11 +169,7 @@ function DashboardLayout() {
       <div
         className={
           "min-h-screen w-full transition-[padding] duration-200 " +
-          (isDesktop
-            ? sidebarCollapsed
-              ? "lg:pl-20"
-              : "lg:pl-64"
-            : "lg:pl-0")
+          (isDesktop ? (sidebarCollapsed ? "lg:pl-20" : "lg:pl-64") : "lg:pl-0")
         }
       >
         <DashboardTopbar

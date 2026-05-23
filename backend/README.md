@@ -3,6 +3,7 @@ Backend
 ![Backend Tests](https://github.com/ReizalPutra/prayerkids-hr/actions/workflows/backend-tests.yml/badge.svg)
 
 Prerequisites
+
 - PHP 8.2+
 - Composer
 - pnpm (frontend package manager)
@@ -28,6 +29,7 @@ If sqlite files were accidentally committed, run from repository root:
 ```
 
 Development (local)
+
 - Start backend only:
 
 ```powershell
@@ -51,6 +53,7 @@ composer run-script dev
 ```
 
 Docker (development)
+
 - Build and run backend container:
 
 ```powershell
@@ -59,7 +62,6 @@ docker run --rm -p 8000:8000 -e APP_ENV=local -v %CD%/backend:/app prayerkids-ba
 ```
 
 Notes
+
 - Coverage reports are produced by CI and uploaded as an artifact `coverage-report`.
 - The Scribe try-it-out asset has been cleaned of debug logs; see `backend/public/vendor/scribe/js/tryitout-5.9.0.js`.
-
-

@@ -23,10 +23,32 @@ class EmployeeController extends Controller
      *
      * @response 200 {"meta":{"status":"success","code":200,"message":"Data karyawan berhasil diambil"},"data":[{"id":"019d8f4d-38a7-72b3-aa65-20c9d3d0efe9","nik":"EMP-2026-001","full_name":"Budi Setiawan","status":"active"}]}
      */
-    public function index()
+    public function index(\Illuminate\Http\Request $request)
     {
         $this->authorize('viewAny', Employee::class);
-        $employees = $this->employeeService->getAll();
+
+        $q = $request->query('q');
+        $status = $request->query('status');
+
+        $query = Employee::query()->with(['user', 'division', 'position']);
+
+        if ($q) {
+            $query->where(function ($sub) use ($q) {
+                $sub->where('full_name', 'like', "%{$q}%")
+                    ->orWhere('nik', 'like', "%{$q}%")
+                    ->orWhere('id', 'like', "%{$q}%");
+            });
+        }
+
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        $perPage = (int) $request->query('per_page', 20);
+        $page = (int) $request->query('page', 1);
+
+        $employees = $query->paginate($perPage, ['*'], 'page', $page);
+
         return $this->success($employees, 'Data karyawan berhasil diambil');
     }
 

@@ -11,6 +11,25 @@ Currently, two official plugins are available:
 
 The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
 
+## Feature-Based Structure
+
+The frontend is being refactored toward a feature-based structure.
+
+Recommended flow:
+
+- Keep reusable UI primitives in `src/components/ui`.
+- Keep app shell and layout composition in `src/components/layout`.
+- Keep domain logic, page composition, and feature-specific data in `src/features/<domain>`.
+- Keep `src/pages` as thin route wrappers that re-export or mount feature pages.
+
+Current example:
+
+- `src/features/dashboard/pages/DashboardPage.tsx` contains the dashboard screen.
+- `src/features/dashboard/dashboard-tiles.ts` owns dashboard-specific tile data and role filtering.
+- `src/pages/DashboardPage.tsx` is now a compatibility wrapper.
+
+This keeps navigation, dashboard cards, and feature data close together while reducing cross-folder coupling as the app grows.
+
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:

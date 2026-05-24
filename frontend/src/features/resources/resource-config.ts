@@ -6,6 +6,7 @@ export type ResourceConfig = {
   columns: Array<{ key: string; label: string }>;
   fields: ResourceField[];
   samplePayload: Record<string, unknown>;
+  defaultPerPage?: number;
 };
 
 export type ResourceFieldType =
@@ -649,5 +650,5 @@ export const resourceConfigs: ResourceConfig[] = [
 ];
 
 export const resourceConfigMap = Object.fromEntries(
-  resourceConfigs.map((config) => [config.key, config]),
+  resourceConfigs.map((config) => [config.key, { ...config, defaultPerPage: config.defaultPerPage ?? 20 }]),
 ) as Record<string, ResourceConfig>;

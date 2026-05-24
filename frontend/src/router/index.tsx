@@ -1,12 +1,12 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "../pages/LoginPage";
-import DashboardLayout from "../shared/layouts/DahsboardLayout";
+import DashboardLayout from "@/components/layout/dashboard/DashboardLayout";
 import { lazy, Suspense, type ReactNode } from "react";
 import { useMeQuery } from "@/hooks/useAuth";
 import type { User } from "@/types";
 
 const DashboardPage = lazy(() => import("../pages/DashboardPage"));
-const EmployeePage = lazy(() => import("../pages/EmployeePage"));
+const EmployeesFeaturePage = lazy(() => import("@/features/employees/pages/EmployeesPage"));
 const DivisionsPage = lazy(() => import("../pages/dashboard/DivisionsPage"));
 const PositionsPage = lazy(() => import("../pages/dashboard/PositionsPage"));
 const ShiftsPage = lazy(() => import("../pages/dashboard/ShiftsPage"));
@@ -134,7 +134,7 @@ function AppRouter() {
               fallback="/dashboard"
             >
               <RouteSuspense>
-                <EmployeePage />
+                <EmployeesFeaturePage />
               </RouteSuspense>
             </RoleGuard>
           }

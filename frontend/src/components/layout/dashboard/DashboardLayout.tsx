@@ -13,8 +13,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import DashboardSidebar from "./dashboard/DashboardSidebar";
-import DashboardTopbar from "./dashboard/DashboardTopbar";
+import DashboardSidebar from "@/components/layout/dashboard/DashboardSidebar";
+import DashboardTopbar from "@/components/layout/dashboard/DashboardTopbar";
 
 function DashboardLayout() {
   const navigate = useNavigate();
@@ -61,6 +61,7 @@ function DashboardLayout() {
       return;
     }
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSidebarOpen(false);
   }, [isDesktop, location.pathname]);
 

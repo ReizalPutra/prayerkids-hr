@@ -1,7 +1,13 @@
 import { NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { LayoutDashboard, Users, LogOut, Shield, Layers3 } from "lucide-react";
+import {
+  LayoutDashboard,
+  Users,
+  LogOut,
+  Shield,
+  Layers3,
+} from "lucide-react";
 import { resourceConfigs } from "@/features/resources/resource-config";
 import { toKebabCase } from "./dashboard-layout-utils";
 
@@ -42,13 +48,7 @@ function DashboardSidebar({
       }
       aria-hidden={!sidebarExpanded && !isDesktop}
     >
-      <div
-        className={
-          sidebarExpanded
-            ? "flex items-center justify-between"
-            : "flex items-center justify-start"
-        }
-      >
+      <div className={sidebarExpanded ? "flex items-center justify-between" : "flex items-center justify-start"}>
         <div>
           <p
             className={
@@ -68,63 +68,35 @@ function DashboardSidebar({
           (sidebarExpanded ? "lg:mt-0" : "hidden lg:block lg:p-3")
         }
       >
-        <p
-          className={
-            sidebarExpanded
-              ? "text-xs uppercase tracking-wide text-muted-foreground"
-              : "sr-only"
-          }
-        >
+        <p className={sidebarExpanded ? "text-xs uppercase tracking-wide text-muted-foreground" : "sr-only"}>
           Prayerkids HR
         </p>
-        <h2
-          className={sidebarExpanded ? "mt-1 text-lg font-semibold" : "sr-only"}
-        >
+        <h2 className={sidebarExpanded ? "mt-1 text-lg font-semibold" : "sr-only"}>
           {isEmployee ? "Employee Panel" : "Admin Panel"}
         </h2>
-        <p
-          className={
-            sidebarExpanded ? "mt-2 text-sm text-muted-foreground" : "sr-only"
-          }
-        >
+        <p className={sidebarExpanded ? "mt-2 text-sm text-muted-foreground" : "sr-only"}>
           {userName} ({userRole})
         </p>
       </div>
 
       <nav className="space-y-2">
-        <Button
-          asChild
-          variant="ghost"
-          className={iconButtonClass}
-          title="Dashboard"
-        >
+        <Button asChild variant="ghost" className={iconButtonClass} title="Dashboard">
           <NavLink to="/dashboard">
             <LayoutDashboard className="size-4" />
             <span className={sidebarExpanded ? "" : "sr-only"}>Dashboard</span>
           </NavLink>
         </Button>
 
-        <Button
-          asChild
-          variant="ghost"
-          className={iconButtonClass}
-          title="Scan Presensi"
-        >
+        <Button asChild variant="ghost" className={iconButtonClass} title="Scan Presensi">
           <NavLink to="/employees">
             <Users className="size-4" />
-            <span className={sidebarExpanded ? "" : "sr-only"}>
-              Scan Presensi
-            </span>
+            <span className={sidebarExpanded ? "" : "sr-only"}>Scan Presensi</span>
           </NavLink>
         </Button>
 
         {!isEmployee ? (
           <>
-            {sidebarExpanded ? (
-              <Separator className="my-2" />
-            ) : (
-              <Separator className="my-2 lg:hidden" />
-            )}
+            {sidebarExpanded ? <Separator className="my-2" /> : <Separator className="my-2 lg:hidden" />}
 
             {resourceConfigs.map((resource) => (
               <Button
@@ -136,9 +108,7 @@ function DashboardSidebar({
               >
                 <NavLink to={`/dashboard/${toKebabCase(resource.key)}`}>
                   <Layers3 className="size-4" />
-                  <span className={sidebarExpanded ? "" : "sr-only"}>
-                    {resource.title}
-                  </span>
+                  <span className={sidebarExpanded ? "" : "sr-only"}>{resource.title}</span>
                 </NavLink>
               </Button>
             ))}
@@ -152,9 +122,7 @@ function DashboardSidebar({
               >
                 <NavLink to="/dashboard/user-management">
                   <Shield className="size-4" />
-                  <span className={sidebarExpanded ? "" : "sr-only"}>
-                    User Management
-                  </span>
+                  <span className={sidebarExpanded ? "" : "sr-only"}>User Management</span>
                 </NavLink>
               </Button>
             ) : null}

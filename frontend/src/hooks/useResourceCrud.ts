@@ -5,15 +5,20 @@ import type { ApiResponse } from "@/types";
 export type ResourceRecord = Record<string, unknown> & { id: string };
 
 const resourceKeys = {
-  list: (endpoint: string) => ["resource", endpoint, "list"] as const,
+  list: (endpoint: string) => ["resource", endpoint, "list"],
 };
 
-export const useResourceListQuery = (endpoint: string) =>
+export const useResourceListQuery = (
+  endpoint: string,
+  params?: Record<string, unknown> | undefined,
+) =>
   useQuery({
-    queryKey: resourceKeys.list(endpoint),
+    queryKey: [...resourceKeys.list(endpoint), params ?? {}],
     enabled: Boolean(endpoint),
     queryFn: async () => {
-      const response = await api.get<ApiResponse<ResourceRecord[]>>(endpoint);
+      const response = await api.get<ApiResponse<ResourceRecord[]>>(endpoint, {
+        params,
+      });
       return response.data.data;
     },
   });

@@ -17,7 +17,8 @@ export const useAttendanceScanMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (payload: AttendanceScanPayload) => attendanceService.scan(payload),
+    mutationFn: (payload: AttendanceScanPayload) =>
+      attendanceService.scan(payload),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: attendanceKeys.list() });
     },

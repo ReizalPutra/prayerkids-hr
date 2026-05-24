@@ -35,7 +35,9 @@ function DashboardTopbar({
         </div>
 
         <div>
-          <p className="text-sm text-muted-foreground">Selamat datang kembali</p>
+          <p className="text-sm text-muted-foreground">
+            Selamat datang kembali
+          </p>
           <h1 className="text-xl font-semibold">Sistem HR Prayerkids</h1>
         </div>
       </div>

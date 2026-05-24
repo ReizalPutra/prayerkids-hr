@@ -67,7 +67,9 @@ function DashboardPage() {
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0">
-            <CardTitle className="text-sm font-medium">Pengguna Aktif</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Pengguna Aktif
+            </CardTitle>
             <Users className="size-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -123,7 +125,9 @@ function DashboardPage() {
           </CardHeader>
           <CardContent>
             <p className="text-xl font-semibold">
-              {meQuery.isError || divisionsQuery.isError ? "Perlu cek" : "Sehat"}
+              {meQuery.isError || divisionsQuery.isError
+                ? "Perlu cek"
+                : "Sehat"}
             </p>
             <p className="text-xs text-muted-foreground">
               Monitoring sederhana endpoint utama

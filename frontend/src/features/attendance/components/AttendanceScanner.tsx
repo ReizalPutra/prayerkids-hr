@@ -1,6 +1,12 @@
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { AttendanceShiftOption, AttendanceScanPayload } from "../types";
@@ -70,20 +76,24 @@ function AttendanceScanner({
       throw new Error("Browser tidak mendukung geolocation.");
     }
 
-    return new Promise<{ latitude: number; longitude: number }>((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          resolve({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-        },
-        (error) => {
-          reject(new Error(error.message || "Gagal mengambil lokasi saat ini."));
-        },
-        { enableHighAccuracy: true, timeout: 10000 },
-      );
-    });
+    return new Promise<{ latitude: number; longitude: number }>(
+      (resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            resolve({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            });
+          },
+          (error) => {
+            reject(
+              new Error(error.message || "Gagal mengambil lokasi saat ini."),
+            );
+          },
+          { enableHighAccuracy: true, timeout: 10000 },
+        );
+      },
+    );
   };
 
   const handleUseCurrentLocation = async () => {
@@ -94,7 +104,9 @@ function AttendanceScanner({
       setLongitude(coords.longitude.toFixed(7));
       setMessage("Lokasi berhasil diisi dari perangkat.");
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Gagal mengambil lokasi.");
+      setMessage(
+        error instanceof Error ? error.message : "Gagal mengambil lokasi.",
+      );
     }
   };
 
@@ -135,7 +147,8 @@ function AttendanceScanner({
       <CardHeader>
         <CardTitle>Scan Presensi</CardTitle>
         <CardDescription>
-          Input token QR lokasi, pilih shift, lalu kirim presensi dari halaman attendance.
+          Input token QR lokasi, pilih shift, lalu kirim presensi dari halaman
+          attendance.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -193,7 +206,11 @@ function AttendanceScanner({
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row">
-            <Button type="button" variant="outline" onClick={handleUseCurrentLocation}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleUseCurrentLocation}
+            >
               Pakai Lokasi Saat Ini
             </Button>
             <Button type="submit" disabled={isSubmitting}>
@@ -201,7 +218,9 @@ function AttendanceScanner({
             </Button>
           </div>
 
-          {message ? <p className="text-sm text-muted-foreground">{message}</p> : null}
+          {message ? (
+            <p className="text-sm text-muted-foreground">{message}</p>
+          ) : null}
         </form>
       </CardContent>
     </Card>

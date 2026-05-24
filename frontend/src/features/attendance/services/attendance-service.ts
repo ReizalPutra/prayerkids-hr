@@ -8,7 +8,8 @@ import type {
 
 export const attendanceService = {
   async getAll(): Promise<AttendanceRecord[]> {
-    const response = await api.get<ApiResponse<AttendanceRecord[]>>("/attendances");
+    const response =
+      await api.get<ApiResponse<AttendanceRecord[]>>("/attendances");
     return response.data.data;
   },
 

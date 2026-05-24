@@ -6,7 +6,9 @@ import { useMeQuery } from "@/hooks/useAuth";
 import type { User } from "@/types";
 
 const DashboardPage = lazy(() => import("../pages/DashboardPage"));
-const EmployeesFeaturePage = lazy(() => import("@/features/employees/pages/EmployeesPage"));
+const EmployeesFeaturePage = lazy(
+  () => import("@/features/employees/pages/EmployeesPage"),
+);
 const DivisionsPage = lazy(() => import("../pages/dashboard/DivisionsPage"));
 const PositionsPage = lazy(() => import("../pages/dashboard/PositionsPage"));
 const ShiftsPage = lazy(() => import("../pages/dashboard/ShiftsPage"));

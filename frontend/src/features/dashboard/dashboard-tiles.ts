@@ -8,7 +8,7 @@ import {
   DollarSign,
   Activity,
 } from "lucide-react";
-import type { ComponentType, SVGProps } from 'react';
+import type { ComponentType, SVGProps } from "react";
 
 export type DashboardRole = "admin" | "hr" | "employee";
 

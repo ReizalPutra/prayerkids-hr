@@ -650,5 +650,8 @@ export const resourceConfigs: ResourceConfig[] = [
 ];
 
 export const resourceConfigMap = Object.fromEntries(
-  resourceConfigs.map((config) => [config.key, { ...config, defaultPerPage: config.defaultPerPage ?? 20 }]),
+  resourceConfigs.map((config) => [
+    config.key,
+    { ...config, defaultPerPage: config.defaultPerPage ?? 20 },
+  ]),
 ) as Record<string, ResourceConfig>;

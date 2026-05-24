@@ -56,11 +56,15 @@ function AttendanceHistory({ records }: AttendanceHistoryProps) {
                   </div>
                   <div>
                     <p className="text-xs text-muted-foreground">Clock In</p>
-                    <p className="font-medium">{getFieldText(record.clock_in)}</p>
+                    <p className="font-medium">
+                      {getFieldText(record.clock_in)}
+                    </p>
                   </div>
                   <div>
                     <p className="text-xs text-muted-foreground">Clock Out</p>
-                    <p className="font-medium">{getFieldText(record.clock_out)}</p>
+                    <p className="font-medium">
+                      {getFieldText(record.clock_out)}
+                    </p>
                   </div>
                 </div>
               </div>

@@ -1,13 +1,24 @@
 import { useMemo } from "react";
 import { useResourceListQuery } from "@/hooks/useResourceCrud";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import AttendanceHistory from "../components/AttendanceHistory";
 import AttendanceScanner from "../components/AttendanceScanner";
 import AttendanceSummary from "../components/AttendanceSummary";
-import { useAttendanceListQuery, useAttendanceScanMutation } from "../hooks/useAttendance";
+import {
+  useAttendanceListQuery,
+  useAttendanceScanMutation,
+} from "../hooks/useAttendance";
 import type { AttendanceRecord, AttendanceShiftOption } from "../types";
 
-const toShiftOptions = (items: Record<string, unknown>[]): AttendanceShiftOption[] =>
+const toShiftOptions = (
+  items: Record<string, unknown>[],
+): AttendanceShiftOption[] =>
   items.map((item) => ({
     id: String(item.id),
     name: String(item.name ?? "-"),
@@ -44,7 +55,8 @@ function AttendancePage() {
         <p className="text-sm text-muted-foreground">Attendance Feature</p>
         <h2 className="mt-1 text-2xl font-semibold">Presensi dan Riwayat</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Halaman ini menggabungkan scan QR presensi, ringkasan data, dan riwayat presensi terbaru.
+          Halaman ini menggabungkan scan QR presensi, ringkasan data, dan
+          riwayat presensi terbaru.
         </p>
       </div>
 
@@ -73,13 +85,18 @@ function AttendancePage() {
           </CardHeader>
           <CardContent className="space-y-3 text-sm text-muted-foreground">
             <p>
-              Endpoint daftar presensi: <span className="font-medium text-foreground">/attendances</span>
+              Endpoint daftar presensi:{" "}
+              <span className="font-medium text-foreground">/attendances</span>
             </p>
             <p>
-              Endpoint scan QR: <span className="font-medium text-foreground">/attendances/scan-qr</span>
+              Endpoint scan QR:{" "}
+              <span className="font-medium text-foreground">
+                /attendances/scan-qr
+              </span>
             </p>
             <p>
-              Shift options: <span className="font-medium text-foreground">/shifts</span>
+              Shift options:{" "}
+              <span className="font-medium text-foreground">/shifts</span>
             </p>
             <p>
               {attendancesQuery.isLoading || shiftsQuery.isLoading
